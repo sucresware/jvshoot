@@ -15,5 +15,5 @@ export default {
   zoom: 2,
   pixelArt: true,
   roundPixels: true,
-  parent: 'game',
+  parent: 'game'
 }
