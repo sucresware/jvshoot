@@ -29,9 +29,12 @@ export default class extends Entity {
   }
 
   onDestroy() {
-    this.scene.bgm.stop();
+    for (let i = 1; i <= 7; i++) {
+      this.scene.loops[i].stop()
+    }
+
     this.scene.time.addEvent({
-      delay: 3000,
+      delay: 400,
       callback: function() {
         this.scene.scene.start("MenuScene");
       },

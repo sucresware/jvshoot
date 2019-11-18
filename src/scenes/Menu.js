@@ -13,6 +13,9 @@ export default class extends Phaser.Scene {
     this.sound.add("explode").play()
     this.cameras.main.shake(200, 0.01)
 
+    this.bgm = this.sound.add("loop_1")
+    this.bgm.play({ loop: -1 })
+
     let background = this.add.sprite(this.game.config.width/2, this.game.config.height/2, 'space')
     background.setScale(2)
 
@@ -38,6 +41,7 @@ export default class extends Phaser.Scene {
   }
   update () {
     if (this.keySpace.isDown) {
+      this.bgm.stop()
       this.scene.start('GameScene')
     }
   }

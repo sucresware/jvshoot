@@ -5,6 +5,9 @@ import Player from '../entities/Player'
 import ScrollingBackground from '../entities/ScrollingBackground'
 import CarrierShip from '../entities/CarrierShip'
 
+var scoreLoop = 1;
+var lastScoreLoop = 0;
+
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -12,9 +15,7 @@ export default class extends Phaser.Scene {
 
   init () {}
 
-  preload () {}
-
-  create () {
+  preload () {
     this.anims.create({
       key: "explosion",
       frames: this.anims.generateFrameNumbers("explosion"),
@@ -28,7 +29,9 @@ export default class extends Phaser.Scene {
       frameRate: 20,
       repeat: -1
     })
+  }
 
+  create () {
     this.player = new Player(
       this,
       this.game.config.width * 0.5,
@@ -57,8 +60,9 @@ export default class extends Phaser.Scene {
 
     this.add.bitmapText(3, 2, 'font', 'SCORE', 8)
 
-    this.ui = {
-      score: this.add.bitmapText(45, 2, 'font', '0', 8),
+    this.currentGame = {
+      score: 0,
+      scoreElem: this.add.bitmapText(45, 2, 'font', '0', 8)
     }
 
     this.sfx = {
@@ -90,7 +94,8 @@ export default class extends Phaser.Scene {
         if (enemy.onDestroy !== undefined) enemy.onDestroy()
         enemy.explode(true)
         playerLaser.destroy()
-        scene.ui.score.text++
+        scene.currentGame.score++
+        scene.currentGame.scoreElem.text = scene.currentGame.score
       }
     })
 
@@ -111,8 +116,10 @@ export default class extends Phaser.Scene {
       }
     });
 
-    this.bgm = this.sound.add('bgm')
-    this.bgm.play()
+    this.loops = [];
+    for (let i = 1; i <= 7; i++) {
+      this.loops[i] = this.sound.add("loop_" + i)
+    }
   }
 
   update() {
@@ -135,5 +142,24 @@ export default class extends Phaser.Scene {
     for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].update()
     }
-   }
+
+    if (this.currentGame.score >= 0 && this.currentGame.score <= 9) scoreLoop = 1;
+    if (this.currentGame.score >= 10 && this.currentGame.score <= 19) scoreLoop = 2;
+    if (this.currentGame.score >= 20 && this.currentGame.score <= 29) scoreLoop = 3;
+    if (this.currentGame.score >= 30 && this.currentGame.score <= 39) scoreLoop = 4;
+    if (this.currentGame.score >= 40 && this.currentGame.score <= 49) scoreLoop = 5;
+    if (this.currentGame.score >= 50 && this.currentGame.score <= 59) scoreLoop = 6;
+    if (this.currentGame.score >= 60) scoreLoop = 7;
+
+    if (scoreLoop != lastScoreLoop) {
+      let seek = 0
+      if (this.loops[lastScoreLoop]) {
+        seek = this.loops[lastScoreLoop].seek
+        this.loops[lastScoreLoop].stop()
+      }
+
+      this.loops[scoreLoop].play({ loop: -1, seek: seek });
+      lastScoreLoop = scoreLoop;
+    }
+  }
 }
