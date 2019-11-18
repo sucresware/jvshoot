@@ -50,7 +50,9 @@ export default class extends Phaser.Scene {
     })
 
     // Sounds
-    this.load.audio("bgm", "assets/sounds/nebula.mp3")
+    for (let i = 1; i <= 7; i++) {
+      this.load.audio("loop_" + i, "assets/sounds/loops/loop_" + i + ".mp3")
+    }
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
