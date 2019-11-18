@@ -71,16 +71,26 @@ export default class extends Phaser.Scene {
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
-    setTimeout(() => {
-      this.cameras.main.shake(200, 0.05)
-      explode.play()
+    this.time.addEvent({
+      delay: slideDelay,
+      callback: () => {
+        this.cameras.main.shake(200, 0.05)
+        explode.play()
 
-      Phaser.Actions.SetAlpha(this.slides.intro.getChildren(), 0);
-      Phaser.Actions.SetAlpha(this.slides.credits.getChildren(), 1);
-      background.setAlpha(1)
+        Phaser.Actions.SetAlpha(this.slides.intro.getChildren(), 0);
+        Phaser.Actions.SetAlpha(this.slides.credits.getChildren(), 1);
+        background.setAlpha(1)
 
-      setTimeout(() => this.scene.start('MenuScene'), slideDelay * 2);
-    }, slideDelay);
+        this.time.addEvent({
+          delay: slideDelay * 2,
+          callback: () => this.scene.start('MenuScene'),
+          callbackScope: this,
+          loop: false
+        })
+      },
+      callbackScope: this,
+      loop: false
+    })
   }
   update () {
     if (this.keySpace.isDown) {
