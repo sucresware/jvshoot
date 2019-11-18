@@ -117,12 +117,19 @@ export default class extends Phaser.Scene {
       that.ui.score.text = that.state.score;
     })
 
-    watch(this.state, "combo", function(){
+    watch(this.state, "combo", function(attribute, action, newValue, oldValue){
       that.ui.combo.text = 'X' + that.state.combo;
 
       if (that.state.combo == 100) {
         that.bgm.stop()
         that.bgm_mbr.play('game')
+      }
+
+      if (that.state.combo == 0
+        && !that.state.introPhase
+        && oldValue >= 100) {
+        that.bgm_mbr.stop()
+        that.bgm.play('game')
       }
     })
 
@@ -133,11 +140,6 @@ export default class extends Phaser.Scene {
 
       if (that.state.multiplier <= 0) {
         that.state.combo = 0;
-
-        if (that.state.combo == 0) {
-          that.bgm_mbr.stop()
-          that.bgm.play('game')
-        }
       }
     })
 
@@ -162,10 +164,27 @@ export default class extends Phaser.Scene {
     }
 
    this.time.addEvent({
-      delay: 1000,
+      delay: 10,
       callback: function() {
-        let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
-        this.enemies.add(enemy)
+        if (this.state.combo >= 50) {
+          if (Phaser.Math.Between(0, 10) == 1) {
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            this.enemies.add(enemy)
+          }
+        } else if (this.state.combo >= 15) {
+          if (Phaser.Math.Between(0, 30) == 1) {
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            this.enemies.add(enemy)
+          }
+        } else {
+          if (Phaser.Math.Between(0, 50) == 1) {
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            this.enemies.add(enemy)
+          }
+        }
+
+
+
       },
       callbackScope: this,
       loop: true
