@@ -55,10 +55,10 @@ export default class extends Phaser.Scene {
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    this.add.bitmapText(3, 2, 'visitor', 'SCORE', 10)
+    this.add.bitmapText(3, 2, 'font', 'SCORE', 8)
 
     this.ui = {
-      score: this.add.bitmapText(38, 2, 'visitor', '0', 10),
+      score: this.add.bitmapText(45, 2, 'font', '0', 8),
     }
 
     this.sfx = {

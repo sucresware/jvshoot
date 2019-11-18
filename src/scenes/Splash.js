@@ -6,7 +6,7 @@ export default class extends Phaser.Scene {
   }
 
   preload () {
-    this.load.bitmapFont('visitor', './assets/fonts/visitor.png', './assets/fonts/visitor.xml')
+    this.load.bitmapFont('font', './assets/fonts/font.png', './assets/fonts/font.xml')
 
     this.load.image('logo', 'assets/images/logo.png')
 
@@ -29,7 +29,7 @@ export default class extends Phaser.Scene {
     })
 
     this.load.spritesheet("shipWithMotor", "assets/images/shipWithMotor.png", {
-      frameWidth: 16,
+      frameWidth: 8,
       frameHeight: 24
     })
 
@@ -45,7 +45,7 @@ export default class extends Phaser.Scene {
     background.setScale(2)
 
     let logo = this.add.sprite(this.game.config.width/2, 150, 'logo')
-    
+
     let flare = this.add.sprite(this.game.config.width/2, 150, 'flare')
 
     this.anims.create({
@@ -57,8 +57,8 @@ export default class extends Phaser.Scene {
 
     flare.anims.play('flare')
 
-    this.add.bitmapText(this.game.config.width/2, 200, 'visitor', 'PRESS SPACE TO START', 10).setOrigin(0.5)
-    this.add.bitmapText(this.game.config.width/2, 250, 'visitor', 'HIGH SCORE: 0', 10).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width/2, 200, 'font', 'PRESS SPACE TO START', 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width/2, 250, 'font', 'HIGH SCORE: 0', 8).setOrigin(0.5)
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
   }
