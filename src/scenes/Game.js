@@ -16,15 +16,15 @@ export default class extends Phaser.Scene {
 
   create () {
     this.anims.create({
-      key: "sprExplosion",
-      frames: this.anims.generateFrameNumbers("sprExplosion"),
+      key: "explosion",
+      frames: this.anims.generateFrameNumbers("explosion"),
       frameRate: 40,
       repeat: 0
     })
 
     this.anims.create({
-      key: "shipWithMotor",
-      frames: this.anims.generateFrameNumbers("shipWithMotor"),
+      key: "ship",
+      frames: this.anims.generateFrameNumbers("ship"),
       frameRate: 20,
       repeat: -1
     })
@@ -33,10 +33,10 @@ export default class extends Phaser.Scene {
       this,
       this.game.config.width * 0.5,
       this.game.config.height * 0.5,
-      'shipWithMotor'
+      'ship'
     )
 
-    this.player.play('shipWithMotor')
+    this.player.play('ship')
 
     this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
     this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)
@@ -47,7 +47,7 @@ export default class extends Phaser.Scene {
     this.backgrounds = [];
     for (let i = 1; i < 3; i++) {
       this.backgrounds.push(
-        new ScrollingBackground(this, "sprBg0", i * 20)
+        new ScrollingBackground(this, "space", i * 20)
       )
     }
 
@@ -63,10 +63,10 @@ export default class extends Phaser.Scene {
 
     this.sfx = {
       explosions: [
-        this.sound.add("sndExplode0"),
-        this.sound.add("sndExplode1")
+        this.sound.add("explode"),
+        this.sound.add("explode_alt")
       ],
-      laser: this.sound.add("sndLaser", { volume: 0.4 })
+      laser: this.sound.add("laser", { volume: 0.4 })
     }
 
    this.time.addEvent({
