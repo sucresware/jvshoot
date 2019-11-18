@@ -21,7 +21,7 @@ export default class extends Phaser.Scene {
       frameRate: 20,
       repeat: 0
     })
-
+    
     this.anims.create({
       key: "shipWithMotor",
       frames: this.anims.generateFrameNumbers("shipWithMotor"),

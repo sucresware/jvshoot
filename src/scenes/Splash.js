@@ -10,6 +10,12 @@ export default class extends Phaser.Scene {
 
     this.load.image('logo', 'assets/images/logo.png')
 
+// this.load.image('flare', 'assets/images/flare.png')
+    this.load.spritesheet("flare", "assets/images/flare.png", {
+      frameWidth: 138,
+      frameHeight: 64
+    })
+
     this.load.image('hap', 'assets/images/hap.png')
     this.load.image('noel', 'assets/images/noel.png')
 
@@ -39,6 +45,18 @@ export default class extends Phaser.Scene {
     background.setScale(2)
 
     let logo = this.add.sprite(this.game.config.width/2, 150, 'logo')
+    
+    let flare = this.add.sprite(this.game.config.width/2, 150, 'flare')
+
+    this.anims.create({
+      key: "flare",
+      frames: this.anims.generateFrameNumbers("flare"),
+      frameRate: 30,
+      repeat: -1
+    })
+
+    flare.anims.play('flare')
+
     this.add.bitmapText(this.game.config.width/2, 200, 'visitor', 'PRESS SPACE TO START', 10).setOrigin(0.5)
     this.add.bitmapText(this.game.config.width/2, 250, 'visitor', 'HIGH SCORE: 0', 10).setOrigin(0.5)
 
