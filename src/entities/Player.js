@@ -33,7 +33,7 @@ export default class extends Entity {
     this.scene.time.addEvent({
       delay: 3000,
       callback: function() {
-        this.scene.scene.start("SplashScene");
+        this.scene.scene.start("MenuScene");
       },
       callbackScope: this,
       loop: false
