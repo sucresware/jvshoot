@@ -18,10 +18,10 @@ export default class extends Phaser.Scene {
     this.anims.create({
       key: "sprExplosion",
       frames: this.anims.generateFrameNumbers("sprExplosion"),
-      frameRate: 20,
+      frameRate: 40,
       repeat: 0
     })
-    
+
     this.anims.create({
       key: "shipWithMotor",
       frames: this.anims.generateFrameNumbers("shipWithMotor"),
