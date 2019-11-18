@@ -21,7 +21,7 @@ export default class extends Phaser.Scene {
 
     let progressBar = this.add.graphics()
     let progressBox = this.add.graphics()
-    progressBox.fillStyle(0x050710, 0.8)
+    progressBox.fillStyle(0x050710, 1)
     progressBox.fillRect(40, this.game.config.height / 2, this.game.config.width - 80, 8)
 
     // Fonts

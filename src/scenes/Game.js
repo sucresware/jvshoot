@@ -72,16 +72,27 @@ export default class extends Phaser.Scene {
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    this.add.bitmapText(3, 2, 'font', 'KILLS', 8)
+    let header = this.add.graphics()
+    header.fillStyle(0x000000)
+    header.fillRect(0, 0, this.game.config.width, 50)
+
+    this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
+    this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
+    this.add.bitmapText(110, 10, 'font', 'COMBO', 8)
 
     this.state = {
       kills: 0,
+      score: 0,
       combo: 0,
+      multiplier: 0,
       introPhase: true,
     }
 
     this.ui = {
-      kills: this.add.bitmapText(45, 2, 'font', '0', 8),
+      kills: this.add.bitmapText(10, 25, 'font', '0', 16),
+      score: this.add.bitmapText(60, 25, 'font', '0', 16),
+      combo: this.add.bitmapText(110, 25, 'font', '0', 16),
+      multiplier: this.add.graphics(),
       hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'font', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
     }
 
@@ -99,6 +110,24 @@ export default class extends Phaser.Scene {
 
       if (that.state.kills >= 3) {
         that.state.introPhase = false;
+      }
+    })
+
+    watch(this.state, "score", function(){
+      that.ui.score.text = that.state.score;
+    })
+
+    watch(this.state, "combo", function(){
+      that.ui.combo.text = 'X' + that.state.combo;
+    })
+
+    watch(this.state, "multiplier", function(){
+      that.ui.multiplier.clear()
+      that.ui.multiplier.fillStyle(0x3D3DAD)
+      that.ui.multiplier.fillRect(0, 0, (that.state.multiplier * that.game.config.width) / 100, 6)
+
+      if (that.state.multiplier <= 0) {
+        that.state.combo = 0;
       }
     })
 
@@ -132,6 +161,15 @@ export default class extends Phaser.Scene {
       loop: true
     })
 
+    this.time.addEvent({
+      delay: 20,
+      callback: function() {
+        this.state.multiplier -= 1;
+      },
+      callbackScope: this,
+      loop: true
+    })
+
     var scene = this;
 
     this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
@@ -139,7 +177,11 @@ export default class extends Phaser.Scene {
         if (enemy.onDestroy !== undefined) enemy.onDestroy()
         enemy.explode(true)
         playerLaser.destroy()
+
         scene.state.kills++;
+        scene.state.score += 1 * scene.state.combo;
+        scene.state.combo++;
+        scene.state.multiplier = 100; // Refill the multiplier
       }
     })
 
@@ -154,9 +196,9 @@ export default class extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
       if (!player.getData("isDead") &&
           !laser.getData("isDead")) {
-        player.explode(false);
-        player.onDestroy();
-        laser.destroy();
+        player.explode(false)
+        player.onDestroy()
+        laser.destroy()
       }
     });
 
@@ -185,6 +227,7 @@ export default class extends Phaser.Scene {
   }
 
   update() {
+
     if (!this.player.getData("isDead")) {
       this.player.update()
 
