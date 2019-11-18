@@ -40,7 +40,7 @@ export default class extends Phaser.Scene {
     })
 
     this.load.spritesheet("ship", "assets/images/ship.png", {
-      frameWidth: 8,
+      frameWidth: 16,
       frameHeight: 24
     })
 
