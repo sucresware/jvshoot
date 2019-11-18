@@ -73,9 +73,10 @@ export default class extends Phaser.Scene {
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    let header = this.add.graphics()
-    header.fillStyle(0x000000)
-    header.fillRect(0, 0, this.game.config.width, 50)
+    let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
+    // let header = this.add.graphics()
+    // header.fillStyle(0x000000)
+    // header.fillRect(0, 0, this.game.config.width, 50)
 
     this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
     this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
