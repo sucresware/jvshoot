@@ -7,38 +7,6 @@ export default class extends Phaser.Scene {
   }
 
   preload () {
-    this.load.bitmapFont('font', './assets/fonts/font.png', './assets/fonts/font.xml')
-
-    this.load.image('logo', 'assets/images/logo.png')
-
-// this.load.image('flare', 'assets/images/flare.png')
-    this.load.spritesheet("flare", "assets/images/flare.png", {
-      frameWidth: 138,
-      frameHeight: 64
-    })
-
-    this.load.image('hap', 'assets/images/hap.png')
-    this.load.image('noel', 'assets/images/noel.png')
-
-    this.load.image("space", "assets/images/space.png")
-
-    this.load.image("laser", "assets/images/laser.png")
-
-    this.load.spritesheet("sprExplosion", "assets/images/boom.png", {
-      frameWidth: 32,
-      frameHeight: 32
-    })
-
-    this.load.spritesheet("ship", "assets/images/ship.png", {
-      frameWidth: 8,
-      frameHeight: 24
-    })
-
-    let bgm = this.load.audio("bgm", "assets/sounds/nebula.mp3")
-
-    this.load.audio("explode", "assets/sounds/explode.wav")
-    this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
-    this.load.audio("laser", "assets/sounds/laser.wav")
   }
 
   create () {
