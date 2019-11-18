@@ -75,9 +75,9 @@ export default class extends Phaser.Scene {
 
     let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
 
-    this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
-    this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
-    this.add.bitmapText(110, 10, 'font', 'COMBO', 8)
+    // this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
+    // this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
+    // this.add.bitmapText(110, 10, 'font', 'COMBO', 8)
 
     this.state = {
       kills: 0,
@@ -89,9 +89,9 @@ export default class extends Phaser.Scene {
     }
 
     this.ui = {
-      kills: this.add.bitmapText(10, 25, 'font', '0', 16),
-      score: this.add.bitmapText(60, 25, 'font', '0', 16),
-      combo: this.add.bitmapText(110, 25, 'font', '0', 16),
+      kills: this.add.bitmapText(this.game.config.width-10, 20, 'font', '0', 16).setOrigin(1, 0),
+      score: this.add.bitmapText(10, 20, 'font', '0', 16),
+      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'font', '0', 16).setOrigin(0.5),
       multiplier: this.add.graphics(),
       hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'font', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
     }
