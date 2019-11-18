@@ -33,6 +33,7 @@ export default class extends Entity {
       this.scene.loops[i].stop()
     }
     this.scene.bgm.stop()
+    this.scene.bgm_mbr.stop()
 
     this.scene.time.addEvent({
       delay: 400,

@@ -74,9 +74,6 @@ export default class extends Phaser.Scene {
     this.playerLasers = this.add.group()
 
     let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
-    // let header = this.add.graphics()
-    // header.fillStyle(0x000000)
-    // header.fillRect(0, 0, this.game.config.width, 50)
 
     this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
     this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
@@ -122,6 +119,11 @@ export default class extends Phaser.Scene {
 
     watch(this.state, "combo", function(){
       that.ui.combo.text = 'X' + that.state.combo;
+
+      if (that.state.combo == 100) {
+        that.bgm.stop()
+        that.bgm_mbr.play('game')
+      }
     })
 
     watch(this.state, "multiplier", function(){
@@ -131,6 +133,11 @@ export default class extends Phaser.Scene {
 
       if (that.state.multiplier <= 0) {
         that.state.combo = 0;
+
+        if (that.state.combo == 0) {
+          that.bgm_mbr.stop()
+          that.bgm.play('game')
+        }
       }
     })
 
@@ -213,17 +220,30 @@ export default class extends Phaser.Scene {
     }
 
     this.bgm = this.sound.add("bgm")
+    this.bgm_mbr = this.sound.add("bgm_mbr")
 
     this.bgm.addMarker({
       name: 'intro',
       start: 9.2,
       duration: 14.7,
-      config: { loop: -1 }
+      config: {
+        loop: -1,
+        volume: 0.4
+      }
     });
 
     this.bgm.addMarker({
       name: 'game',
       start: 38.3,
+      config: {
+        loop: -1,
+        volume: 0.4
+      }
+    });
+
+    this.bgm_mbr.addMarker({
+      name: 'game',
+      start: 34.4,
       config: { loop: -1 }
     });
 

@@ -55,7 +55,8 @@ export default class extends Phaser.Scene {
       this.load.audio("loop_" + i, "assets/sounds/loops/loop_" + i + ".mp3")
     }
 
-    this.load.audio("bgm", "assets/sounds/we_have_accidentally_borrowed_your_votedisk.mp3")
+    this.load.audio("bgm", "assets/sounds/votedisk.mp3")
+    this.load.audio("bgm_mbr", "assets/sounds/votedisk_mbr.mp3")
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
