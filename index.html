@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <title>JVSHOOT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta http-equiv="cleartype" content="on">
 
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: #050710;
+        }
+
+        canvas {
+            border: 1px solid #3D3DAD;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+    </style>
 </head>
 
-<body class="bg-black">
-    <div class="h-screen flex items-center justify-center">
-        <div id="game" class="border border-gray-800 rounded"></div>
-    </div>
-
+<body class="-">
     <script src="dist/vendor.bundle.js"></script>
     <script src="dist/bundle.js"></script>
 </body>

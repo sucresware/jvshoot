@@ -12,7 +12,10 @@ export default {
       fps: 120
     },
   },
-  zoom: 2,
+  scale: {
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   pixelArt: true,
   roundPixels: true,
   parent: 'game'
