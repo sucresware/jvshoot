@@ -13,6 +13,7 @@ var callWatchers = WatchJS.callWatchers;
 
 const EXPECTED_INTRO_KILLS = 3;
 const COMBO_MULTIPLIER = 0.1;
+const GOD = true;
 
 export default class extends Phaser.Scene {
   constructor () {
@@ -84,6 +85,7 @@ export default class extends Phaser.Scene {
       kills: 0,
       score: 0,
       combo: 0,
+      damage: 1,
       multiplier: 0,
       introPhase: true,
     }
@@ -172,15 +174,17 @@ export default class extends Phaser.Scene {
 
     var scene = this;
 
-    this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
+    this.physics.add.overlap(this.playerLasers, this.enemies, function(playerLaser, enemy) {
       if (enemy) {
-        if (enemy.onDestroy !== undefined) enemy.onDestroy()
-        enemy.explode(true)
+        let isDead = enemy.damage(true)
         playerLaser.destroy()
 
-        scene.state.kills++;
-        scene.state.score += 1 * scene.state.combo;
-        scene.state.combo++;
+        if (isDead) {
+          scene.state.kills++;
+          scene.state.score += 1 * scene.state.combo;
+          scene.state.combo++;
+        }
+
         scene.state.multiplier = 100; // Refill the multiplier
       }
     })
@@ -227,7 +231,6 @@ export default class extends Phaser.Scene {
   }
 
   update() {
-
     if (!this.player.getData("isDead")) {
       this.player.update()
 
@@ -243,6 +246,10 @@ export default class extends Phaser.Scene {
         this.player.setData("isShooting", false)
       }
     }
+
+    Phaser.Actions.Call(this.enemies.getChildren(), (entity) => { entity.update(); });
+    Phaser.Actions.Call(this.enemyLasers.getChildren(), (entity) => { entity.update(); });
+    Phaser.Actions.Call(this.playerLasers.getChildren(), (entity) => { entity.update(); });
 
     for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].update()

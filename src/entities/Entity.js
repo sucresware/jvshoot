@@ -2,18 +2,76 @@ import Phaser from 'phaser'
 import axios from 'axios'
 
 export default class extends Phaser.GameObjects.Sprite {
-  constructor (scene, x, y, asset, type) {
+  constructor (scene, x, y, asset, type, health) {
     super(scene, x, y, asset)
 
+    this.asset = asset
     this.scene = scene
     this.scene.add.existing(this)
     this.scene.physics.world.enableBody(this, 0)
+
     this.setData("type", type)
     this.setData("isDead", false)
+
+    if (health) {
+      this.healthBackground = this.scene.add.graphics()
+      this.healthInner = this.scene.add.graphics()
+
+      this.setData("maxHealth", health)
+      this.setData("health", health)
+    } else {
+      this.setData("health", 1)
+    }
+  }
+
+  update() {
+    if (this.healthBackground !== undefined) {
+      this.healthBackground.clear()
+      this.healthInner.clear()
+
+      if (this.getData('health') == this.getData('maxHealth')) return;
+
+      let x = this.x - (this.width / 2);
+      let y = this.y - (this.height / 2) - 6;
+
+      this.healthBackground.fillStyle(0xFFFFFF)
+      this.healthBackground.fillRect(x, y, this.width, 4)
+
+      let percentKilled = this.getData('health') / this.getData('maxHealth') * 100;
+
+      if (percentKilled > 50) {
+        this.healthInner.fillStyle(0x00FF00)
+      } else if (percentKilled > 25) {
+        this.healthInner.fillStyle(0xFFC803)
+      } else {
+        this.healthInner.fillStyle(0xFF0000)
+      }
+
+      this.healthInner.fillRect(x + 1, y + 1, (this.getData('health') * (this.width - 2)) / this.getData('maxHealth'), 2)
+    }
+  }
+
+  damage(canDestroy) {
+    let health = this.getData('health')
+    health -= this.scene.state.damage;
+    this.setData('health', health)
+
+    if (health <= 0) {
+      if (this.onDestroy !== undefined) this.onDestroy()
+      this.explode(canDestroy)
+      return true;
+    }
+
+    return false;
   }
 
   explode(canDestroy) {
     if (!this.getData("isDead")) {
+      if (this.healthBackground !== undefined) {
+        this.healthBackground.destroy()
+        this.healthInner.destroy()
+      }
+
       this.setTexture("explosion")
       this.play("explosion")
 

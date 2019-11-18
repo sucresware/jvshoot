@@ -11,7 +11,7 @@ export default class extends Phaser.Scene {
     this.load.on('progress', (value) => {
         progressBar.clear()
         progressBar.fillStyle(0x3D3DAD, 1)
-        progressBar.fillRect(40, this.game.config.height / 2, (this.game.config.width - 80)* value, 8)
+        progressBar.fillRect(40, this.game.config.height / 2, (this.game.config.width - 80) * value, 8)
     })
 
     this.load.on('complete', () => {
