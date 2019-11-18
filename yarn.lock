@@ -3361,6 +3361,11 @@ md5.js@^1.3.4:
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
 
+melanke-watchjs@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/melanke-watchjs/-/melanke-watchjs-1.5.0.tgz#d82354ae47ed69580e7237644e7043e367534754"
+  integrity sha512-YUQzBucdH5p3s/UPQ0fvYyzqRfyLKTS35Qj5iaVBQ6XYGvvpEX7afR1xi8uUGsTEfFNqDFRrADz9TkVu4/TeXQ==
+
 mem@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/mem/-/mem-4.3.0.tgz#461af497bc4ae09608cdb2e60eefb69bff744178"

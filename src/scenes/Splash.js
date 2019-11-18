@@ -60,10 +60,10 @@ export default class extends Phaser.Scene {
     text = this.add.bitmapText(left, top, 'font', 'BLOOD', 16)
     this.slides.credits.add(text)
     top += 30;
-    text = this.add.bitmapText(left, top, 'font', 'WITH MUSIC FROM', 8)
+    text = this.add.bitmapText(left, top, 'font', 'MUSIC FROM', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', 'SHE', 16)
+    text = this.add.bitmapText(left, top, 'font', 'DUBMOOD', 16)
     this.slides.credits.add(text)
     top += 30;
 

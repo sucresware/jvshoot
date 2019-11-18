@@ -1,12 +1,18 @@
 /* globals __DEV__ */
-import Phaser from 'phaser'
 
+import Phaser from 'phaser'
 import Player from '../entities/Player'
 import ScrollingBackground from '../entities/ScrollingBackground'
 import CarrierShip from '../entities/CarrierShip'
 
-var scoreLoop = 1;
-var lastScoreLoop = 0;
+import WatchJS from 'melanke-watchjs';
+
+var watch = WatchJS.watch;
+var unwatch = WatchJS.unwatch;
+var callWatchers = WatchJS.callWatchers;
+
+const EXPECTED_INTRO_KILLS = 3;
+const COMBO_MULTIPLIER = 0.1;
 
 export default class extends Phaser.Scene {
   constructor () {
@@ -16,6 +22,8 @@ export default class extends Phaser.Scene {
   init () {}
 
   preload () {
+    this.cameras.main.setBackgroundColor(0x000000)
+
     this.anims.create({
       key: "explosion",
       frames: this.anims.generateFrameNumbers("explosion"),
@@ -34,8 +42,8 @@ export default class extends Phaser.Scene {
   create () {
     this.player = new Player(
       this,
-      this.game.config.width * 0.5,
-      this.game.config.height * 0.5,
+      this.game.config.width / 2,
+      this.game.config.height - 120,
       'ship'
     )
 
@@ -54,16 +62,57 @@ export default class extends Phaser.Scene {
       )
     }
 
+    for (let i = 0; i < this.backgrounds.length; i++) {
+      this.backgrounds[i].setAlpha(0)
+    }
+
+    this.backgrounds[0].setAlpha(1)
+
     this.enemies = this.add.group()
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    this.add.bitmapText(3, 2, 'font', 'SCORE', 8)
+    this.add.bitmapText(3, 2, 'font', 'KILLS', 8)
 
-    this.currentGame = {
-      score: 0,
-      scoreElem: this.add.bitmapText(45, 2, 'font', '0', 8)
+    this.state = {
+      kills: 0,
+      combo: 0,
+      introPhase: true,
     }
+
+    this.ui = {
+      kills: this.add.bitmapText(45, 2, 'font', '0', 8),
+      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'font', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
+    }
+
+    this.ui.kills.setDepth(20);
+    this.ui.hero.setDepth(-1);
+
+    var that = this;
+
+    watch(this.state, "kills", function(){
+      that.ui.kills.text = that.state.kills;
+
+      if (that.state.kills <= EXPECTED_INTRO_KILLS) {
+        that.ui.hero.text = EXPECTED_INTRO_KILLS - that.state.kills;
+      }
+
+      if (that.state.kills >= 3) {
+        that.state.introPhase = false;
+      }
+    })
+
+    watch(this.state, "introPhase", function(){
+      if (that.state.introPhase == false) {
+        for (let i = 0; i < that.backgrounds.length; i++) {
+          that.backgrounds[i].setAlpha(1)
+        }
+        that.cameras.main.zoomTo(1, 200);
+        that.cameras.main.setBackgroundColor(0x50710)
+        that.bgm.play('game')
+        that.ui.hero.text = '';
+      }
+    })
 
     this.sfx = {
       explosions: [
@@ -76,11 +125,7 @@ export default class extends Phaser.Scene {
    this.time.addEvent({
       delay: 1000,
       callback: function() {
-        let enemy = new CarrierShip(
-          this,
-          Phaser.Math.Between(0, this.game.config.width),
-          0
-        )
+        let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
         this.enemies.add(enemy)
       },
       callbackScope: this,
@@ -94,8 +139,7 @@ export default class extends Phaser.Scene {
         if (enemy.onDestroy !== undefined) enemy.onDestroy()
         enemy.explode(true)
         playerLaser.destroy()
-        scene.currentGame.score++
-        scene.currentGame.scoreElem.text = scene.currentGame.score
+        scene.state.kills++;
       }
     })
 
@@ -120,6 +164,24 @@ export default class extends Phaser.Scene {
     for (let i = 1; i <= 7; i++) {
       this.loops[i] = this.sound.add("loop_" + i)
     }
+
+    this.bgm = this.sound.add("bgm")
+
+    this.bgm.addMarker({
+      name: 'intro',
+      start: 9.2,
+      duration: 14.7,
+      config: { loop: -1 }
+    });
+
+    this.bgm.addMarker({
+      name: 'game',
+      start: 38.3,
+      config: { loop: -1 }
+    });
+
+    this.cameras.main.setZoom(2);
+    this.bgm.play('intro')
   }
 
   update() {
@@ -141,25 +203,6 @@ export default class extends Phaser.Scene {
 
     for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].update()
-    }
-
-    if (this.currentGame.score >= 0 && this.currentGame.score <= 9) scoreLoop = 1;
-    if (this.currentGame.score >= 10 && this.currentGame.score <= 19) scoreLoop = 2;
-    if (this.currentGame.score >= 20 && this.currentGame.score <= 29) scoreLoop = 3;
-    if (this.currentGame.score >= 30 && this.currentGame.score <= 39) scoreLoop = 4;
-    if (this.currentGame.score >= 40 && this.currentGame.score <= 49) scoreLoop = 5;
-    if (this.currentGame.score >= 50 && this.currentGame.score <= 59) scoreLoop = 6;
-    if (this.currentGame.score >= 60) scoreLoop = 7;
-
-    if (scoreLoop != lastScoreLoop) {
-      let seek = 0
-      if (this.loops[lastScoreLoop]) {
-        seek = this.loops[lastScoreLoop].seek
-        this.loops[lastScoreLoop].stop()
-      }
-
-      this.loops[scoreLoop].play({ loop: -1, seek: seek });
-      lastScoreLoop = scoreLoop;
     }
   }
 }

@@ -23,8 +23,9 @@
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
     "expose-loader": "^0.7.3",
+    "phaser": "^3.0.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "phaser": "^3.0.0"
+    "melanke-watchjs": "^1.5.0"
   }
 }

@@ -37,4 +37,10 @@ export default class {
       }
     }
   }
+
+  setAlpha(alpha) {
+    for (let i = 0; i < this.layers.getChildren().length; i++) {
+      let layer = this.layers.getChildren()[i].setAlpha(alpha);
+    }
+  }
 }
