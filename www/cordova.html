@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: blob:;">
+
     <meta charset="UTF-8">
     <title>JVSHOOT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -23,7 +25,8 @@
 </head>
 
 <body>
-    <script src="dist/vendor.bundle.js"></script>
-    <script src="dist/bundle.js"></script>
+    <script src="dist/vendor.js"></script>
+    <script src="cordova.js"></script>
+    <script src="dist/cordova.js"></script>
 </body>
 </html>

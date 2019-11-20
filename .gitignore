@@ -1,4 +1,10 @@
 node_modules/
-dist/
+www/dist/
 .vscode/
 *.log
+bin/*
+!/plugins
+!/plugins/android.json
+!/plugins/fetch.json
+plugins/*
+platforms/*

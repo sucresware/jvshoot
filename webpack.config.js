@@ -4,15 +4,16 @@ var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: [path.resolve(__dirname, 'src/main.js')],
+    main: [path.resolve(__dirname, 'src/main.js')],
+    cordova: [path.resolve(__dirname, 'src/cordova.js')],
     vendor: ['phaser']
   },
   mode: 'development',
   output: {
     pathinfo: true,
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: './dist/',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'www/dist'),
+    publicPath: './www/dist/',
+    filename: '[name].js'
   },
   watch: true,
   plugins: [
@@ -24,7 +25,7 @@ module.exports = {
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
       server: {
-        baseDir: ['./', './build']
+        baseDir: ['./www']
       }
     })
   ],
