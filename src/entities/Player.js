@@ -15,8 +15,17 @@ export default class extends Entity {
   update() {
     this.body.setVelocity(0);
 
-    this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-    this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+    this.x = Phaser.Math.Clamp(
+      this.x,
+      this.scene.cameras.main.worldView.left,
+      this.scene.cameras.main.worldView.right
+    );
+
+    this.y = Phaser.Math.Clamp(
+      this.y,
+      this.scene.cameras.main.worldView.top,
+      this.scene.cameras.main.worldView.bottom
+    );
 
     if (this.getData("isShooting")) {
       if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
