@@ -15,17 +15,23 @@ export default class extends Entity {
   update() {
     this.body.setVelocity(0);
 
-    this.x = Phaser.Math.Clamp(
-      this.x,
-      this.scene.cameras.main.worldView.left,
-      this.scene.cameras.main.worldView.right
-    );
+    if (this.scene.cameras.main.worldView.right) {
+      this.x = Phaser.Math.Clamp(
+        this.x,
+        this.scene.cameras.main.worldView.left,
+        this.scene.cameras.main.worldView.right
+      );
+    }
 
-    this.y = Phaser.Math.Clamp(
-      this.y,
-      this.scene.cameras.main.worldView.top,
-      this.scene.cameras.main.worldView.bottom
-    );
+    if (this.scene.cameras.main.worldView.bottom) {
+      this.y = Phaser.Math.Clamp(
+        this.y,
+        this.scene.cameras.main.worldView.top,
+        this.scene.cameras.main.worldView.bottom
+      );
+    }
+
+    console.log(this.x, this.y);
 
     if (this.getData("isShooting")) {
       if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
