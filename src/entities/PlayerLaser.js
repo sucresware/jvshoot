@@ -6,4 +6,8 @@ export default class extends Entity {
     super(scene, x, y, "laser");
     this.body.velocity.y = -270;
   }
+
+  update() {
+    if (this.y <= 0) this.destroy()
+  }
 }
