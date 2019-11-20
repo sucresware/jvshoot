@@ -17,7 +17,7 @@ export default class extends Phaser.Scene {
     let explode_alt = this.sound.add("explode_alt")
 
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
-    background.setScale(2)
+    // background.setScale(2)
     background.setAlpha(0)
 
     this.slides = {

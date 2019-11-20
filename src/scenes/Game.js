@@ -59,9 +59,9 @@ export default class extends Phaser.Scene {
     this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
 
     this.backgrounds = [];
-    for (let i = 1; i < 3; i++) {
+    for (let i = 1; i <= 5; i++) {
       this.backgrounds.push(
-        new ScrollingBackground(this, "space", i * 20)
+        new ScrollingBackground(this, "space", i)
       )
     }
 
