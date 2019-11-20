@@ -8,7 +8,7 @@
 
 ## À propos de JVSHOOT
 
-Un space-shooter web réalisé en quelques heures avec [Phaser](https://phaser.io/).
+Un space-shooter web réalisé initialement en quelques heures avec [Phaser](https://phaser.io/).
 
 ## Installation
 
