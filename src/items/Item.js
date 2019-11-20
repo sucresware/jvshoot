@@ -26,7 +26,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
   use() {
   }
 
-  destroy() {
+  delete() {
     // Destroy this shit
     this.destroy()
   }

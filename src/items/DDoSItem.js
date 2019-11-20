@@ -24,11 +24,10 @@ export default class extends Item {
     scene.player.anims.stop()
 
     super.use()
-    this.destroy()
+    this.delete()
   }
 
-  destroy() {
-    super.destroy()
+  delete() {
+    super.delete()
   }
-
 }
