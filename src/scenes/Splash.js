@@ -1,6 +1,11 @@
 const { version } = require('../../package.json');
 import Phaser from 'phaser'
-import Helpers from '../helpers'
+
+import WatchJS from 'melanke-watchjs';
+
+var watch = WatchJS.watch;
+var unwatch = WatchJS.unwatch;
+var callWatchers = WatchJS.callWatchers;
 
 const slideDelay = 2000;
 
@@ -16,17 +21,13 @@ export default class extends Phaser.Scene {
   create () {
     let explode = this.sound.add("explode")
     let explode_alt = this.sound.add("explode_alt")
-
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
     background.setAlpha(0)
 
     this.slides = {
-      intro: this.add.group(),
+      intro: this.add.container(0, 0),
       credits: this.add.container(10, 100),
     }
-
-    this.cameras.main.shake(200, 0.01)
-    explode_alt.play()
 
     // Intro
     let text = this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white_shadow', 'SUCRESWARE', 16).setOrigin(0.5)
@@ -68,13 +69,16 @@ export default class extends Phaser.Scene {
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
     this.input.addPointer(1);
 
+    watch(this.input.pointer1, "isDown", (key, action, value) => value ? this.next(value) : '')
+    watch(this.keySpace, "isDown", (key, action, value) => value ? this.next(value) : '')
+
     this.time.addEvent({
       delay: slideDelay,
       callback: () => {
         this.cameras.main.shake(200, 0.05)
         explode.play()
 
-        Phaser.Actions.SetAlpha(this.slides.intro.getChildren(), 0);
+        this.slides.intro.setAlpha(0);
         this.slides.credits.setAlpha(1);
         background.setAlpha(1)
 
@@ -88,11 +92,12 @@ export default class extends Phaser.Scene {
       callbackScope: this,
       loop: false
     })
+
+    this.cameras.main.shake(200, 0.01)
+    explode_alt.play()
   }
 
-  update () {
-    if (this.keySpace.isDown || this.input.pointer1.isDown) {
-      this.scene.start('MenuScene')
-    }
+  next(value) {
+    this.scene.start('MenuScene');
   }
 }

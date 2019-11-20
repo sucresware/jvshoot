@@ -7,7 +7,6 @@ import CarrierShip from '../entities/CarrierShip'
 import DDoSItem from '../items/DDoSItem'
 
 import WatchJS from 'melanke-watchjs';
-
 var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
