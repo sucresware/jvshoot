@@ -31,18 +31,20 @@ export default class extends Phaser.Scene {
     });
 
     this.bgm.play('intro')
+    this.cameras.main.setZoom(2);
+    this.cameras.main.zoomTo(1, 50);
 
-    let background = this.add.sprite(this.game.config.width / 2, this.game.config.height/2, 'space')
-    background.setScale(2)
 
-    let logo = this.add.sprite(this.game.config.width / 2, 150, 'logo')
-    let flare = this.add.sprite(this.game.config.width / 2, 150, 'flare')
+    let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
 
-    var tween = this.tweens.add({
-        targets: [
-          logo, flare
-        ],
-        y: 150 - 5,
+    let top = 170;
+
+    let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(1.4)
+    let flare = this.add.sprite(this.game.config.width / 2, top, 'flare').setScale(1.4)
+
+    tween = this.tweens.add({
+        targets: [ logo, flare ],
+        y: top - 5,
         duration: 2000,
         ease: 'Sine.easeInOut',
         repeat: -1,
@@ -50,6 +52,8 @@ export default class extends Phaser.Scene {
         hold: 500,
         yoyo: true,
     });
+
+    top += 50;
 
     this.anims.create({
       key: "flare",
@@ -67,11 +71,21 @@ export default class extends Phaser.Scene {
       loop: true
     });
 
-    this.add.bitmapText(this.game.config.width / 2, 200, 'white', 'PRESS SPACE TO START', 8).setOrigin(0.5)
-    this.add.bitmapText(this.game.config.width / 2, 250, 'white', 'HIGH SCORE: 0', 8).setOrigin(0.5)
+    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'PRESS SPACE TO START', 8).setOrigin(0.5)
 
-    let padding = 5;
-    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - padding, 'white', 'V' + version + ' COPYRIGHT 2019 SUCRESWARE', 4).setOrigin(.5, 1)
+    var tween = this.tweens.add({
+        targets: [ start ],
+        alpha: 0,
+        duration: 0,
+        ease: 'Sine.easeInOut',
+        repeat: -1,
+        repeatDelay: 1000,
+        hold: 1000,
+        yoyo: true,
+    });
+
+    top += 15;
+    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version + ' © 2019 SUCRESWARE', 8).setOrigin(0.5)
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
   }
