@@ -31,8 +31,6 @@ export default class extends Entity {
       );
     }
 
-    console.log(this.x, this.y);
-
     if (this.getData("isShooting")) {
       if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
         this.setData("timerShootTick", this.getData("timerShootTick") + 1); // Every game update, increase timerShootTick by one until we reach the value of timerShootDelay
@@ -72,16 +70,21 @@ export default class extends Entity {
   }
 
   onDestroy() {
+    this.scene.ui.hero.text = "OVER"
     this.scene.bgm.stop()
     this.scene.bgm_mbr.stop()
 
+    // Kill all ennemies
     this.scene.time.addEvent({
       delay: 400,
-      callback: function() {
-        this.scene.scene.start("MenuScene");
-      },
+      callback: () => Phaser.Actions.Call(this.scene.enemies.getChildren(), (entity) => { entity.explode(true); }),
       callbackScope: this,
-      loop: false
+    })
+
+    this.scene.time.addEvent({
+      delay: 800,
+      callback: () => this.scene.scene.start("MenuScene"),
+      callbackScope: this,
     });
   }
 }
