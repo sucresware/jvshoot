@@ -4,6 +4,7 @@ import Phaser from 'phaser'
 import Player from '../entities/Player'
 import ScrollingBackground from '../entities/ScrollingBackground'
 import CarrierShip from '../entities/CarrierShip'
+import DDoSItem from '../items/DDoSItem'
 
 import WatchJS from 'melanke-watchjs';
 
@@ -55,6 +56,7 @@ export default class extends Phaser.Scene {
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
 
     this.backgrounds = [];
     for (let i = 1; i < 3; i++) {
@@ -70,6 +72,7 @@ export default class extends Phaser.Scene {
     this.backgrounds[0].setAlpha(1)
 
     this.enemies = this.add.group()
+    this.items = this.add.group()
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
@@ -110,6 +113,10 @@ export default class extends Phaser.Scene {
 
       if (that.state.kills >= 3) {
         that.state.introPhase = false;
+      }
+
+      if (that.state.kills == 10) {
+        that.items.add(new DDoSItem(that))
       }
     })
 
@@ -168,17 +175,17 @@ export default class extends Phaser.Scene {
       callback: function() {
         if (this.state.combo >= 50) {
           if (Phaser.Math.Between(0, 10) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
             this.enemies.add(enemy)
           }
         } else if (this.state.combo >= 15) {
           if (Phaser.Math.Between(0, 30) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
             this.enemies.add(enemy)
           }
         } else {
           if (Phaser.Math.Between(0, 50) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 0)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
             this.enemies.add(enemy)
           }
         }
@@ -210,6 +217,16 @@ export default class extends Phaser.Scene {
         }
 
         scene.state.multiplier = 100; // Refill the multiplier
+      }
+    })
+
+    this.physics.add.overlap(this.player, this.items, function(player, item) {
+
+
+      if (!player.getData("isDead")) {
+        // Search for other active items
+        // Destroy them then pickup
+        item.pickup()
       }
     })
 
@@ -277,9 +294,15 @@ export default class extends Phaser.Scene {
         this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1)
         this.player.setData("isShooting", false)
       }
+
+      if (this.keyEnter.isDown) {
+        console.log(this.items.getChildren())
+        // Loop on the array, search for the current pickup, use it
+      }
     }
 
     Phaser.Actions.Call(this.enemies.getChildren(), (entity) => { entity.update(); });
+    Phaser.Actions.Call(this.items.getChildren(), (entity) => { entity.update(); });
     Phaser.Actions.Call(this.enemyLasers.getChildren(), (entity) => { entity.update(); });
     Phaser.Actions.Call(this.playerLasers.getChildren(), (entity) => { entity.update(); });
 

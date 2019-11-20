@@ -12,6 +12,34 @@ export default class extends Entity {
     this.setData("timerShootTick", this.getData("timerShootDelay") - 1)
   }
 
+  update() {
+    this.body.setVelocity(0);
+
+    this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
+    this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+
+    if (this.getData("isShooting")) {
+      if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
+        this.setData("timerShootTick", this.getData("timerShootTick") + 1); // Every game update, increase timerShootTick by one until we reach the value of timerShootDelay
+      } else { // When the "manual timer" is triggered:
+        if (this.scene.state.combo >= 50) {
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 8, this.y))
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 4, this.y))
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 4, this.y))
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 8, this.y))
+        } else if (this.scene.state.combo >= 15) {
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 4, this.y))
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 4, this.y))
+        } else {
+          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x, this.y))
+        }
+
+        this.scene.sfx.laser.play()
+        this.setData("timerShootTick", 0);
+      }
+    }
+  }
+
   moveUp() {
     this.body.setVelocityY(-this.getData("speed"))
   }
@@ -40,33 +68,5 @@ export default class extends Entity {
       callbackScope: this,
       loop: false
     });
-  }
-
-  update() {
-    this.body.setVelocity(0);
-
-    this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-    this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
-
-    if (this.getData("isShooting")) {
-      if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
-        this.setData("timerShootTick", this.getData("timerShootTick") + 1); // Every game update, increase timerShootTick by one until we reach the value of timerShootDelay
-      } else { // When the "manual timer" is triggered:
-        if (this.scene.state.combo >= 50) {
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 8, this.y))
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 4, this.y))
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 4, this.y))
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 8, this.y))
-        } else if (this.scene.state.combo >= 15) {
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x - 4, this.y))
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x + 4, this.y))
-        } else {
-          this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x, this.y))
-        }
-
-        this.scene.sfx.laser.play()
-        this.setData("timerShootTick", 0);
-      }
-    }
   }
 }

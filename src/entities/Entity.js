@@ -1,5 +1,4 @@
 import Phaser from 'phaser'
-import axios from 'axios'
 
 export default class extends Phaser.GameObjects.Sprite {
   constructor (scene, x, y, asset, type, health) {

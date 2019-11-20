@@ -11,6 +11,15 @@ export default class {
     this.createLayers();
   }
 
+  update() {
+    if (this.layers.getChildren()[0].y > 0) {
+      for (let i = 0; i < this.layers.getChildren().length; i++) {
+        let layer = this.layers.getChildren()[i];
+        layer.y = (-layer.displayHeight) + (layer.displayHeight * i);
+      }
+    }
+  }
+
   createLayers() {
     for (let i = 0; i < 2; i++) {
       // Creating two backgrounds will allow a continuous flow giving the illusion that they are moving.
@@ -26,15 +35,6 @@ export default class {
       layer.body.velocity.y = this.velocityY;
 
       this.layers.add(layer);
-    }
-  }
-
-  update() {
-    if (this.layers.getChildren()[0].y > 0) {
-      for (let i = 0; i < this.layers.getChildren().length; i++) {
-        let layer = this.layers.getChildren()[i];
-        layer.y = (-layer.displayHeight) + (layer.displayHeight * i);
-      }
     }
   }
 
