@@ -19,8 +19,8 @@ export default class extends Phaser.Scene {
         progressBox.destroy()
     })
 
-    let progressBar = this.add.graphics()
     let progressBox = this.add.graphics()
+    let progressBar = this.add.graphics()
     progressBox.fillStyle(0x050710, 1)
     progressBox.fillRect(40, this.game.config.height / 2, this.game.config.width - 80, 8)
 
