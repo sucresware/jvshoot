@@ -1,5 +1,6 @@
 const { version } = require('../../package.json');
 import Phaser from 'phaser'
+import Helpers from '../helpers'
 
 const slideDelay = 2000;
 
@@ -21,7 +22,7 @@ export default class extends Phaser.Scene {
 
     this.slides = {
       intro: this.add.group(),
-      credits: this.add.group(),
+      credits: this.add.container(10, 100),
     }
 
     this.cameras.main.shake(200, 0.01)
@@ -32,41 +33,40 @@ export default class extends Phaser.Scene {
     this.slides.intro.add(text);
 
     // Credits
-    let left = 20;
-    let top = 110;
+    let top = 0;
 
-    text = this.add.bitmapText(left, top, 'white', 'THIS IS ANOTHER', 8)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'THIS IS ANOTHER', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'white', 'OPEN-SOURCE PROJECT FROM', 8)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'OPEN-SOURCE PROJECT', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'white_shadow', '4SUCRES.ORG', 16)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'FROM 4SUCRES.ORG', 8)
     this.slides.credits.add(text)
     top += 60;
 
-    text = this.add.bitmapText(left, top, 'indigo', 'DEVELOPED BY', 8)
+    text = this.add.bitmapText(0, top, 'indigo', 'DEVELOPED BY', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'white_shadow', 'MGK', 16)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'MGK', 16)
     this.slides.credits.add(text)
     top += 30;
-    text = this.add.bitmapText(left, top, 'indigo', 'DESIGNED BY', 8)
+    text = this.add.bitmapText(0, top, 'indigo', 'DESIGNED BY', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'white_shadow', 'BLOOD', 16)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'BLOOD', 16)
     this.slides.credits.add(text)
     top += 30;
-    text = this.add.bitmapText(left, top, 'indigo', 'MUSIC FROM', 8)
+    text = this.add.bitmapText(0, top, 'indigo', 'MUSIC FROM', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'white_shadow', 'DUBMOOD', 16)
+    text = this.add.bitmapText(0, top, 'white_shadow', 'DUBMOOD', 16)
     this.slides.credits.add(text)
-    // top += 30;
 
-    Phaser.Actions.SetAlpha(this.slides.credits.getChildren(), 0);
+    this.slides.credits.setAlpha(0);
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    this.input.addPointer(1);
 
     this.time.addEvent({
       delay: slideDelay,
@@ -75,7 +75,7 @@ export default class extends Phaser.Scene {
         explode.play()
 
         Phaser.Actions.SetAlpha(this.slides.intro.getChildren(), 0);
-        Phaser.Actions.SetAlpha(this.slides.credits.getChildren(), 1);
+        this.slides.credits.setAlpha(1);
         background.setAlpha(1)
 
         this.time.addEvent({
@@ -89,8 +89,9 @@ export default class extends Phaser.Scene {
       loop: false
     })
   }
+
   update () {
-    if (this.keySpace.isDown) {
+    if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.scene.start('MenuScene')
     }
   }

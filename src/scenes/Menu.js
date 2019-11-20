@@ -34,13 +34,12 @@ export default class extends Phaser.Scene {
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
-
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
 
     let top = 170;
 
-    let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(1.4)
-    let flare = this.add.sprite(this.game.config.width / 2, top, 'flare').setScale(1.4)
+    let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(1.2)
+    let flare = this.add.sprite(this.game.config.width / 2, top, 'flare').setScale(1.2)
 
     tween = this.tweens.add({
         targets: [ logo, flare ],
@@ -71,7 +70,8 @@ export default class extends Phaser.Scene {
       loop: true
     });
 
-    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'PRESS SPACE TO START', 8).setOrigin(0.5)
+    let label = window.mobile ? 'TOUCH TO START' : 'PRESS SPACE TO START'
+    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', label, 8).setOrigin(0.5)
 
     var tween = this.tweens.add({
         targets: [ start ],
@@ -85,12 +85,15 @@ export default class extends Phaser.Scene {
     });
 
     top += 15;
-    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version + ' © 2019 SUCRESWARE', 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', '© 2019 SUCRESWARE', 8).setOrigin(0.5)
+    top += 15;
+    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version, 8).setOrigin(0.5)
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    this.input.addPointer(1);
   }
   update () {
-    if (this.keySpace.isDown) {
+    if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.bgm.stop()
       this.scene.start('GameScene')
     }

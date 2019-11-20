@@ -17,6 +17,5 @@ export default {
       autoCenter: Phaser.Scale.CENTER_BOTH
   },
   pixelArt: true,
-  roundPixels: true,
-  parent: 'game'
+  roundPixels: true
 }

@@ -53,6 +53,7 @@ export default class extends Phaser.Scene {
 
     this.player.play('ship')
 
+    this.input.addPointer(2);
     this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
     this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
@@ -67,8 +68,10 @@ export default class extends Phaser.Scene {
       )
     }
 
-    for (let i = 0; i < this.backgrounds.length - 1; i++) {
-      this.backgrounds[i].setAlpha(0)
+    if (!window.mobile) {
+      for (let i = 0; i < this.backgrounds.length - 1; i++) {
+        this.backgrounds[i].setAlpha(0)
+      }
     }
 
     this.enemies = this.add.group()
@@ -272,13 +275,19 @@ export default class extends Phaser.Scene {
       config: { loop: -1 }
     });
 
-    this.cameras.main.setZoom(2);
-    // this.player.x = this.game.config.width / 2
-    // this.player.y = this.game.config.height - 120
-    this.bgm.play('intro')
+    if (!window.mobile) {
+      this.cameras.main.setZoom(2);
+      this.bgm.play('intro')
+    }
   }
 
   update() {
+    if (window.mobile) {
+      if (this.input.pointer1.isDown) {
+        this.player.x = this.input.pointer1.x
+        this.player.y = this.input.pointer1.y - 25
+      }
+    }
     if (!this.player.getData("isDead")) {
       this.player.update()
 
@@ -287,7 +296,10 @@ export default class extends Phaser.Scene {
       if (this.keyQ.isDown) this.player.moveLeft()
       else if (this.keyD.isDown) this.player.moveRight()
 
-      if (this.keySpace.isDown) {
+      if (
+        (this.keySpace.isDown
+        || (this.input.pointer1.isDown && this.input.pointer2.isDown))
+      ) {
         this.player.setData("isShooting", true)
       } else {
         this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1)

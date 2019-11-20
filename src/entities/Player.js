@@ -8,7 +8,7 @@ export default class extends Entity {
 
     this.setData("speed", 200)
     this.setData("isShooting", false)
-    this.setData("timerShootDelay", 10)
+    this.setData("timerShootDelay", 15)
     this.setData("timerShootTick", this.getData("timerShootDelay") - 1)
   }
 
