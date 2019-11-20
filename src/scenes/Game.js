@@ -25,6 +25,8 @@ export default class extends Phaser.Scene {
 
   preload () {
     this.cameras.main.setBackgroundColor(0x000000)
+    // let border = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, 0x000000, 0).setOrigin(0);
+    // border.setStrokeStyle(2, 0x3D3DAD);
 
     this.anims.create({
       key: "explosion",
@@ -65,22 +67,19 @@ export default class extends Phaser.Scene {
       )
     }
 
-    for (let i = 0; i < this.backgrounds.length; i++) {
+    for (let i = 0; i < this.backgrounds.length - 1; i++) {
       this.backgrounds[i].setAlpha(0)
     }
-
-    this.backgrounds[0].setAlpha(1)
 
     this.enemies = this.add.group()
     this.items = this.add.group()
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
-
-    // this.add.bitmapText(10, 10, 'white', 'KILLS', 8)
-    // this.add.bitmapText(60, 10, 'white', 'SCORE', 8)
-    // this.add.bitmapText(110, 10, 'white', 'COMBO', 8)
+    // let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
+    this.add.bitmapText(10, 10, 'indigo', 'KILLS', 8)
+    this.add.bitmapText(60, 10, 'indigo', 'SCORE', 8)
+    this.add.bitmapText(110, 10, 'indigo', 'COMBO', 8)
 
     this.state = {
       kills: 0,
@@ -92,11 +91,11 @@ export default class extends Phaser.Scene {
     }
 
     this.ui = {
-      kills: this.add.bitmapText(this.game.config.width-10, 20, 'white', '0', 16).setOrigin(1, 0),
-      score: this.add.bitmapText(10, 20, 'white', '0', 16),
-      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'white', '0', 16).setOrigin(0.5),
+      kills: this.add.bitmapText(this.game.config.width-10, 20, 'white_shadow', '0', 16).setOrigin(1, 0),
+      score: this.add.bitmapText(10, 20, 'white_shadow', '0', 16),
+      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'white_shadow', '0', 16).setOrigin(0.5),
       multiplier: this.add.graphics(),
-      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
+      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white_shadow', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
     }
 
     this.ui.kills.setDepth(20);
@@ -153,7 +152,7 @@ export default class extends Phaser.Scene {
     watch(this.state, "introPhase", function(){
       if (that.state.introPhase == false) {
         for (let i = 0; i < that.backgrounds.length; i++) {
-          that.backgrounds[i].setAlpha(1)
+          that.backgrounds[i].resetAlpha()
         }
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
@@ -175,17 +174,17 @@ export default class extends Phaser.Scene {
       callback: function() {
         if (this.state.combo >= 50) {
           if (Phaser.Math.Between(0, 10) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
             this.enemies.add(enemy)
           }
         } else if (this.state.combo >= 15) {
           if (Phaser.Math.Between(0, 30) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
             this.enemies.add(enemy)
           }
         } else {
-          if (Phaser.Math.Between(0, 50) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), 50)
+          if (Phaser.Math.Between(0, 40) == 1) {
+            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
             this.enemies.add(enemy)
           }
         }
@@ -221,8 +220,6 @@ export default class extends Phaser.Scene {
     })
 
     this.physics.add.overlap(this.player, this.items, function(player, item) {
-
-
       if (!player.getData("isDead")) {
         // Search for other active items
         // Destroy them then pickup
@@ -276,6 +273,8 @@ export default class extends Phaser.Scene {
     });
 
     this.cameras.main.setZoom(2);
+    // this.player.x = this.game.config.width / 2
+    // this.player.y = this.game.config.height - 120
     this.bgm.play('intro')
   }
 
