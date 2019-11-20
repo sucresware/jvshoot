@@ -75,9 +75,9 @@ export default class extends Phaser.Scene {
 
     let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
 
-    // this.add.bitmapText(10, 10, 'font', 'KILLS', 8)
-    // this.add.bitmapText(60, 10, 'font', 'SCORE', 8)
-    // this.add.bitmapText(110, 10, 'font', 'COMBO', 8)
+    // this.add.bitmapText(10, 10, 'white', 'KILLS', 8)
+    // this.add.bitmapText(60, 10, 'white', 'SCORE', 8)
+    // this.add.bitmapText(110, 10, 'white', 'COMBO', 8)
 
     this.state = {
       kills: 0,
@@ -89,11 +89,11 @@ export default class extends Phaser.Scene {
     }
 
     this.ui = {
-      kills: this.add.bitmapText(this.game.config.width-10, 20, 'font', '0', 16).setOrigin(1, 0),
-      score: this.add.bitmapText(10, 20, 'font', '0', 16),
-      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'font', '0', 16).setOrigin(0.5),
+      kills: this.add.bitmapText(this.game.config.width-10, 20, 'white', '0', 16).setOrigin(1, 0),
+      score: this.add.bitmapText(10, 20, 'white', '0', 16),
+      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'white', '0', 16).setOrigin(0.5),
       multiplier: this.add.graphics(),
-      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'font', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
+      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
     }
 
     this.ui.kills.setDepth(20);
@@ -182,9 +182,6 @@ export default class extends Phaser.Scene {
             this.enemies.add(enemy)
           }
         }
-
-
-
       },
       callbackScope: this,
       loop: true
@@ -233,13 +230,8 @@ export default class extends Phaser.Scene {
       }
     });
 
-    this.loops = [];
-    for (let i = 1; i <= 7; i++) {
-      this.loops[i] = this.sound.add("loop_" + i)
-    }
-
-    this.bgm = this.sound.add("bgm")
-    this.bgm_mbr = this.sound.add("bgm_mbr")
+    this.bgm = this.sound.add("votedisk")
+    this.bgm_mbr = this.sound.add("votedisk_mbr")
 
     this.bgm.addMarker({
       name: 'intro',

@@ -29,43 +29,41 @@ export default class extends Phaser.Scene {
     explode_alt.play()
 
     // Intro
-
-    let text = this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'font', '4SUCRES.ORG', 16).setOrigin(0.5)
+    let text = this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white_shadow', 'SUCRESWARE', 16).setOrigin(0.5)
     this.slides.intro.add(text);
 
     // Credits
-
     let left = 20;
     let top = 110;
 
-    text = this.add.bitmapText(left, top, 'font', 'THIS IS ANOTHER', 8)
+    text = this.add.bitmapText(left, top, 'white', 'THIS IS ANOTHER', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', 'OPEN-SOURCE PROJECT FROM', 8)
+    text = this.add.bitmapText(left, top, 'white', 'OPEN-SOURCE PROJECT FROM', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', '4SUCRES.ORG', 16)
+    text = this.add.bitmapText(left, top, 'white_shadow', '4SUCRES.ORG', 16)
     this.slides.credits.add(text)
     top += 60;
 
-    text = this.add.bitmapText(left, top, 'font', 'DEVELOPED BY', 8)
+    text = this.add.bitmapText(left, top, 'indigo', 'DEVELOPED BY', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', 'MGK', 16)
+    text = this.add.bitmapText(left, top, 'white_shadow', 'MGK', 16)
     this.slides.credits.add(text)
     top += 30;
-    text = this.add.bitmapText(left, top, 'font', 'DESIGNED BY', 8)
+    text = this.add.bitmapText(left, top, 'indigo', 'DESIGNED BY', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', 'BLOOD', 16)
+    text = this.add.bitmapText(left, top, 'white_shadow', 'BLOOD', 16)
     this.slides.credits.add(text)
     top += 30;
-    text = this.add.bitmapText(left, top, 'font', 'MUSIC FROM', 8)
+    text = this.add.bitmapText(left, top, 'indigo', 'MUSIC FROM', 8)
     this.slides.credits.add(text)
     top += 15;
-    text = this.add.bitmapText(left, top, 'font', 'DUBMOOD', 16)
+    text = this.add.bitmapText(left, top, 'white_shadow', 'DUBMOOD', 16)
     this.slides.credits.add(text)
-    top += 30;
+    // top += 30;
 
     Phaser.Actions.SetAlpha(this.slides.credits.getChildren(), 0);
 

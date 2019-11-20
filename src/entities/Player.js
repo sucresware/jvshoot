@@ -29,9 +29,6 @@ export default class extends Entity {
   }
 
   onDestroy() {
-    for (let i = 1; i <= 7; i++) {
-      this.scene.loops[i].stop()
-    }
     this.scene.bgm.stop()
     this.scene.bgm_mbr.stop()
 

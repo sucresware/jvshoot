@@ -1,0 +1,12 @@
+http://kvazars.com/littera/
+
+Glyphs:
+
+0123456789
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+ÀÇÈÉÊË
+!?"'@#%&()*+,.-_[]{}|~©®
+
+Font: Press Start 2P (Dafont)
+Size: 8
+Stroke: Disabled

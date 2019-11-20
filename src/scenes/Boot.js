@@ -25,9 +25,14 @@ export default class extends Phaser.Scene {
     progressBox.fillRect(40, this.game.config.height / 2, this.game.config.width - 80, 8)
 
     // Fonts
-    this.load.bitmapFont('font', './assets/fonts/font.png', './assets/fonts/font.xml')
+    let fonts = ['white', 'indigo', 'orange', 'red', 'green'];
+    fonts.forEach(font => {
+      this.load.bitmapFont(font, './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
+      this.load.bitmapFont(font + '_shadow', './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
+    })
 
     // Images
+    this.load.image('4sucres', 'assets/images/4sucres.png')
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
     this.load.image('noel', 'assets/images/noel.png')
@@ -51,12 +56,9 @@ export default class extends Phaser.Scene {
     })
 
     // Sounds
-    for (let i = 1; i <= 7; i++) {
-      this.load.audio("loop_" + i, "assets/sounds/loops/loop_" + i + ".mp3")
-    }
-
-    this.load.audio("bgm", "assets/sounds/votedisk.mp3")
-    this.load.audio("bgm_mbr", "assets/sounds/votedisk_mbr.mp3")
+    this.load.audio("votedisk", "assets/sounds/votedisk.mp3")
+    this.load.audio("votedisk_mbr", "assets/sounds/votedisk_mbr.mp3")
+    this.load.audio("the_scene_is_dead", "assets/sounds/the_scene_is_dead.mp3")
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
