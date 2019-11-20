@@ -28,15 +28,15 @@ export default class extends Phaser.Scene {
     let fonts = ['white', 'indigo', 'orange', 'red', 'green'];
     fonts.forEach(font => {
       this.load.bitmapFont(font, './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
-      this.load.bitmapFont(font + '_shadow', './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
+      this.load.bitmapFont(font + '_shadow', './assets/fonts/' + font + '_shadow.png', './assets/fonts/' + font + '_shadow.xml')
     })
 
     // Images
+    this.load.image("space", "assets/images/space.png")
     this.load.image('4sucres', 'assets/images/4sucres.png')
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
     this.load.image('noel', 'assets/images/noel.png')
-    this.load.image("space", "assets/images/space.png")
     this.load.image("laser", "assets/images/laser.png")
     this.load.image("scoreboard", "assets/images/scoreboard.png")
     this.load.image("computer", "assets/images/computer.png")
