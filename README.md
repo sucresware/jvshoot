@@ -8,15 +8,15 @@
 
 ## À propos de JVSHOOT
 
-Un space-shooter web réalisé initialement en quelques heures avec [Phaser](https://phaser.io/).
+Un space-shooter web dans l'univers JVlike, réalisé avec le moteur [Phaser](https://phaser.io/).
 
 ## Développement
 
 ```
 git clone https://github.com/4sucres/jvshoot.git
 cd jvshoot
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 Un onglet de navigateur sera ouvert sur un serveur local à l'adresse http://localhost:3000
@@ -25,7 +25,8 @@ Un onglet de navigateur sera ouvert sur un serveur local à l'adresse http://loc
 
 ```
 npm install -g cordova
-cordova platform add android
+cordova platform rm android
+cordova platform add android # Generates build files
 cordova run android
 ```
 
@@ -34,3 +35,5 @@ cordova run android
 https://github.com/lean/phaser-es6-webpack
 
 https://github.com/jaredyork/CoursePhaser3SpaceShooter
+
+https://cordova.apache.org/
