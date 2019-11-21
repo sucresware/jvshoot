@@ -11,7 +11,7 @@ let gameConfig = Object.assign(config, {
   scene: [BootScene, SplashScene, MenuScene, GameScene]
 })
 
-export default class Game extends Phaser.Game {
+export default class MainGame extends Phaser.Game {
   constructor (appendConfig) {
     if (appendConfig) gameConfig = {...gameConfig, ...appendConfig }
     super(gameConfig)

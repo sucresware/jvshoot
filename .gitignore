@@ -8,3 +8,4 @@ bin/*
 !/plugins/fetch.json
 plugins/*
 platforms/*
+deploy.config.php

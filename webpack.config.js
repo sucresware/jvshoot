@@ -15,7 +15,6 @@ module.exports = {
     publicPath: './www/dist/',
     filename: '[name].js'
   },
-  watch: true,
   plugins: [
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),

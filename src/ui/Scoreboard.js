@@ -1,10 +1,10 @@
 import Phaser from 'phaser'
-import Game from '../Game'
 
 import WatchJS from 'melanke-watchjs';
 var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 
+// TODO: Use ../Game constant
 const EXPECTED_INTRO_KILLS = 3;
 
 export default class {

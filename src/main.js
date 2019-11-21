@@ -1,3 +1,3 @@
-import Game from './Game'
+import MainGame from './MainGame'
 
-window.game = new Game()
+window.game = new MainGame()

@@ -30,6 +30,14 @@ cordova platform add android # Generates build files
 cordova run android
 ```
 
+## Déploiement avec Deployer
+
+[Deployer](https://deployer.org/) est pré-configuré au sein du projet pour permettre une mise en ligne rapide de la dernière version du jeu.
+
+```
+dep deploy
+```
+
 ## Credits
 
 https://github.com/lean/phaser-es6-webpack

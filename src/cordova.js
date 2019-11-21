@@ -1,4 +1,4 @@
-import Game from './Game'
+import MainGame from './MainGame'
 import config from './config'
 
 document.addEventListener('deviceready', () => {
@@ -6,7 +6,7 @@ document.addEventListener('deviceready', () => {
     let width = window.innerWidth / scaleFactor;
 
     window.mobile = true;
-    window.game = new Game({
+    window.game = new MainGame({
         type: Phaser.CANVAS,
         width: width,
         zoom: scaleFactor

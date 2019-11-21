@@ -5,8 +5,8 @@
   "author": "MGK <sr@mgk.dev>",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
-    "deploy": ""
+    "start": "webpack --watch",
+    "build": "webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
