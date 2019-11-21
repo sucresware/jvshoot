@@ -10,6 +10,14 @@ set('application', 'JVSHOOT');
 set('repository', 'https://github.com/4sucres/jvshoot.git');
 set('git_tty', false);
 
+task('android:build', function () {
+    run('cordova build android');
+})->local();
+
+task('upload:apk', function () {
+    upload("./platforms/android/app/build/outputs/apk/debug/app-debug.apk", '{{release_path}}/www');
+});
+
 // recipe/npm.php
 
 set('bin/npm', function () {
@@ -26,10 +34,6 @@ task('npm:build', function () {
     run("cd {{release_path}} && {{bin/npm}} run build");
 });
 
-task('upload', function () {
-    upload('www/', '{{release_path}}/www');
-});
-
 // Tasks
 desc('Deploy your project');
 task('deploy', [
@@ -37,7 +41,6 @@ task('deploy', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
-    // 'upload',
     'deploy:update_code',
     'npm:install',
     'npm:build',
@@ -49,3 +52,11 @@ task('deploy', [
 ]);
 
 after('deploy:failed', 'deploy:unlock');
+
+desc('Deploy apk');
+task('deploy:apk', [
+    'npm:build',
+    'android:build',
+    'upload:apk',
+    'success'
+]);
