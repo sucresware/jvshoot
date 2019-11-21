@@ -25,8 +25,6 @@ export default class extends Phaser.Scene {
 
   preload () {
     this.cameras.main.setBackgroundColor(0x000000)
-    // let border = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, 0x000000, 0).setOrigin(0);
-    // border.setStrokeStyle(2, 0x3D3DAD);
 
     this.anims.create({
       key: "explosion",
@@ -68,7 +66,7 @@ export default class extends Phaser.Scene {
       )
     }
 
-    for (let i = 0; i < this.backgrounds.length - 1; i++) {
+    for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].setAlpha(0, 0)
     }
 
@@ -76,11 +74,6 @@ export default class extends Phaser.Scene {
     this.items = this.add.group()
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
-
-    // let header = this.add.sprite(0, 0, 'scoreboard').setOrigin(0);
-    this.add.bitmapText(10, 10, 'indigo', 'KILLS', 8)
-    this.add.bitmapText(60, 10, 'indigo', 'SCORE', 8)
-    this.add.bitmapText(110, 10, 'indigo', 'COMBO', 8)
 
     this.state = {
       kills: 0,
@@ -91,26 +84,10 @@ export default class extends Phaser.Scene {
       introPhase: true,
     }
 
-    this.ui = {
-      kills: this.add.bitmapText(this.game.config.width-10, 20, 'white_shadow', '0', 16).setOrigin(1, 0),
-      score: this.add.bitmapText(10, 20, 'white_shadow', '0', 16),
-      combo: this.add.bitmapText(this.game.config.width / 2, this.game.config.height -20, 'white_shadow', '0', 16).setOrigin(0.5),
-      multiplier: this.add.graphics(),
-      hero: this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white_shadow', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
-    }
-
-    this.ui.kills.setDepth(20);
-    this.ui.hero.setDepth(-1);
+    this.scoreboard = new Scoreboard(this);
 
     var that = this;
-
     watch(this.state, "kills", function(){
-      that.ui.kills.text = that.state.kills;
-
-      if (that.state.kills <= EXPECTED_INTRO_KILLS) {
-        that.ui.hero.text = EXPECTED_INTRO_KILLS - that.state.kills;
-      }
-
       if (that.state.kills >= 3) {
         that.state.introPhase = false;
       }
@@ -120,13 +97,7 @@ export default class extends Phaser.Scene {
       }
     })
 
-    watch(this.state, "score", function(){
-      that.ui.score.text = that.state.score;
-    })
-
     watch(this.state, "combo", function(attribute, action, newValue, oldValue){
-      that.ui.combo.text = 'X' + that.state.combo;
-
       if (that.state.combo == 100) {
         that.bgm.stop()
         that.bgm_mbr.play('game')
@@ -141,10 +112,6 @@ export default class extends Phaser.Scene {
     })
 
     watch(this.state, "multiplier", function(){
-      that.ui.multiplier.clear()
-      that.ui.multiplier.fillStyle(0x3D3DAD)
-      that.ui.multiplier.fillRect(0, 0, (that.state.multiplier * that.game.config.width) / 100, 6)
-
       if (that.state.multiplier <= 0) {
         that.state.combo = 0;
       }
@@ -154,11 +121,11 @@ export default class extends Phaser.Scene {
       if (that.state.introPhase == false) {
         for (let i = 0; i < that.backgrounds.length; i++) {
           that.backgrounds[i].resetAlpha(1000)
+          that.scoreboard.showUI()
         }
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
         that.bgm.play('game')
-        that.ui.hero.text = '';
       }
     })
 
@@ -275,8 +242,9 @@ export default class extends Phaser.Scene {
 
     if (!window.mobile) {
       this.cameras.main.setZoom(2);
-      this.bgm.play('intro')
     }
+
+    this.bgm.play('intro')
   }
 
   update() {

@@ -70,7 +70,7 @@ export default class extends Entity {
   }
 
   onDestroy() {
-    this.scene.ui.hero.text = "OVER"
+    this.scene.scoreboard.ui.hero.text = "OVER"
     this.scene.bgm.stop()
     this.scene.bgm_mbr.stop()
 

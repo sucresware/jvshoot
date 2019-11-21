@@ -53,10 +53,6 @@ export default class {
         alpha: alpha,
         duration: speed,
         ease: 'Sine.easeInOut',
-        // repeat: false,
-        // repeatDelay: 1000,
-        // hold: 500,
-        // yoyo: true,
     });
   }
 
