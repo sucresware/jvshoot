@@ -7,8 +7,6 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 
-const slideDelay = 3000;
-
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'SplashScene' })
@@ -43,7 +41,7 @@ export default class extends Phaser.Scene {
     ]);
 
     slide.before = () => this.bgm.play()
-    slide.delay = 4400
+    // slide.delay = 4400
 
     this.slides.push(slide);
 
@@ -57,7 +55,7 @@ export default class extends Phaser.Scene {
 
     slide.before = () => meSpeak.speak("developed by M G K")
 
-    slide.delay = 4000
+    // slide.delay = 4000
 
     this.slides.push(slide);
 
@@ -71,7 +69,7 @@ export default class extends Phaser.Scene {
 
     slide.before = () => meSpeak.speak("designed by Blud")
 
-    slide.delay = 4000
+    // slide.delay = 4000
 
     this.slides.push(slide);
 
@@ -85,6 +83,7 @@ export default class extends Phaser.Scene {
     slide.before = () => {
       this.cameras.main.setZoom(0.1);
       this.cameras.main.zoomTo(1, 300);
+      this.cameras.main.setBackgroundColor(0x050710)
 
       meSpeak.speak("seucruhWare!",  {
         pitch: 10,
@@ -95,9 +94,10 @@ export default class extends Phaser.Scene {
 
     slide.after = () => {
       this.cameras.main.setZoom(1, 300);
+      this.cameras.main.setBackgroundColor(0x000000)
     }
 
-    slide.delay = 3800
+    // slide.delay = 3800
 
     this.slides.push(slide);
 
@@ -112,7 +112,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, top += 45, 'indigo', 'MUSIC BY DUBMOOD', 8).setOrigin(0.5)
     ]);
 
-    slide.delay = 4000
+    // slide.delay = 4000
 
     this.slides.push(slide);
 
@@ -126,6 +126,16 @@ export default class extends Phaser.Scene {
 
     this.currentSlide = -1;
     this.next(0);
+  }
+
+  update() {
+    if (
+      (this.bgm.seek >= 4.4 && this.currentSlide == 0)
+      || (this.bgm.seek >= 8.6 && this.currentSlide == 1)
+      || (this.bgm.seek >= 12.8 && this.currentSlide == 2)
+      || (this.bgm.seek >= 16.8 && this.currentSlide == 3)
+      || (this.bgm.seek >= 20.5 && this.currentSlide == 4)
+    ) this.next(this.currentSlide + 1)
   }
 
   next(nextSlide) {
@@ -145,11 +155,11 @@ export default class extends Phaser.Scene {
     // this.sfx.explode.play()
     // this.cameras.main.shake(200, 0.05)
 
-    this.time.addEvent({
-      delay: this.slides[nextSlide].delay,
-      callback: () => this.next(this.currentSlide + 1),
-      callbackScope: this
-    })
+    // this.time.addEvent({
+    //   delay: this.slides[nextSlide].delay,
+    //   callback: () => this.next(this.currentSlide + 1),
+    //   callbackScope: this
+    // })
 
     this.currentSlide++;
   }
