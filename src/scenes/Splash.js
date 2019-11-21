@@ -16,10 +16,6 @@ export default class extends Phaser.Scene {
 
   preload () {
     this.cameras.main.setBackgroundColor(0x000000)
-    this.sfx = {
-      explode: this.sound.add("explode")
-    }
-
     meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
     meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
   }
@@ -28,58 +24,98 @@ export default class extends Phaser.Scene {
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
     background.setAlpha(0)
 
+    this.bgm = this.sound.add("the_courier");
+
     this.slides = [];
     let slide;
 
+    // SEIZURES
+    slide = { container: this.add.container(this.game.config.width / 2, 120) };
+    var top = 0;
+
+    slide.container.add([
+      this.add.bitmapText(0, top += 40, 'red', 'WARNING', 16).setOrigin(0.5),
+      this.add.bitmapText(0, top += 40, 'white', 'THIS GAME HAS BEEN', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white', 'IDENTIFIED TO POTENTIALLY', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white', 'TRIGGER SEIZURES', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white', 'FOR PEOPLE WITH', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white', 'PHOTOSENSITIVE EPILEPSY', 8).setOrigin(0.5)
+    ]);
+
+    slide.before = () => this.bgm.play()
+    slide.delay = 4400
+
+    this.slides.push(slide);
+
     // MGK
-    slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
+    slide = { container: this.add.container(this.game.config.width / 2, 200) };
 
     slide.container.add([
       this.add.bitmapText(0, 0, 'white', 'DEVELOPED BY', 8).setOrigin(0.5),
       this.add.bitmapText(0, 15, 'orange_shadow', 'MGK', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => {
-      meSpeak.speak("developed by M G K")
-    }
+    slide.before = () => meSpeak.speak("developed by M G K")
+
+    slide.delay = 4000
 
     this.slides.push(slide);
 
     // BLOOD
-    slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
+    slide = { container: this.add.container(this.game.config.width / 2, 200) };
 
     slide.container.add([
       this.add.bitmapText(0, 0, 'white', 'DESIGNED BY', 8).setOrigin(0.5),
       this.add.bitmapText(0, 15, 'orange_shadow', 'BLOOD', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => {
-      meSpeak.speak("designed by Blud")
-    }
+    slide.before = () => meSpeak.speak("designed by Blud")
+
+    slide.delay = 4000
 
     this.slides.push(slide);
 
-    // Credits
-    slide = { container: this.add.container(this.game.config.width / 2, 130) };
-    let top = 0;
+    // SUCRESWARE
+    slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
 
     slide.container.add([
-      this.add.bitmapText(0, top += 15, 'white_shadow', 'THIS IS ANOTHER', 8).setOrigin(0.5),
-      this.add.bitmapText(0, top += 15, 'white_shadow', 'OPEN-SOURCE PROJECT', 8).setOrigin(0.5),
-      this.add.bitmapText(0, top += 15, 'white_shadow', 'FROM 4SUCRES.ORG', 8).setOrigin(0.5),
-      this.add.bitmapText(0, top += 45, 'indigo', 'MUSIC BY DUBMOOD', 8).setOrigin(0.5),
-      this.add.bitmapText(0, top += 15, 'orange', 'POWERED BY SUCRESWARE', 8).setOrigin(0.5)
+      this.add.bitmapText(0, 0, 'orange_shadow', 'SUCRESWARE', 16).setOrigin(0.5)
     ]);
 
     slide.before = () => {
-      meSpeak.speak("seucreiWare!",  {
-        pitch: 20,
+      this.cameras.main.setZoom(0.1);
+      this.cameras.main.zoomTo(1, 300);
+
+      meSpeak.speak("seucruhWare!",  {
+        pitch: 10,
         speed: 125,
         wordgap: 3
       })
     }
 
+    slide.after = () => {
+      this.cameras.main.setZoom(1, 300);
+    }
+
+    slide.delay = 3800
+
     this.slides.push(slide);
+
+    // Credits
+    slide = { container: this.add.container(this.game.config.width / 2, 150) };
+    var top = 0;
+
+    slide.container.add([
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'THIS IS ANOTHER', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'OPEN-SOURCE PROJECT', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'FROM 4SUCRES.ORG', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 45, 'indigo', 'MUSIC BY DUBMOOD', 8).setOrigin(0.5)
+    ]);
+
+    slide.delay = 4000
+
+    this.slides.push(slide);
+
     this.slides.forEach((slide) => slide.container.setAlpha(0));
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -88,19 +124,16 @@ export default class extends Phaser.Scene {
     watch(this.input.pointer1, "isDown", (key, action, value) => value ? this.skip() : '')
     watch(this.keySpace, "isDown", (key, action, value) => value ? this.skip() : '')
 
-    this.time.addEvent({
-      delay: slideDelay,
-      callback: () => this.next(this.currentSlide + 1),
-      callbackScope: this,
-      loop: true
-    })
-
     this.currentSlide = -1;
     this.next(0);
   }
 
   next(nextSlide) {
     if (nextSlide == this.slides.length) return this.skip()
+
+    if (this.slides[this.currentSlide] !== undefined && this.slides[this.currentSlide].after !== undefined) {
+      this.slides[this.currentSlide].after();
+    }
 
     this.slides.forEach((slide) => slide.container.setAlpha(0))
     this.slides[nextSlide].container.setAlpha(1)
@@ -109,8 +142,14 @@ export default class extends Phaser.Scene {
       this.slides[nextSlide].before();
     }
 
-    this.sfx.explode.play()
-    this.cameras.main.shake(200, 0.05)
+    // this.sfx.explode.play()
+    // this.cameras.main.shake(200, 0.05)
+
+    this.time.addEvent({
+      delay: this.slides[nextSlide].delay,
+      callback: () => this.next(this.currentSlide + 1),
+      callbackScope: this
+    })
 
     this.currentSlide++;
   }
@@ -118,6 +157,7 @@ export default class extends Phaser.Scene {
   skip() {
     unwatch(this.input.pointer1, 'isDown');
     unwatch(this.keySpace, 'isDown');
+    this.bgm.stop();
     this.scene.start('MenuScene');
   }
 }
