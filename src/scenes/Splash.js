@@ -1,5 +1,6 @@
 const { version } = require('../../package.json');
 import Phaser from 'phaser'
+var meSpeak = require("mespeak")
 
 import WatchJS from 'melanke-watchjs';
 
@@ -7,7 +8,7 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 
-const slideDelay = 2000;
+const slideDelay = 3000;
 
 export default class extends Phaser.Scene {
   constructor () {
@@ -16,88 +17,108 @@ export default class extends Phaser.Scene {
 
   preload () {
     this.cameras.main.setBackgroundColor(0x000000)
+    this.sfx = {
+      explode: this.sound.add("explode")
+    }
+
+    meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
+    meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
   }
 
   create () {
-    let explode = this.sound.add("explode")
-    let explode_alt = this.sound.add("explode_alt")
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
     background.setAlpha(0)
 
-    this.slides = {
-      intro: this.add.container(0, 0),
-      credits: this.add.container(10, 100),
+    this.slides = [];
+    let slide;
+
+    // MGK
+    slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
+
+    slide.container.add([
+      this.add.bitmapText(0, 0, 'white', 'DEVELOPED BY', 8).setOrigin(0.5),
+      this.add.bitmapText(0, 15, 'orange_shadow', 'MGK', 16).setOrigin(0.5)
+    ]);
+
+    slide.before = () => {
+      meSpeak.speak("developed by M G K")
     }
 
-    // Intro
-    let text = this.add.bitmapText(this.game.config.width / 2, this.game.config.height / 2, 'white_shadow', 'SUCRESWARE', 16).setOrigin(0.5)
-    this.slides.intro.add(text);
+    this.slides.push(slide);
+
+    // BLOOD
+    slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
+
+    slide.container.add([
+      this.add.bitmapText(0, 0, 'white', 'DESIGNED BY', 8).setOrigin(0.5),
+      this.add.bitmapText(0, 15, 'orange_shadow', 'BLOOD', 16).setOrigin(0.5)
+    ]);
+
+    slide.before = () => {
+      meSpeak.speak("designed by Blud")
+    }
+
+    this.slides.push(slide);
 
     // Credits
+    slide = { container: this.add.container(this.game.config.width / 2, 130) };
     let top = 0;
 
-    text = this.add.bitmapText(0, top, 'white_shadow', 'THIS IS ANOTHER', 8)
-    this.slides.credits.add(text)
-    top += 15;
-    text = this.add.bitmapText(0, top, 'white_shadow', 'OPEN-SOURCE PROJECT', 8)
-    this.slides.credits.add(text)
-    top += 15;
-    text = this.add.bitmapText(0, top, 'white_shadow', 'FROM 4SUCRES.ORG', 8)
-    this.slides.credits.add(text)
-    top += 60;
+    slide.container.add([
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'THIS IS ANOTHER', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'OPEN-SOURCE PROJECT', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'white_shadow', 'FROM 4SUCRES.ORG', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 45, 'indigo', 'MUSIC BY DUBMOOD', 8).setOrigin(0.5),
+      this.add.bitmapText(0, top += 15, 'orange', 'POWERED BY SUCRESWARE', 8).setOrigin(0.5)
+    ]);
 
-    text = this.add.bitmapText(0, top, 'indigo', 'DEVELOPED BY', 8)
-    this.slides.credits.add(text)
-    top += 15;
-    text = this.add.bitmapText(0, top, 'white_shadow', 'MGK', 16)
-    this.slides.credits.add(text)
-    top += 30;
-    text = this.add.bitmapText(0, top, 'indigo', 'DESIGNED BY', 8)
-    this.slides.credits.add(text)
-    top += 15;
-    text = this.add.bitmapText(0, top, 'white_shadow', 'BLOOD', 16)
-    this.slides.credits.add(text)
-    top += 30;
-    text = this.add.bitmapText(0, top, 'indigo', 'MUSIC FROM', 8)
-    this.slides.credits.add(text)
-    top += 15;
-    text = this.add.bitmapText(0, top, 'white_shadow', 'DUBMOOD', 16)
-    this.slides.credits.add(text)
+    slide.before = () => {
+      meSpeak.speak("seucreiWare!",  {
+        pitch: 20,
+        speed: 125,
+        wordgap: 3
+      })
+    }
 
-    this.slides.credits.setAlpha(0);
+    this.slides.push(slide);
+    this.slides.forEach((slide) => slide.container.setAlpha(0));
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
     this.input.addPointer(1);
 
-    watch(this.input.pointer1, "isDown", (key, action, value) => value ? this.next(value) : '')
-    watch(this.keySpace, "isDown", (key, action, value) => value ? this.next(value) : '')
+    watch(this.input.pointer1, "isDown", (key, action, value) => value ? this.skip() : '')
+    watch(this.keySpace, "isDown", (key, action, value) => value ? this.skip() : '')
 
     this.time.addEvent({
       delay: slideDelay,
-      callback: () => {
-        this.cameras.main.shake(200, 0.05)
-        explode.play()
-
-        this.slides.intro.setAlpha(0);
-        this.slides.credits.setAlpha(1);
-        background.setAlpha(1)
-
-        this.time.addEvent({
-          delay: slideDelay * 2,
-          callback: () => this.scene.start('MenuScene'),
-          callbackScope: this,
-          loop: false
-        })
-      },
+      callback: () => this.next(this.currentSlide + 1),
       callbackScope: this,
-      loop: false
+      loop: true
     })
 
-    this.cameras.main.shake(200, 0.01)
-    explode_alt.play()
+    this.currentSlide = -1;
+    this.next(0);
   }
 
-  next(value) {
+  next(nextSlide) {
+    if (nextSlide == this.slides.length) return this.skip()
+
+    this.slides.forEach((slide) => slide.container.setAlpha(0))
+    this.slides[nextSlide].container.setAlpha(1)
+
+    if (this.slides[nextSlide].before !== undefined) {
+      this.slides[nextSlide].before();
+    }
+
+    this.sfx.explode.play()
+    this.cameras.main.shake(200, 0.05)
+
+    this.currentSlide++;
+  }
+
+  skip() {
+    unwatch(this.input.pointer1, 'isDown');
+    unwatch(this.keySpace, 'isDown');
     this.scene.start('MenuScene');
   }
 }
