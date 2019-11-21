@@ -41,15 +41,26 @@ export default class {
     }
   }
 
-  setAlpha(alpha) {
+  setAlpha(alpha, speed) {
+    let allLayers = []
+
     for (let i = 0; i < this.layers.getChildren().length; i++) {
-      let layer = this.layers.getChildren()[i].setAlpha(alpha);
+      allLayers.push(this.layers.getChildren()[i])
     }
+
+    this.scene.tweens.add({
+        targets: allLayers,
+        alpha: alpha,
+        duration: speed,
+        ease: 'Sine.easeInOut',
+        // repeat: false,
+        // repeatDelay: 1000,
+        // hold: 500,
+        // yoyo: true,
+    });
   }
 
-  resetAlpha() {
-    for (let i = 0; i < this.layers.getChildren().length; i++) {
-      let layer = this.layers.getChildren()[i].setAlpha(this.opacity);
-    }
+  resetAlpha(speed) {
+    this.setAlpha(this.opacity, speed);
   }
 }

@@ -2,9 +2,10 @@
 
 import Phaser from 'phaser'
 import Player from '../entities/Player'
-import ScrollingBackground from '../entities/ScrollingBackground'
 import CarrierShip from '../entities/CarrierShip'
 import DDoSItem from '../items/DDoSItem'
+import ScrollingBackground from '../ui/ScrollingBackground'
+import Scoreboard from '../ui/Scoreboard'
 
 import WatchJS from 'melanke-watchjs';
 var watch = WatchJS.watch;
@@ -67,10 +68,8 @@ export default class extends Phaser.Scene {
       )
     }
 
-    if (!window.mobile) {
-      for (let i = 0; i < this.backgrounds.length - 1; i++) {
-        this.backgrounds[i].setAlpha(0)
-      }
+    for (let i = 0; i < this.backgrounds.length - 1; i++) {
+      this.backgrounds[i].setAlpha(0, 0)
     }
 
     this.enemies = this.add.group()
@@ -154,7 +153,7 @@ export default class extends Phaser.Scene {
     watch(this.state, "introPhase", function(){
       if (that.state.introPhase == false) {
         for (let i = 0; i < that.backgrounds.length; i++) {
-          that.backgrounds[i].resetAlpha()
+          that.backgrounds[i].resetAlpha(1000)
         }
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
