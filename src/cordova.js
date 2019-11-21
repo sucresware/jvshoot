@@ -11,5 +11,4 @@ document.addEventListener('deviceready', () => {
         width: width,
         zoom: scaleFactor
     })
-
 }, false);
