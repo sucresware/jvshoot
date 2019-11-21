@@ -1,8 +1,7 @@
 const { version } = require('../../package.json');
 import Phaser from 'phaser'
-var meSpeak = require("mespeak")
-
 import WatchJS from 'melanke-watchjs';
+import meSpeak from 'mespeak';
 
 var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
