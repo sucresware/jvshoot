@@ -26,7 +26,6 @@ export default class {
 
       this.scene.physics.world.enableBody(layer, 0);
       layer.body.velocity.y = this.velocity;
-      // layer.body.velocity.y = 50;
 
       this.layers.add(layer);
     }

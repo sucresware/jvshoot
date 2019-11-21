@@ -33,13 +33,12 @@ export default class extends Phaser.Scene {
 
     // Images
     this.load.image("space", "assets/images/space.png")
-    this.load.image('4sucres', 'assets/images/4sucres.png')
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
     this.load.image('noel', 'assets/images/noel.png')
     this.load.image("laser", "assets/images/laser.png")
-    this.load.image("scoreboard", "assets/images/scoreboard.png")
     this.load.image("computer", "assets/images/computer.png")
+    this.load.image("background", "assets/images/background.png")
 
     this.load.spritesheet("explosion", "assets/images/boom.png", {
       frameWidth: 32,

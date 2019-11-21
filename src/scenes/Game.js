@@ -42,6 +42,11 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    this.background = this.add
+      .sprite(0, this.game.config.height, 'background')
+      .setOrigin(0)
+      .setDepth(-10)
+
     this.player = new Player(
       this,
       this.game.config.width / 2,
@@ -120,12 +125,21 @@ export default class extends Phaser.Scene {
     watch(this.state, "introPhase", function(){
       if (that.state.introPhase == false) {
         for (let i = 0; i < that.backgrounds.length; i++) {
-          that.backgrounds[i].resetAlpha(1000)
-          that.scoreboard.showUI()
+          that.backgrounds[i].resetAlpha(500)
         }
+
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
         that.bgm.play('game')
+
+        that.tweens.add({
+          targets: that.background,
+          y: 0,
+          duration: 500,
+          ease: 'Sine.easeInOut',
+        });
+
+        setTimeout(() => that.scoreboard.showUI(), 1000);
       }
     })
 
