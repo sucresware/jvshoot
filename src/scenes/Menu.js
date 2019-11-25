@@ -21,8 +21,9 @@ export default class extends Phaser.Scene {
     });
 
     this.time.addEvent({
-      delay: 46.5 * 1000,
+      delay: 70 * 1000,
       callback: function() {
+        this.bgm.stop()
         this.scene.start("SplashScene");
       },
       callbackScope: this,
