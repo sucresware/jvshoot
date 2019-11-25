@@ -10,7 +10,7 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    this.sound.add("explode").play({ volume: window.settings.volEffect })
+    this.sound.add("explode").play({ volume: window.settings.volumes.sfx })
     this.cameras.main.shake(200, 0.01)
 
     this.bgm = this.sound.add("the_courier")

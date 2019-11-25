@@ -14,9 +14,11 @@ let gameConfig = {
 }
 
 let defaultSettings = {
-  volMusic: 0.5,
-  volEffect: 0.5,
-  particles: true,
+  volumes: {
+    music: 0.5,
+    sfx: 0.5
+  },
+  effects: 2
 }
 
 window.settings = {

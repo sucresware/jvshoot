@@ -46,7 +46,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, top += 15, 'white', 'PHOTOSENSITIVE EPILEPSY', 8).setOrigin(0.5)
     ]);
 
-    slide.before = () => this.bgm.play({ volume: window.settings.volMusic })
+    slide.before = () => this.bgm.play({ volume: window.settings.volumes.music })
 
     this.slides.push(slide);
 
@@ -58,7 +58,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, 15, 'orange_shadow', 'MGK', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => meSpeak.speak("developed by M G K", { volume: window.settings.volEffect })
+    slide.before = () => meSpeak.speak("developed by M G K", { volume: window.settings.volumes.sfx })
 
     this.slides.push(slide);
 
@@ -70,7 +70,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, 15, 'orange_shadow', 'BLOOD', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => meSpeak.speak("designed by Blud", { volume: window.settings.volEffect })
+    slide.before = () => meSpeak.speak("designed by Blud", { volume: window.settings.volumes.sfx })
 
     this.slides.push(slide);
 
@@ -90,7 +90,7 @@ export default class extends Phaser.Scene {
         pitch: 10,
         speed: 125,
         wordgap: 3,
-        volume: window.settings.volEffect
+        volume: window.settings.volumes.sfx
       })
     }
 

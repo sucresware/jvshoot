@@ -74,7 +74,7 @@ export default class extends Phaser.GameObjects.Sprite {
       this.setTexture("explosion")
       this.play("explosion")
 
-      this.scene.sfx.explosions[Phaser.Math.Between(0, this.scene.sfx.explosions.length - 1)].play({ volume: window.settings.volEffect });
+      this.scene.sfx.explosions[Phaser.Math.Between(0, this.scene.sfx.explosions.length - 1)].play({ volume: window.settings.volumes.sfx });
       if (this.shootTimer !== undefined) {
         if (this.shootTimer) {
           this.shootTimer.remove(false)
