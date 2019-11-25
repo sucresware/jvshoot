@@ -99,6 +99,7 @@ export default class extends Phaser.Scene {
       this.bgm.stop()
       this.scene.start('GameScene')
     } else if (this.keySettings.isDown) {
+      this.bgm.stop()
       this.scene.start('SettingsScene')
     }
   }
