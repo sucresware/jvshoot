@@ -86,7 +86,7 @@ export default class extends Phaser.Scene {
 
     this.selectedText = [this.effectText, this.musicText, this.particlesText];
 
-    this.change(0)
+    this.blinkSelected(0)
     this.refreshGui()
   }
 
