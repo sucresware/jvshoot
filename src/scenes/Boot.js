@@ -39,6 +39,10 @@ export default class extends Phaser.Scene {
     this.load.image("laser", "assets/images/laser.png")
     this.load.image("computer", "assets/images/computer.png")
     this.load.image("background", "assets/images/background.png")
+    this.load.image("arrow", "assets/images/arrow.png")
+    this.load.image("checkbox", "assets/images/checkbox.png")
+    this.load.image("checkbox_ok", "assets/images/checkbox_ok.png")
+
 
     this.load.spritesheet("explosion", "assets/images/boom.png", {
       frameWidth: 32,

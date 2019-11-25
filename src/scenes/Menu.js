@@ -12,8 +12,7 @@ export default class extends Phaser.Scene {
   create () {
     this.sound.add("explode").play()
     this.cameras.main.shake(200, 0.01)
-
-    this.bgm = this.sound.add("the_scene_is_dead")
+    this.bgm = this.sound.add("the_scene_is_dead");
 
     this.bgm.addMarker({
       name: 'intro',
@@ -89,13 +88,18 @@ export default class extends Phaser.Scene {
     top += 15;
     this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version, 8).setOrigin(0.5)
 
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 10, 'white_shadow', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
+
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
     this.input.addPointer(1);
   }
   update () {
     if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.bgm.stop()
       this.scene.start('GameScene')
+    } else if (this.keySettings.isDown) {
+      this.scene.start('SettingsScene')
     }
   }
 }

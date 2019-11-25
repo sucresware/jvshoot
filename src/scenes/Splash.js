@@ -72,7 +72,7 @@ export default class extends Phaser.Scene {
     ]);
 
     slide.before = () => {
-      meSpeak.speak("seucreiWare!",  {
+      meSpeak.speak("seucraeiWare!",  {
         pitch: 20,
         speed: 125,
         wordgap: 3
