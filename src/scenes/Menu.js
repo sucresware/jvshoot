@@ -12,12 +12,12 @@ export default class extends Phaser.Scene {
   create () {
     this.sound.add("explode").play()
     this.cameras.main.shake(200, 0.01)
-    this.bgm = this.sound.add("the_scene_is_dead");
+
+    this.bgm = this.sound.add("the_courier")
 
     this.bgm.addMarker({
       name: 'intro',
-      start: 4.3,
-      duration: 46.5
+      start: 20.35
     });
 
     this.time.addEvent({

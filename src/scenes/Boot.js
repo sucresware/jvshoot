@@ -60,6 +60,7 @@ export default class extends Phaser.Scene {
     })
 
     // Sounds
+    this.load.audio("the_courier", "assets/sounds/the_courier.mp3")
     this.load.audio("votedisk", "assets/sounds/votedisk.mp3")
     this.load.audio("votedisk_mbr", "assets/sounds/votedisk_mbr.mp3")
     this.load.audio("the_scene_is_dead", "assets/sounds/the_scene_is_dead.mp3")
