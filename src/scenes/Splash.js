@@ -58,7 +58,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, 15, 'orange_shadow', 'MGK', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => meSpeak.speak("developed by M G K")
+    slide.before = () => meSpeak.speak("developed by M G K", { volume: window.settings.volEffect })
 
     this.slides.push(slide);
 
@@ -70,7 +70,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, 15, 'orange_shadow', 'BLOOD', 16).setOrigin(0.5)
     ]);
 
-    slide.before = () => meSpeak.speak("designed by Blud")
+    slide.before = () => meSpeak.speak("designed by Blud", { volume: window.settings.volEffect })
 
     this.slides.push(slide);
 
@@ -89,7 +89,8 @@ export default class extends Phaser.Scene {
       meSpeak.speak("seucruhWare!",  {
         pitch: 10,
         speed: 125,
-        wordgap: 3
+        wordgap: 3,
+        volume: window.settings.volEffect
       })
     }
 
