@@ -10,7 +10,7 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    this.sound.add("explode").play()
+    this.sound.add("explode").play({ volume: window.settings.volEffect })
     this.cameras.main.shake(200, 0.01)
 
     this.bgm = this.sound.add("the_courier")
@@ -29,7 +29,7 @@ export default class extends Phaser.Scene {
       loop: false
     });
 
-    this.bgm.play('intro')
+    this.bgm.play('intro', { volume: window.settings.volMusic })
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
@@ -92,6 +92,7 @@ export default class extends Phaser.Scene {
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
     this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+
     this.input.addPointer(1);
   }
   update () {

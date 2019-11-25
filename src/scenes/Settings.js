@@ -28,7 +28,7 @@ export default class extends Phaser.Scene {
 
   create () {
     this.bgm.play('intro', { volume: window.settings.volMusic })
-    this.sound.add("explode").play()
+    this.sound.add("explode").play({ volume: window.settings.volEffect })
 
     this.cameras.main.shake(200, 0.01)
     this.cameras.main.setZoom(2);

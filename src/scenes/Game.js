@@ -105,14 +105,14 @@ export default class extends Phaser.Scene {
     watch(this.state, "combo", function(attribute, action, newValue, oldValue){
       if (that.state.combo == 100) {
         that.bgm.stop()
-        that.bgm_mbr.play('game')
+        that.bgm_mbr.play('game', { volume: window.settings.volMusic })
       }
 
       if (that.state.combo == 0
         && !that.state.introPhase
         && oldValue >= 100) {
         that.bgm_mbr.stop()
-        that.bgm.play('game')
+        that.bgm.play('game', { volume: window.settings.volMusic })
       }
     })
 
@@ -130,7 +130,7 @@ export default class extends Phaser.Scene {
 
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
-        that.bgm.play('game')
+        that.bgm.play('game', { volume: window.settings.volMusic })
 
         that.tweens.add({
           targets: that.background,
@@ -258,7 +258,7 @@ export default class extends Phaser.Scene {
       this.cameras.main.setZoom(2);
     }
 
-    this.bgm.play('intro')
+    this.bgm.play('intro', { volume: window.settings.volMusic })
   }
 
   update() {

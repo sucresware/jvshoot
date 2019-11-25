@@ -7,6 +7,8 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 
+var loaded = false;
+
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'SplashScene' })
@@ -14,15 +16,19 @@ export default class extends Phaser.Scene {
 
   preload () {
     this.cameras.main.setBackgroundColor(0x000000)
-    meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
-    meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
+
+    if (!loaded) {
+      meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
+      meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
+      loaded = true;
+    }
+
+    this.bgm = this.sound.add("the_courier");
   }
 
   create () {
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
     background.setAlpha(0)
-
-    this.bgm = this.sound.add("the_courier");
 
     this.slides = [];
     let slide;
@@ -40,8 +46,7 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, top += 15, 'white', 'PHOTOSENSITIVE EPILEPSY', 8).setOrigin(0.5)
     ]);
 
-    slide.before = () => this.bgm.play()
-    // slide.delay = 4400
+    slide.before = () => this.bgm.play({ volume: window.settings.volMusic })
 
     this.slides.push(slide);
 
@@ -55,8 +60,6 @@ export default class extends Phaser.Scene {
 
     slide.before = () => meSpeak.speak("developed by M G K")
 
-    // slide.delay = 4000
-
     this.slides.push(slide);
 
     // BLOOD
@@ -68,8 +71,6 @@ export default class extends Phaser.Scene {
     ]);
 
     slide.before = () => meSpeak.speak("designed by Blud")
-
-    // slide.delay = 4000
 
     this.slides.push(slide);
 
@@ -97,8 +98,6 @@ export default class extends Phaser.Scene {
       this.cameras.main.setBackgroundColor(0x000000)
     }
 
-    // slide.delay = 3800
-
     this.slides.push(slide);
 
     // Credits
@@ -111,8 +110,6 @@ export default class extends Phaser.Scene {
       this.add.bitmapText(0, top += 15, 'white_shadow', 'FROM 4SUCRES.ORG', 8).setOrigin(0.5),
       this.add.bitmapText(0, top += 45, 'indigo', 'MUSIC BY DUBMOOD', 8).setOrigin(0.5)
     ]);
-
-    // slide.delay = 4000
 
     this.slides.push(slide);
 
@@ -151,15 +148,6 @@ export default class extends Phaser.Scene {
     if (this.slides[nextSlide].before !== undefined) {
       this.slides[nextSlide].before();
     }
-
-    // this.sfx.explode.play()
-    // this.cameras.main.shake(200, 0.05)
-
-    // this.time.addEvent({
-    //   delay: this.slides[nextSlide].delay,
-    //   callback: () => this.next(this.currentSlide + 1),
-    //   callbackScope: this
-    // })
 
     this.currentSlide++;
   }
