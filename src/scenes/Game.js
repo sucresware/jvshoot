@@ -150,23 +150,23 @@ export default class extends Phaser.Scene {
       ],
       laser: this.sound.add("laser", { volume: 0.4 })
     }
-
+   let spawnMargin = window.mobile ? 10 : 5
    this.time.addEvent({
       delay: 10,
       callback: function() {
         if (this.state.combo >= 50) {
           if (Phaser.Math.Between(0, 10) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         } else if (this.state.combo >= 15) {
           if (Phaser.Math.Between(0, 30) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         } else {
           if (Phaser.Math.Between(0, 40) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         }
