@@ -130,13 +130,13 @@ export default class extends Phaser.Scene {
   select (key) {
     switch (key) {
       case 'up':
-        if (selected > 0 && selected <= this.selectedText.length) {
+        if (selected > 0 && selected <= this.selectedText.length - 1) {
           selected--;
           this.blinkSelected(selected);
         }
       break;
       case 'down':
-        if (selected >= 0 && selected < this.selectedText.length) {
+        if (selected >= 0 && selected < this.selectedText.length - 1) {
           selected++;
           this.blinkSelected(selected);
         }
