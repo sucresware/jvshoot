@@ -105,14 +105,14 @@ export default class extends Phaser.Scene {
     watch(this.state, "combo", function(attribute, action, newValue, oldValue){
       if (that.state.combo == 100) {
         that.bgm.stop()
-        that.bgm_mbr.play('game')
+        that.bgm_mbr.play('game', { volume: window.settings.volumes.music })
       }
 
       if (that.state.combo == 0
         && !that.state.introPhase
         && oldValue >= 100) {
         that.bgm_mbr.stop()
-        that.bgm.play('game')
+        that.bgm.play('game', { volume: window.settings.volumes.music })
       }
     })
 
@@ -130,7 +130,7 @@ export default class extends Phaser.Scene {
 
         that.cameras.main.zoomTo(1, 200);
         that.cameras.main.setBackgroundColor(0x50710)
-        that.bgm.play('game')
+        that.bgm.play('game', { volume: window.settings.volumes.music })
 
         that.tweens.add({
           targets: that.background,
@@ -150,23 +150,23 @@ export default class extends Phaser.Scene {
       ],
       laser: this.sound.add("laser", { volume: 0.4 })
     }
-
+   let spawnMargin = window.mobile ? 10 : 5
    this.time.addEvent({
       delay: 10,
       callback: function() {
         if (this.state.combo >= 50) {
           if (Phaser.Math.Between(0, 10) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         } else if (this.state.combo >= 15) {
           if (Phaser.Math.Between(0, 30) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         } else {
           if (Phaser.Math.Between(0, 40) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(0, this.game.config.width), -10)
+            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
             this.enemies.add(enemy)
           }
         }
@@ -258,7 +258,7 @@ export default class extends Phaser.Scene {
       this.cameras.main.setZoom(2);
     }
 
-    this.bgm.play('intro')
+    this.bgm.play('intro', { volume: window.settings.volumes.music })
   }
 
   update() {

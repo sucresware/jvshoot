@@ -2,34 +2,38 @@ const { version } = require('../../package.json');
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
+
   constructor () {
     super({ key: 'MenuScene' })
+
+    this.firstTime = true;
   }
 
   preload () {
+    if (this.firstTime) {
+      this.bgm = this.sound.add("the_courier");
+      this.bgm.addMarker({ name: 'intro', start: 20.35 });
+      this.sfx = { explode: this.sound.add("explode") }
+
+      this.firstTime = false;
+    }
   }
 
   create () {
-    this.sound.add("explode").play()
-    this.cameras.main.shake(200, 0.01)
-
-    this.bgm = this.sound.add("the_courier")
-
-    this.bgm.addMarker({
-      name: 'intro',
-      start: 20.35
-    });
+    if (window.settings.effects >= 1) this.cameras.main.shake(200, 0.01);
+    this.sfx.explode.play({ volume: window.settings.volumes.sfx })
 
     this.time.addEvent({
-      delay: 46.5 * 1000,
+      delay: 70 * 1000,
       callback: function() {
+        this.bgm.stop()
         this.scene.start("SplashScene");
       },
       callbackScope: this,
       loop: false
     });
 
-    this.bgm.play('intro')
+    this.bgm.play('intro', { volume: window.settings.volMusic })
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
@@ -88,13 +92,20 @@ export default class extends Phaser.Scene {
     top += 15;
     this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version, 8).setOrigin(0.5)
 
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 10, 'white_shadow', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
+
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+
     this.input.addPointer(1);
   }
   update () {
     if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.bgm.stop()
       this.scene.start('GameScene')
+    } else if (this.keySettings.isDown) {
+      this.bgm.stop()
+      this.scene.start('SettingsScene')
     }
   }
 }

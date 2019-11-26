@@ -47,7 +47,7 @@ export default class extends Entity {
           this.scene.playerLasers.add(new PlayerLaser(this.scene, this.x, this.y))
         }
 
-        this.scene.sfx.laser.play()
+        this.scene.sfx.laser.play({ volume: window.settings.volumes.sfx })
         this.setData("timerShootTick", 0);
       }
     }
