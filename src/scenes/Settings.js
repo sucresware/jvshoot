@@ -190,13 +190,13 @@ export default class extends Phaser.Scene {
       this.lSelect2.setVisible(false)
     }
 
-    this.rSelect.setVisible(true)
-    this.lSelect.setVisible(true)
+    this.rSelect3.setVisible(true)
+    this.lSelect3.setVisible(true)
 
     if (window.settings.effects == 2) {
-      this.rSelect.setVisible(false)
+      this.rSelect3.setVisible(false)
     } else if (window.settings.effects == 0) {
-      this.lSelect.setVisible(false)
+      this.lSelect3.setVisible(false)
     }
 
     this.sfxText.setText(window.settings.volumes.sfx * 10)

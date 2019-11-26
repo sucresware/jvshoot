@@ -2,23 +2,26 @@ const { version } = require('../../package.json');
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
+
   constructor () {
     super({ key: 'MenuScene' })
+
+    this.firstTime = true;
   }
 
   preload () {
+    if (this.firstTime) {
+      this.bgm = this.sound.add("the_courier");
+      this.bgm.addMarker({ name: 'intro', start: 20.35 });
+      this.sfx = { explode: this.sound.add("explode") }
+
+      this.firstTime = false;
+    }
   }
 
   create () {
-    this.sound.add("explode").play({ volume: window.settings.volumes.sfx })
-    this.cameras.main.shake(200, 0.01)
-
-    this.bgm = this.sound.add("the_courier")
-
-    this.bgm.addMarker({
-      name: 'intro',
-      start: 20.35
-    });
+    if (window.settings.effects >= 1) this.cameras.main.shake(200, 0.01);
+    this.sfx.explode.play({ volume: window.settings.volumes.sfx })
 
     this.time.addEvent({
       delay: 70 * 1000,
