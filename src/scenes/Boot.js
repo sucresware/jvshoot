@@ -70,6 +70,7 @@ export default class extends Phaser.Scene {
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
     this.load.image('noel', 'assets/images/noel.png')
+    this.load.image('coin', 'assets/images/coin.png')
     this.load.image("laser", "assets/images/laser.png")
     this.load.image("computer", "assets/images/computer.png")
     this.load.image("background", "assets/images/background.png")
@@ -90,5 +91,6 @@ export default class extends Phaser.Scene {
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
+    this.load.audio("coin", "assets/sounds/coin.wav")
   }
 }

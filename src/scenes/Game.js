@@ -146,10 +146,11 @@ export default class extends Phaser.Scene {
 
     this.sfx = {
       explosions: [
-        this.sound.add("explode"),
-        this.sound.add("explode_alt")
+        this.sound.add("explode", { volume: window.settings.volumes.sfx }),
+        this.sound.add("explode_alt", { volume: window.settings.volumes.sfx })
       ],
-      laser: this.sound.add("laser", { volume: 0.4 })
+      coin: this.sound.add("coin", { volume: window.settings.volumes.sfx }),
+      laser: this.sound.add("laser", { volume: window.settings.volumes.sfx })
     }
    let spawnMargin = window.mobile ? 10 : 5
    this.time.addEvent({

@@ -10,9 +10,28 @@ export default class Item extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this)
     this.scene.physics.world.enableBody(this, 0)
+
+    this.delay = 10 * 60; // In frames
   }
 
   update() {
+    this.delay--;
+
+    if (this.delay == 3 * 60) {
+        this.scene.tweens.add({
+          targets: this,
+          alpha: 0,
+          duration: 0,
+          repeat: -1,
+          repeatDelay: 100,
+          hold: 100,
+          yoyo: true
+        });
+    }
+
+    if (this.delay == 0) {
+      this.destroy()
+    }
   }
 
   pickup() {

@@ -39,6 +39,8 @@ export default class extends Phaser.Scene {
 
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
 
+    this.add.bitmapText(this.game.config.width - 10, 10, 'orange', window.state.coins + ' COINS', 12).setOrigin(1, 0)
+
     let top = 170;
 
     let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(2)

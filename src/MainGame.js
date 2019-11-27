@@ -26,6 +26,10 @@ export default class MainGame extends Phaser.Game {
       effects: 2
     }
 
+    let defaultState = {
+      coins: 0,
+    }
+
     // Pick "zoom" default value :
     defaultSettings.zoom = 1;
     if (gameConfig.height >= window.innerHeight) defaultSettings.zoom = 0; // Fullscreen (desktop)
@@ -34,6 +38,11 @@ export default class MainGame extends Phaser.Game {
     window.settings = {
       ...defaultSettings,
       ...JSON.parse(localStorage.getItem('settings')),
+    };
+
+    window.state = {
+      ...defaultState,
+      ...JSON.parse(localStorage.getItem('state')),
     };
 
     if (appendConfig) gameConfig = { ...gameConfig, ...appendConfig }
