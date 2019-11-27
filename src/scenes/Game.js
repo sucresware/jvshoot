@@ -34,6 +34,13 @@ export default class extends Phaser.Scene {
     })
 
     this.anims.create({
+      key: "onche_beta",
+      frames: this.anims.generateFrameNumbers("onche_beta"),
+      frameRate: 60,
+      repeat: 0
+    })
+
+    this.anims.create({
       key: "ship",
       frames: this.anims.generateFrameNumbers("ship"),
       frameRate: 20,

@@ -69,6 +69,8 @@ export default class extends Phaser.Scene {
     this.load.image("space", "assets/images/space.png")
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
+    this.load.image('4s', 'assets/images/4s.png')
+    this.load.image('v2', 'assets/images/v2.png')
     this.load.image('noel', 'assets/images/noel.png')
     this.load.image('coin', 'assets/images/coin.png')
     this.load.image("laser", "assets/images/laser.png")
@@ -82,6 +84,7 @@ export default class extends Phaser.Scene {
     this.load.spritesheet("explosion", "assets/images/boom.png", { frameWidth: 64, frameHeight: 64 })
     this.load.spritesheet("ship", "assets/images/ship.png", { frameWidth: 32, frameHeight: 48 })
     this.load.spritesheet("flare", "assets/images/flare.png", { frameWidth: 138, frameHeight: 64 })
+    this.load.spritesheet("onche_beta", "assets/images/onche_beta.png", { frameWidth: 64, frameHeight: 48 })
 
     // Sounds
     this.load.audio("the_courier", "assets/sounds/the_courier.mp3")
