@@ -6,7 +6,7 @@ export default class extends Entity {
   constructor (scene, x, y, asset) {
     super(scene, x, y, asset, 'Player')
 
-    this.setData("speed", 200)
+    this.setData("speed", 400)
     this.setData("isShooting", false)
     this.setData("timerShootDelay", 15)
     this.setData("timerShootTick", this.getData("timerShootDelay") - 1)

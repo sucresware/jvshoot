@@ -46,6 +46,7 @@ export default class extends Phaser.Scene {
       .sprite(0, this.game.config.height, 'background')
       .setOrigin(0)
       .setDepth(-10)
+      .setDisplaySize(this.game.config.width, this.game.config.height)
 
     this.player = new Player(
       this,
@@ -156,17 +157,35 @@ export default class extends Phaser.Scene {
       callback: function() {
         if (this.state.combo >= 50) {
           if (Phaser.Math.Between(0, 10) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
+            let enemy = new CarrierShip(this,
+              Phaser.Math.Between(
+                this.cameras.main.worldView.left + spawnMargin,
+                this.cameras.main.worldView.right - spawnMargin
+              ),
+              this.cameras.main.worldView.top - 10
+            );
             this.enemies.add(enemy)
           }
         } else if (this.state.combo >= 15) {
           if (Phaser.Math.Between(0, 30) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
+            let enemy = new CarrierShip(this,
+              Phaser.Math.Between(
+                this.cameras.main.worldView.left + spawnMargin,
+                this.cameras.main.worldView.right - spawnMargin
+              ),
+              this.cameras.main.worldView.top - 10
+            );
             this.enemies.add(enemy)
           }
         } else {
           if (Phaser.Math.Between(0, 40) == 1) {
-            let enemy = new CarrierShip(this, Phaser.Math.Between(spawnMargin, this.game.config.width-spawnMargin), -10)
+            let enemy = new CarrierShip(this,
+              Phaser.Math.Between(
+                this.cameras.main.worldView.left + spawnMargin,
+                this.cameras.main.worldView.right - spawnMargin
+              ),
+              this.cameras.main.worldView.top - 10
+            );
             this.enemies.add(enemy)
           }
         }

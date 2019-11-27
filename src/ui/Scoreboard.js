@@ -18,21 +18,21 @@ export default class {
     let gameHeight = scene.game.config.height;
 
     let top = {
-      kills: scene.add.bitmapText(56, 20, 'white_shadow', '0', 8),
-      score: scene.add.bitmapText(56, 10, 'white_shadow', '0', 8),
+      kills: scene.add.bitmapText(100, 30, 'white_shadow', '0', 16),
+      score: scene.add.bitmapText(100, 10, 'white_shadow', '0', 16),
     }
 
     let bottom = {
       multiplierBackground: scene.add.graphics(),
       multiplier: scene.add.graphics(),
-      combo: scene.add.bitmapText(gameWidth - 10, gameHeight, 'indigo', '0', 8).setOrigin(1, 1),
+      combo: scene.add.bitmapText(gameWidth - 10, gameHeight, 'indigo', '0', 16).setOrigin(1, 1),
     }
 
     this.scoreboard = scene.add.container(0, 0, [
       ...Object.values(top),
-      scene.add.bitmapText(gameWidth - 10, 10, 'orange', 'JVSHOOT!', 8).setOrigin(1, 0),
-      scene.add.bitmapText(10, 10, 'indigo', 'SCORE', 8),
-      scene.add.bitmapText(10, 20, 'indigo', 'KILLS', 8),
+      scene.add.bitmapText(gameWidth - 10, 10, 'orange', 'JVSHOOT!', 16).setOrigin(1, 0),
+      scene.add.bitmapText(10, 10, 'indigo', 'SCORE', 16),
+      scene.add.bitmapText(10, 30, 'indigo', 'KILLS', 16),
     ]);
 
     this.comboZone = scene.add.container(0, 0, [
@@ -70,11 +70,11 @@ export default class {
     watch(this.scene.state, "multiplier", () => {
       this.ui.multiplierBackground.clear()
       this.ui.multiplierBackground.fillStyle(0x000000)
-      this.ui.multiplierBackground.fillRect(0, this.scene.game.config.height - 9, this.scene.game.config.width, 9)
+      this.ui.multiplierBackground.fillRect(0, this.scene.game.config.height - 17, this.scene.game.config.width, 17)
 
       this.ui.multiplier.clear()
       this.ui.multiplier.fillStyle(0x3D3DAD)
-      this.ui.multiplier.fillRect(0, this.scene.game.config.height - 9, (this.scene.state.multiplier * (this.scene.game.config.width - this.ui.combo.width - 10 - 10)) / 100, 9)
+      this.ui.multiplier.fillRect(0, this.scene.game.config.height - 17, (this.scene.state.multiplier * (this.scene.game.config.width - this.ui.combo.width - 10 - 10)) / 100, 17)
     })
   }
 

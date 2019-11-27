@@ -6,6 +6,6 @@ export default class extends Entity {
     let sprites = ['hap', 'noel'];
     super(scene, x, y, sprites[Phaser.Math.Between(0, 1)], "CarrierShip", Phaser.Math.Between(0, 2));
 
-    this.body.velocity.y = Phaser.Math.Between(50, 100);
+    this.body.velocity.y = Phaser.Math.Between(100, 200);
   }
 }

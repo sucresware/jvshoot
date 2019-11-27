@@ -13,6 +13,7 @@ export default class extends Phaser.GameObjects.Sprite {
     this.setData("isDead", false)
 
     if (health) {
+      this.healthBorder = this.scene.add.graphics()
       this.healthBackground = this.scene.add.graphics()
       this.healthInner = this.scene.add.graphics()
 
@@ -24,7 +25,8 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    if (this.healthBackground !== undefined) {
+    if (this.healthBorder !== undefined) {
+      this.healthBorder.clear()
       this.healthBackground.clear()
       this.healthInner.clear()
 
@@ -33,8 +35,11 @@ export default class extends Phaser.GameObjects.Sprite {
       let x = this.x - (this.width / 2);
       let y = this.y - (this.height / 2) - 6;
 
-      this.healthBackground.fillStyle(0xFFFFFF)
-      this.healthBackground.fillRect(x, y, this.width, 4)
+      this.healthBorder.fillStyle(0xFFFFFF)
+      this.healthBorder.fillRect(x, y, this.width, 8)
+
+      this.healthBackground.fillStyle(0x050710)
+      this.healthBackground.fillRect(x + 1, y + 1, this.width - 2, 6)
 
       let percentKilled = this.getData('health') / this.getData('maxHealth') * 100;
 
@@ -46,7 +51,7 @@ export default class extends Phaser.GameObjects.Sprite {
         this.healthInner.fillStyle(0xFF0000)
       }
 
-      this.healthInner.fillRect(x + 1, y + 1, (this.getData('health') * (this.width - 2)) / this.getData('maxHealth'), 2)
+      this.healthInner.fillRect(x + 1, y + 1, (this.getData('health') * (this.width - 2)) / this.getData('maxHealth'), 6)
     }
   }
 
@@ -67,6 +72,7 @@ export default class extends Phaser.GameObjects.Sprite {
   explode(canDestroy) {
     if (!this.getData("isDead")) {
       if (this.healthBackground !== undefined) {
+        this.healthBorder.destroy()
         this.healthBackground.destroy()
         this.healthInner.destroy()
       }

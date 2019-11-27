@@ -6,23 +6,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <style>
+        @font-face {
+            font-family: 'PressStart2P';
+            src: url('assets/fonts/PressStart2P.ttf');
+            font-weight: 400;
+            font-weight: normal;
+        }
+
         html, body {
             padding: 0;
             margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
         }
 
         body {
             background: #050710;
+            color: #fff;
         }
 
-        canvas {
+        .wrapper {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #game {
+            display: inline-block;
             border: 1px solid #3D3DAD;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        a {
+            color: #3D3DAD;
+        }
+
+        .devtools {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+
+            padding: 10px;
+            background: #000;
+            border: 1px solid #3D3DAD;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
     </style>
 </head>
 
 <body>
+    <div style="font-family: 'PressStart2P'; position: absolute; visibility: hidden;">Hello</div>
+
+    <div class="devtools">
+        <a href="javascript:void(0)" onclick="document.querySelector('.devtools>.inner').style.display = (document.querySelector('.devtools>.inner').style.display === 'none') ? 'block' : 'none';">Devtools</a>
+        <div class="inner" style="display: none;">
+            <div>
+                Scaling :
+                <a href="javascript:void(0)" onclick="window.game.scale.setZoom(window.game.config.zoom)">RESET</a>
+                <a href="javascript:void(0)" onclick="window.game.scale.setZoom(0.5)">x0.5</a>
+                <a href="javascript:void(0)" onclick="window.game.scale.setZoom(1)">x1</a>
+                <a href="javascript:void(0)" onclick="window.game.scale.setZoom(1.5)">x1.5</a>
+                <a href="javascript:void(0)" onclick="window.game.scale.setZoom(2)">x2</a>
+            </div>
+            <div>
+                Scenes :
+                <a href="javascript:void(0)" onclick="window.game.scene.start('BootScene')">Boot</a>
+                <a href="javascript:void(0)" onclick="window.game.scene.start('SplashScene')">Splash</a>
+                <a href="javascript:void(0)" onclick="window.game.scene.start('MenuScene')">Menu</a>
+                <a href="javascript:void(0)" onclick="window.game.scene.start('SettingsScene')">Settings</a>
+                <a href="javascript:void(0)" onclick="window.game.scene.start('GameScene')">Game</a>
+            </div>
+            <div>
+                Setttings :
+                <a href="javascript:void(0)" onclick="localStorage.clear(); window.location.reload();">Reset</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div id="game"></div>
+    </div>
+
     <script src="dist/vendor.js"></script>
     <script src="dist/main.js"></script>
 </body>

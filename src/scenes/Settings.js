@@ -62,7 +62,14 @@ export default class extends Phaser.Scene {
     this.particlesText = this.add.bitmapText(left + 10, top, 'white_shadow', 'EFFECTS', 8)
     this.effectsText = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', '', 8)
     this.lSelect3 = this.add.sprite(this.game.config.width / 2 - 10, top + 4, 'arrow').setScale(-1)
-    this.rSelect3 = this.add.sprite(this.game.config.width / 2 + 60, top + 4, 'arrow')
+    this.rSelect3 = this.add.sprite(this.game.config.width / 2 + 95, top + 4, 'arrow')
+
+    top += 20;
+
+    this.scalingText = this.add.bitmapText(left + 10, top, 'white_shadow', 'SCALING', 8)
+    this.scalingModeText = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', '', 8)
+    this.lSelect4 = this.add.sprite(this.game.config.width / 2 - 10, top + 4, 'arrow').setScale(-1)
+    this.rSelect4 = this.add.sprite(this.game.config.width / 2 + 95, top + 4, 'arrow')
 
     // this.particlesCB = this.add.sprite(this.game.config.width / 2 + 4, top + 4, 'checkbox')
 
@@ -84,7 +91,7 @@ export default class extends Phaser.Scene {
     watch(this.keyDown, "isDown", (key, action, value) => value ? this.select('down') : '') // Watch if S key is pressed
     watch(this.keyMenu, "isDown", (key, action, value) => value ? this.goToMenu() : '') // Watch if A key is pressed
 
-    this.selectedText = [this.effectText, this.musiK, this.particlesText];
+    this.selectedText = [this.effectText, this.musiK, this.particlesText, this.scalingText];
 
     this.blinkSelected(0)
     this.refreshGui()
@@ -122,6 +129,12 @@ export default class extends Phaser.Scene {
         else if (key === 'left') window.settings.effects--
 
         window.settings.effects = Phaser.Math.Clamp(window.settings.effects, 0, 2);
+        break;
+      case 3:
+        if (key === 'right') window.settings.zoom += 0.5
+        else if (key === 'left') window.settings.zoom -= 0.5
+
+        window.settings.zoom = Phaser.Math.Clamp(window.settings.zoom, -0.5, 2);
         break;
       // case 3:
       //   if (key !== 'space') break;
@@ -199,12 +212,40 @@ export default class extends Phaser.Scene {
       this.lSelect3.setVisible(false)
     }
 
+    this.rSelect4.setVisible(true)
+    this.lSelect4.setVisible(true)
+
+    if (window.settings.zoom == 2) {
+      this.rSelect4.setVisible(false)
+    } else if (window.settings.zoom == -0.5) {
+      this.lSelect4.setVisible(false)
+    }
+
     this.sfxText.setText(window.settings.volumes.sfx * 10)
     this.musicText.setText(window.settings.volumes.music * 10)
 
     if (window.settings.effects == 0) this.effectsText.setText('NONE')
     if (window.settings.effects == 1) this.effectsText.setText('MEDIUM')
     if (window.settings.effects == 2) this.effectsText.setText('ULTRA')
+
+    this.scalingModeText.setText('X' + window.settings.zoom)
+    if (window.settings.zoom == -0.5) this.scalingModeText.setText('MOBILE')
+    if (window.settings.zoom == 0) this.scalingModeText.setText('FULLSCREEN')
+
+    // Apply zoom :
+    this.scale.setGameSize(this.game.config.width, this.game.config.height)
+
+    if (window.settings.zoom == -0.5) {
+      let scaleFactor = window.innerHeight / this.game.config.height;
+      let width = window.innerWidth / scaleFactor;
+      this.scale.setGameSize(width, this.game.config.height)
+      this.scale.setZoom(scaleFactor)
+    } else if (window.settings.zoom == 0) {
+      let scaleFactor = (window.innerHeight - 60) / this.game.config.height;
+      this.scale.setZoom(scaleFactor)
+    } else {
+      this.scale.setZoom(window.settings.zoom)
+    }
 
     // this.particlesCB.setTexture(window.settings.effects ? 'checkbox' : 'checkbox_ok')
   }

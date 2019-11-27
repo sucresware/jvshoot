@@ -16,9 +16,13 @@ export default class {
     let flipX = Phaser.Math.Between(0, 1) ? -1 : 1;
     let flipY = Phaser.Math.Between(0, 1) ? -1 : 1;
 
-    for (let i = 0; i < 2; i++) {
-      // Creating two backgrounds will allow a continuous flow giving the illusion that they are moving.
+    // Temp fix
+    flipX *= 2;
+    flipY *= 2;
 
+    for (let i = 0; i < 2; i++) {
+
+      // Creating two backgrounds will allow a continuous flow giving the illusion that they are moving.
       let layer = this.scene.add.sprite(x, -background.height * i, 'space').setOrigin(0.5, 0);
       layer.setScale(flipX * 2, flipY * 2);
       layer.setDepth(-5);
