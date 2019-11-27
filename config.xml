@@ -10,6 +10,7 @@
     <content src="cordova.html" />
     <preference name="Orientation" value="portrait" />
     <preference name="BackgroundColor" value="0x50710ff"/>
+    <preference name="Fullscreen" value="true" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
