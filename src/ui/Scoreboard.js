@@ -18,21 +18,21 @@ export default class {
     let gameHeight = scene.game.config.height;
 
     let top = {
-      kills: scene.add.bitmapText(100, 30, 'white_shadow', '0', 16),
-      score: scene.add.bitmapText(100, 10, 'white_shadow', '0', 16),
+      kills: scene.add.bitmapText(78, 25, 'white', '0', 12),
+      score: scene.add.bitmapText(78, 10, 'white', '0', 12),
     }
 
     let bottom = {
       multiplierBackground: scene.add.graphics(),
       multiplier: scene.add.graphics(),
-      combo: scene.add.bitmapText(gameWidth - 10, gameHeight, 'indigo', '0', 16).setOrigin(1, 1),
+      combo: scene.add.bitmapText(gameWidth - 10, gameHeight, 'indigo', '0', 12).setOrigin(1, 1),
     }
 
     this.scoreboard = scene.add.container(0, 0, [
       ...Object.values(top),
-      scene.add.bitmapText(gameWidth - 10, 10, 'orange', 'JVSHOOT!', 16).setOrigin(1, 0),
-      scene.add.bitmapText(10, 10, 'indigo', 'SCORE', 16),
-      scene.add.bitmapText(10, 30, 'indigo', 'KILLS', 16),
+      scene.add.bitmapText(gameWidth - 10, 10, 'orange', 'JVSHOOT!', 12).setOrigin(1, 0),
+      scene.add.bitmapText(10, 10, 'indigo', 'SCORE', 12),
+      scene.add.bitmapText(10, 25, 'indigo', 'KILLS', 12),
     ]);
 
     this.comboZone = scene.add.container(0, 0, [
@@ -42,7 +42,7 @@ export default class {
     this.ui = {
       ...top,
       ...bottom,
-      hero: scene.add.bitmapText(gameWidth / 2, gameHeight / 2, 'white_shadow', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
+      hero: scene.add.bitmapText(gameWidth / 2, gameHeight / 2, 'white', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
     }
 
     Phaser.Actions.SetDepth(Object.values(this.ui), 50)
@@ -70,11 +70,11 @@ export default class {
     watch(this.scene.state, "multiplier", () => {
       this.ui.multiplierBackground.clear()
       this.ui.multiplierBackground.fillStyle(0x000000)
-      this.ui.multiplierBackground.fillRect(0, this.scene.game.config.height - 17, this.scene.game.config.width, 17)
+      this.ui.multiplierBackground.fillRect(0, this.scene.game.config.height - 13, this.scene.game.config.width, 13)
 
       this.ui.multiplier.clear()
       this.ui.multiplier.fillStyle(0x3D3DAD)
-      this.ui.multiplier.fillRect(0, this.scene.game.config.height - 17, (this.scene.state.multiplier * (this.scene.game.config.width - this.ui.combo.width - 10 - 10)) / 100, 17)
+      this.ui.multiplier.fillRect(0, this.scene.game.config.height - 13, (this.scene.state.multiplier * (this.scene.game.config.width - this.ui.combo.width - 10 - 10)) / 100, 13)
     })
   }
 

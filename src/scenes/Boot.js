@@ -6,7 +6,6 @@ export default class extends Phaser.Scene {
   }
 
   preload () {
-
     /** Scaling **/
     this.scale.setGameSize(this.game.config.width, this.game.config.height)
 
@@ -48,6 +47,13 @@ export default class extends Phaser.Scene {
         this.progressText.setText(type + '/' + name)
     })
 
+    this.load.on('complete', () => {
+      progressPercentText.setText('COMPLETE');
+      setTimeout(() => {
+        this.scene.start('SplashScene')
+      }, 1000);
+    })
+
     let progressBox = this.add.graphics()
     let progressBar = this.add.graphics()
     progressBox.fillStyle(0x050710, 1)
@@ -57,7 +63,6 @@ export default class extends Phaser.Scene {
     let fonts = ['white', 'indigo', 'orange', 'red', 'green'];
     fonts.forEach(font => {
       this.load.bitmapFont(font, './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
-      this.load.bitmapFont(font + '_shadow', './assets/fonts/' + font + '_shadow.png', './assets/fonts/' + font + '_shadow.xml')
     })
 
     // Images
@@ -85,9 +90,5 @@ export default class extends Phaser.Scene {
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
-  }
-
-  update () {
-    this.scene.start('SplashScene')
   }
 }

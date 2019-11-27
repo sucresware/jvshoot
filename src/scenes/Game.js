@@ -140,7 +140,7 @@ export default class extends Phaser.Scene {
           ease: 'Sine.easeInOut',
         });
 
-        setTimeout(() => that.scoreboard.showUI(), 1000);
+        setTimeout(() => that.scoreboard.showUI(200), 1000);
       }
     })
 

@@ -74,7 +74,7 @@ export default class extends Phaser.Scene {
     });
 
     let label = window.mobile ? 'TOUCH TO START' : 'PRESS SPACE TO START'
-    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', label, 16).setOrigin(0.5)
+    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white', label, 16).setOrigin(0.5)
 
     var tween = this.tweens.add({
         targets: [ start ],
@@ -88,11 +88,11 @@ export default class extends Phaser.Scene {
     });
 
     top += 30;
-    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', '© 2019 SUCRESWARE', 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, top, 'white', '© 2019 SUCRESWARE', 8).setOrigin(0.5)
     top += 30;
-    this.add.bitmapText(this.game.config.width / 2, top, 'white_shadow', 'V' + version, 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, top, 'white', 'V' + version, 8).setOrigin(0.5)
 
-    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white_shadow', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
     this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)

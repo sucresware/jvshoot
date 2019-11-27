@@ -51,7 +51,7 @@ export default class extends Phaser.Scene {
       // this.add.text(0, 0, 'DEVELOPED BY', { fontFamily: 'PressStart2P', fontSize: '16px'}).setOrigin(0.5),
       // this.add.text(0, 30, 'MGK', { fontFamily: 'PressStart2P', fontSize: '24px'}).setOrigin(0.5),
       this.add.bitmapText(0, 0, 'white', 'DEVELOPED BY', 16).setOrigin(0.5),
-      this.add.bitmapText(0, 30, 'orange_shadow', 'MGK', 32).setOrigin(0.5)
+      this.add.bitmapText(0, 30, 'orange', 'MGK', 32).setOrigin(0.5)
     ]);
 
     slide.before = () => {
@@ -65,7 +65,7 @@ export default class extends Phaser.Scene {
 
     slide.container.add([
       this.add.bitmapText(0, 0, 'white', 'DESIGNED BY', 16).setOrigin(0.5),
-      this.add.bitmapText(0, 30, 'orange_shadow', 'BLOOD', 32).setOrigin(0.5)
+      this.add.bitmapText(0, 30, 'orange', 'BLOOD', 32).setOrigin(0.5)
     ]);
 
     slide.before = () => meSpeak.speak("designed by Blud", { volume: window.settings.volumes.sfx })
@@ -76,7 +76,7 @@ export default class extends Phaser.Scene {
     slide = { container: this.add.container(this.game.config.width / 2, this.game.config.height / 2) };
 
     slide.container.add([
-      this.add.bitmapText(0, 0, 'orange_shadow', 'SUCRESWARE', 32).setOrigin(0.5)
+      this.add.bitmapText(0, 0, 'orange', 'SUCRESWARE', 32).setOrigin(0.5)
     ]);
 
     slide.before = () => {
@@ -99,9 +99,9 @@ export default class extends Phaser.Scene {
     var top = 0;
 
     slide.container.add([
-      this.add.bitmapText(0, top += 30, 'white_shadow', 'THIS IS ANOTHER', 16).setOrigin(0.5),
-      this.add.bitmapText(0, top += 30, 'white_shadow', 'OPEN-SOURCE PROJECT', 16).setOrigin(0.5),
-      this.add.bitmapText(0, top += 30, 'white_shadow', 'FROM 4SUCRES.ORG', 16).setOrigin(0.5),
+      this.add.bitmapText(0, top += 30, 'white', 'THIS IS ANOTHER', 16).setOrigin(0.5),
+      this.add.bitmapText(0, top += 30, 'white', 'OPEN-SOURCE PROJECT', 16).setOrigin(0.5),
+      this.add.bitmapText(0, top += 30, 'white', 'FROM 4SUCRES.ORG', 16).setOrigin(0.5),
       this.add.bitmapText(0, top += 70, 'indigo', 'MUSIC BY DUBMOOD', 16).setOrigin(0.5)
     ]);
 
