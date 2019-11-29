@@ -257,6 +257,16 @@ export default class extends Phaser.Scene {
   goToMenu () {
     this.bgm.stop()
     this.saveSettings()
+    this.removeWatchers()
     this.scene.start('MenuScene')
+  }
+
+  removeWatchers() {
+    unwatch(this.keyRight, "isDown");
+    unwatch(this.keyLeft, "isDown");
+    unwatch(this.keySpace, "isDown");
+    unwatch(this.keyUp, "isDown");
+    unwatch(this.keyDown, "isDown");
+    unwatch(this.keyMenu, "isDown");
   }
 }

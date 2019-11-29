@@ -40,7 +40,7 @@ export default class ChooseLevelScene extends Phaser.Scene {
 		this.levelSelectL = this.add.sprite(wCenter - 100, top, 'arrow').setScale(-1);
 		this.levelSelectR = this.add.sprite(wCenter + 100, top, 'arrow');
 
-    this.levelValue = 0;
+    this.levelValue = window.selectedLevel || 0;
 
     this.add.bitmapText(wCenter, this.game.config.height - 10, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
 
@@ -81,6 +81,7 @@ export default class ChooseLevelScene extends Phaser.Scene {
   }
 
   start() {
+    this.removeWatchers();
     window.selectedLevel = this.levelValue;
     this.scene.start('GameScene')
   }
@@ -137,6 +138,14 @@ export default class ChooseLevelScene extends Phaser.Scene {
   }
 
   goToMenu () {
+    this.removeWatchers();
     this.scene.start('MenuScene')
+  }
+
+  removeWatchers() {
+    unwatch(this.keyRight, "isDown");
+    unwatch(this.keyLeft, "isDown");
+    unwatch(this.keySpace, "isDown");
+    unwatch(this.keyMenu, "isDown");
   }
 }
