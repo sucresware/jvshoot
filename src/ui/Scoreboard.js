@@ -20,6 +20,7 @@ export default class {
     let top = {
       kills: scene.add.bitmapText(78, 25, 'white', '0', 12),
       score: scene.add.bitmapText(78, 10, 'white', '0', 12),
+      coins: scene.add.bitmapText(gameWidth - 10, 25, 'orange', '0', 12).setOrigin(1, 0),
     }
 
     let bottom = {
@@ -76,12 +77,15 @@ export default class {
       this.ui.multiplier.fillStyle(0x3D3DAD)
       this.ui.multiplier.fillRect(0, this.scene.game.config.height - 13, (this.scene.state.multiplier * (this.scene.game.config.width - this.ui.combo.width - 10 - 10)) / 100, 13)
     })
+
+    watch(window.state, "coins", () => this.ui.coins.text = window.state.coins + " COINS");
   }
 
   unwatch() {
     unwatch(this.scene.state, "kills");
     unwatch(this.scene.state, "score");
     unwatch(this.scene.state, "combo");
+    unwatch(window.state, "coins");
   }
 
   showUI(speed) {
