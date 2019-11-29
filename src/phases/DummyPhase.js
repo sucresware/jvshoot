@@ -4,6 +4,8 @@ import meSpeak from 'mespeak';
 export default class extends Phase {
     constructor(params) {
         super(params);
+
+        this.sleep = params.sleep;
     }
 
     mount() {
@@ -11,7 +13,7 @@ export default class extends Phase {
 
         setTimeout(() => {
            this.unmount();
-        }, 4500);
+        }, this.sleep);
     }
 
     update() {

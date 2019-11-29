@@ -69,7 +69,6 @@ export default class extends Phaser.Scene {
     this.load.image("space", "assets/images/space.png")
     this.load.image('logo', 'assets/images/logo.png')
     this.load.image('hap', 'assets/images/hap.png')
-    this.load.image('olinux', 'assets/images/olinux.png')
     this.load.image('noel', 'assets/images/noel.png')
     this.load.image('coin', 'assets/images/coin.png')
     this.load.image("laser", "assets/images/laser.png")
@@ -90,10 +89,17 @@ export default class extends Phaser.Scene {
     this.load.audio("votedisk", "assets/sounds/votedisk.mp3")
     this.load.audio("votedisk_mbr", "assets/sounds/votedisk_mbr.mp3")
     this.load.audio("the_scene_is_dead", "assets/sounds/the_scene_is_dead.mp3")
-    this.load.audio("la_galerie_marchande", "assets/sounds/la_galerie_marchande.mp3")
     this.load.audio("explode", "assets/sounds/explode.wav")
     this.load.audio("explode_alt", "assets/sounds/explode_alt.wav")
     this.load.audio("laser", "assets/sounds/laser.wav")
-    this.load.audio("coin", "assets/sounds/coin.wav")
+    this.load.audio("coin", "assets/sounds/coin.mp3")
+
+    // Special
+    this.load.image('olinux', 'assets/images/olinux.png')
+    this.load.image('olinux_ah', 'assets/images/olinux_ah.png')
+    this.load.audio("t_ki_toi", "assets/sounds/t_ki_toi.mp3")
+    this.load.audio("tu_tcroi_malin", "assets/sounds/tu_tcroi_malin.mp3")
+    this.load.audio("quoi", "assets/sounds/quoi.mp3")
+    this.load.audio("la_galerie_marchande", "assets/sounds/la_galerie_marchande.mp3")
   }
 }

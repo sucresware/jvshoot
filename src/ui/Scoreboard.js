@@ -43,7 +43,7 @@ export default class {
     this.ui = {
       ...top,
       ...bottom,
-      hero: scene.add.bitmapText(gameWidth / 2, gameHeight / 2, 'white', EXPECTED_INTRO_KILLS, 32).setOrigin(0.5),
+      hero: scene.add.bitmapText(gameWidth / 2, gameHeight / 2, 'white', '', 32).setOrigin(0.5),
     }
 
     Phaser.Actions.SetDepth(Object.values(this.ui), 50)

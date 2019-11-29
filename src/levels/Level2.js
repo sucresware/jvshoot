@@ -8,7 +8,7 @@ export default class extends Level {
         super({ parent: params.parent })
 
         this.phases = [
-            new DummyPhase({ parent: params.parent, level: this })
+            new DummyPhase({ parent: params.parent, level: this, sleep: 4500 })
         ];
     }
 

@@ -50,11 +50,6 @@ export default class extends Phase {
         // Remove watchers
         unwatch(this.counters, "kills");
 
-        // Remove events
-        for (let index = 0; index < this.events.length; index++) {
-            this.events[index].destroy();
-        }
-
         super.unmount();
     }
 }

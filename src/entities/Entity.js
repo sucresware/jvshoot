@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+// import rexShake from './plugins/shakeposition.js';
 
 export default class extends Phaser.GameObjects.Sprite {
   constructor (scene, x, y, asset, type, health) {
@@ -8,9 +9,10 @@ export default class extends Phaser.GameObjects.Sprite {
     this.scene = scene
     this.scene.add.existing(this)
     this.scene.physics.world.enableBody(this, 0)
+    // this.shake = scene.plugins.get('rexShake').add(this);
 
     this.setData("type", type)
-    this.setData("isDead", false)
+    this.isDead = false
 
     if (health) {
       this.healthBorder = this.scene.add.graphics()
@@ -19,8 +21,10 @@ export default class extends Phaser.GameObjects.Sprite {
 
       this.setData("maxHealth", health)
       this.setData("health", health)
+      this.health = health;
     } else {
       this.setData("health", 1)
+      this.health = 1;
     }
   }
 
@@ -59,6 +63,7 @@ export default class extends Phaser.GameObjects.Sprite {
     let health = this.getData('health')
     health -= this.scene.state.damage;
     this.setData('health', health)
+    this.health = health;
 
     if (health <= 0) {
       if (this.onDestroy !== undefined) this.onDestroy()
@@ -70,7 +75,7 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   explode(canDestroy) {
-    if (!this.getData("isDead")) {
+    if (!this.isDead) {
       if (this.healthBackground !== undefined) {
         this.healthBorder.destroy()
         this.healthBackground.destroy()
@@ -96,7 +101,7 @@ export default class extends Phaser.GameObjects.Sprite {
           this.setVisible(false)
         }
       }, this)
-      this.setData("isDead", true)
+      this.isDead = true
 
       if (this.scene.state.combo > 50) {
         this.scene.cameras.main.shake(200, 0.01)
