@@ -72,7 +72,6 @@ export default class extends Entity {
   onDestroy() {
     this.scene.scoreboard.ui.hero.text = "OVER"
     this.scene.bgm.stop()
-    this.scene.bgm_mbr.stop()
 
     // Kill all ennemies
     this.scene.time.addEvent({

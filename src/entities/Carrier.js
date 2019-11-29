@@ -5,11 +5,8 @@ import Coin from '../items/Coin'
 export default class extends Entity {
   constructor(scene, x, y) {
     let ennemies = [
-      // { key: 'v2', life: 1 },
-      // { key: 'onche_beta', life: 1, animated: true },
-      { key: 'hap', life: 2 },
-      // { key: '4s', life: 3 },
-      { key: 'noel', life: 4 },
+      { key: 'hap', life: 1 },
+      { key: 'noel', life: 2 },
     ];
 
     let ennemy = ennemies[Phaser.Math.Between(0, ennemies.length - 1)]

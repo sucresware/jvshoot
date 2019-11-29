@@ -104,7 +104,7 @@ export default class extends Phaser.Scene {
   update () {
     if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.bgm.stop()
-      this.scene.start('GameScene')
+      this.scene.start('ChooseLevelScene')
     } else if (this.keySettings.isDown) {
       this.bgm.stop()
       this.scene.start('SettingsScene')

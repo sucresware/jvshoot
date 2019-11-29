@@ -20,7 +20,7 @@ export default class {
     let top = {
       kills: scene.add.bitmapText(78, 25, 'white', '0', 12),
       score: scene.add.bitmapText(78, 10, 'white', '0', 12),
-      coins: scene.add.bitmapText(gameWidth - 10, 25, 'orange', '0', 12).setOrigin(1, 0),
+      coins: scene.add.bitmapText(gameWidth - 10, 25, 'orange', window.state.coins + ' COINS', 12).setOrigin(1, 0),
     }
 
     let bottom = {
@@ -89,13 +89,13 @@ export default class {
   }
 
   showUI(speed) {
-    if (speed == undefined) speed = 500;
+    if (speed == undefined) speed = 0;
     this.moveUI(this.scoreboard, 0, 0, speed);
     this.moveUI(this.comboZone, 0, 0, speed);
   }
 
   hideUI(speed) {
-    if (speed == undefined) speed = 500;
+    if (speed == undefined) speed = 0;
     this.moveUI(this.scoreboard, 0, -48, speed);
     this.moveUI(this.comboZone, 0, this.scene.game.config.height, speed);
   }

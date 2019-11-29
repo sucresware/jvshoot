@@ -4,6 +4,8 @@ import BootScene from './scenes/Boot'
 import SplashScene from './scenes/Splash'
 import MenuScene from './scenes/Menu'
 import GameScene from './scenes/Game'
+import ChooseLevelScene from './scenes/ChooseLevel'
+import LevelClearScene from './scenes/LevelClear'
 import SettingsScene from './scenes/Settings'
 
 import config from './config'
@@ -15,7 +17,7 @@ export default class MainGame extends Phaser.Game {
 
     let gameConfig = {
       ...config,
-      scene: [BootScene, SplashScene, MenuScene, GameScene, SettingsScene],
+      scene: [BootScene, SplashScene, MenuScene, GameScene, ChooseLevelScene, SettingsScene, LevelClearScene],
     }
 
     let defaultSettings = {

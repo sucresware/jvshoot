@@ -17,7 +17,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
   update() {
     this.delay--;
 
-    if (this.delay == 3 * 60) {
+    if (this.delay == 1 * 60) {
         this.scene.tweens.add({
           targets: this,
           alpha: 0,

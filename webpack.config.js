@@ -32,8 +32,15 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
-        include: path.join(__dirname, 'src')
+        // use: ['babel-loader'],
+        loader: 'babel-loader',
+        include: path.join(__dirname, 'src'),
+        options: {
+          presets: [
+            '@babel/preset-env',
+            { 'plugins': ['@babel/plugin-proposal-class-properties'] }
+          ]
+        }
       }
     ]
   },
