@@ -33,7 +33,7 @@ export default class extends Phaser.Scene {
       loop: false
     });
 
-    this.bgm.play('intro', { volume: window.settings.volMusic })
+    this.bgm.play('intro', { volume: window.settings.volumes.music })
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
