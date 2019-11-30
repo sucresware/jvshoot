@@ -43,13 +43,7 @@ export default class extends Phaser.Scene {
       .setDepth(-10)
       .setDisplaySize(this.game.config.width, this.game.config.height)
 
-    this.player = new Player(
-      this,
-      this.game.config.width / 2,
-      this.game.config.height - 120,
-      'ship'
-    )
-
+    this.player = new Player(this, this.game.config.width / 2, this.game.config.height - 120, 'ship')
     this.player.play('ship')
 
     this.input.addPointer(2);

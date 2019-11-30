@@ -9,7 +9,7 @@ export default class extends Level {
         super({ parent: params.parent })
 
         this.phases = [
-            new WarmupPhase({ parent: params.parent, level: this }),
+            new WarmupPhase({ parent: params.parent, level: this, expectedKills: 3 }),
             new RandomPhase({ parent: params.parent, level: this })
         ];
     }

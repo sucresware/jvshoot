@@ -43,7 +43,6 @@ export default class {
     this.ui = {
       ...top,
       ...bottom,
-      hero: scene.add.bitmapText(gameWidth / 2, gameHeight / 2, 'white', '', 32).setOrigin(0.5),
     }
 
     Phaser.Actions.SetDepth(Object.values(this.ui), 50)
@@ -55,16 +54,7 @@ export default class {
   }
 
   watch() {
-    watch(this.scene.state, "kills", () => {
-      if (this.scene.state.kills <= EXPECTED_INTRO_KILLS) {
-        this.ui.hero.text = EXPECTED_INTRO_KILLS - this.scene.state.kills;
-        if (EXPECTED_INTRO_KILLS - this.scene.state.kills == 0) {
-          this.ui.hero.text = '';
-        }
-      }
-
-      this.ui.kills.text = this.scene.state.kills
-    });
+    watch(this.scene.state, "kills", () => this.ui.kills.text = this.scene.state.kills);
     watch(this.scene.state, "score", () => this.ui.score.text = this.scene.state.score);
     watch(this.scene.state, "combo", () => this.ui.combo.text = 'X' + this.scene.state.combo);
 
