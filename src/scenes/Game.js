@@ -37,6 +37,7 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    // Add elements
     this.background = this.add
       .sprite(0, 0, 'background')
       .setOrigin(0)
@@ -46,32 +47,25 @@ export default class extends Phaser.Scene {
     this.player = new Player(this, this.game.config.width / 2, this.game.config.height - 120, 'ship')
     this.player.play('ship')
 
-    this.input.addPointer(2);
-    this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
-    this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)
-    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
-    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-
     this.backgrounds = [];
     for (let i = 1; i <= 5; i++) {
-      this.backgrounds.push(
-        new ScrollingBackground(this, "space", i)
-      )
+      this.backgrounds.push(new ScrollingBackground(this, "space", i))
     }
 
+    this.state = { kills: 0, damage: 1 }
+    this.scoreboard = new Scoreboard(this);
+
+    // Add groups
     this.enemies = this.add.group()
     this.items = this.add.group()
     this.enemyLasers = this.add.group()
     this.playerLasers = this.add.group()
 
-    this.state = { kills: 0, damage: 1 }
-    this.scoreboard = new Scoreboard(this);
-
+    // Add logic
     this.level = new ChooseLevelScene.levels[window.selectedLevel]({ parent: this })
     this.level.start()
 
+    // Register sounds
     this.sfx = {
       explosions: [
         this.sound.add("explode", { volume: window.settings.volumes.sfx }),
@@ -81,6 +75,7 @@ export default class extends Phaser.Scene {
       laser: this.sound.add("laser", { volume: window.settings.volumes.sfx })
     }
 
+    // Register collisions
     var scene = this;
 
     this.physics.add.overlap(this.playerLasers, this.enemies, function(playerLaser, enemy) {
@@ -119,17 +114,27 @@ export default class extends Phaser.Scene {
         laser.destroy()
       }
     });
+
+    // Register controls
+    this.input.addPointer(2);
+    this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+    this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
   }
 
   update() {
-    if (window.mobile) {
-      if (this.input.pointer1.isDown) {
-        this.player.x = this.input.pointer1.x
-        this.player.y = this.input.pointer1.y - 25
-      }
-    }
-
     if (!this.player.getData("isDead")) {
+      // Controls
+      if (window.mobile) {
+        if (this.input.pointer1.isDown) {
+          this.player.x = this.input.pointer1.x
+          this.player.y = this.input.pointer1.y - 25
+        }
+      }
+
       this.player.update()
 
       if (this.keyZ.isDown) this.player.moveUp()
@@ -137,22 +142,25 @@ export default class extends Phaser.Scene {
       if (this.keyQ.isDown) this.player.moveLeft()
       else if (this.keyD.isDown) this.player.moveRight()
 
-      if (
-        (this.keySpace.isDown
-        || (this.input.pointer1.isDown && this.input.pointer2.isDown))
-      ) {
+      // Keepshooting on hold
+      if ((this.keySpace.isDown || (this.input.pointer1.isDown && this.input.pointer2.isDown))) {
         this.player.setData("isShooting", true)
       } else {
         this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1)
         this.player.setData("isShooting", false)
       }
 
+      // Pickup use
       if (this.keyEnter.isDown) {
         console.log(this.items.getChildren())
         // Loop on the array, search for the current pickup, use it
       }
     }
 
+    // Level logic
+    this.level.update()
+
+    // Update entities
     Phaser.Actions.Call(this.enemies.getChildren(), (entity) => { entity.update(); });
     Phaser.Actions.Call(this.items.getChildren(), (entity) => { entity.update(); });
     Phaser.Actions.Call(this.enemyLasers.getChildren(), (entity) => { entity.update(); });
@@ -162,7 +170,5 @@ export default class extends Phaser.Scene {
     for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].update()
     }
-
-    this.level.update()
   }
 }
