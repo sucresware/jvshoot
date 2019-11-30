@@ -5,6 +5,7 @@ export default class extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "laser");
     this.body.velocity.y = -270;
+    this.depth = 75;
   }
 
   update() {

@@ -19,7 +19,7 @@ export default class {
 
     let top = {
       kills: scene.add.bitmapText(78, 25, 'white', '0', 12),
-      score: scene.add.bitmapText(78, 10, 'white', '0', 12),
+      time: scene.add.bitmapText(78, 10, 'white', '0', 12),
       coins: scene.add.bitmapText(gameWidth - 10, 25, 'orange', window.state.coins + ' COINS', 12).setOrigin(1, 0),
     }
 
@@ -32,7 +32,7 @@ export default class {
     this.scoreboard = scene.add.container(0, 0, [
       ...Object.values(top),
       scene.add.bitmapText(gameWidth - 10, 10, 'orange', 'JVSHOOT!', 12).setOrigin(1, 0),
-      scene.add.bitmapText(10, 10, 'indigo', 'SCORE', 12),
+      scene.add.bitmapText(10, 10, 'indigo', 'TIME', 12),
       scene.add.bitmapText(10, 25, 'indigo', 'KILLS', 12),
     ]);
 
@@ -45,17 +45,18 @@ export default class {
       ...bottom,
     }
 
-    Phaser.Actions.SetDepth(Object.values(this.ui), 50)
-
-    // Hide the scoreboard
-    this.hideUI(0)
+    Phaser.Actions.Call(Object.values(this.ui), (entity) => { entity.setDepth(90); console.log(entity); });
+    Phaser.Actions.Call(this.scoreboard.list, (entity) => { entity.setDepth(90); console.log(entity); });
+    Phaser.Actions.Call(this.comboZone.list, (entity) => { entity.setDepth(90); console.log(entity); });
+    this.scoreboard.setDepth(90);
+    this.comboZone.setDepth(90);
 
     this.watch()
   }
 
   watch() {
     watch(this.scene.state, "kills", () => this.ui.kills.text = this.scene.state.kills);
-    watch(this.scene.state, "score", () => this.ui.score.text = this.scene.state.score);
+    watch(this.scene.state, "time", () => this.ui.time.text = this.scene.state.time);
     watch(this.scene.state, "combo", () => this.ui.combo.text = 'X' + this.scene.state.combo);
 
     watch(this.scene.state, "multiplier", () => {
@@ -73,7 +74,7 @@ export default class {
 
   unwatch() {
     unwatch(this.scene.state, "kills");
-    unwatch(this.scene.state, "score");
+    unwatch(this.scene.state, "time");
     unwatch(this.scene.state, "combo");
     unwatch(window.state, "coins");
   }

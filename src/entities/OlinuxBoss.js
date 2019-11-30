@@ -5,6 +5,10 @@ export default class extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, 'olinux_ah', 'olinux_ah', 150);
     this.scale = 1.5;
+    this.depth = 50;
+    this.healthBorder.setDepth(50);
+    this.healthBackground.setDepth(50);
+    this.healthInner.setDepth(50);
 
     scene.tweens.add({
         targets: this,
@@ -53,7 +57,7 @@ export default class extends Entity {
       let quoi = this.scene.sound.add("quoi");
       quoi.play({
         volume: window.settings.volumes.sfx,
-        rate: 0.1,
+        rate: 1,
       });
 
       let that = this;

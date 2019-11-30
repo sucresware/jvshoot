@@ -5,6 +5,7 @@ export default class extends Phaser.GameObjects.Sprite {
   constructor (scene, x, y, asset, type, health) {
     super(scene, x, y, asset)
 
+    this.depth = 20;
     this.asset = asset
     this.scene = scene
     this.scene.add.existing(this)
@@ -41,7 +42,6 @@ export default class extends Phaser.GameObjects.Sprite {
 
       this.healthBorder.fillStyle(0xFFFFFF)
       this.healthBorder.fillRect(x, y, this.width, 8)
-
       this.healthBackground.fillStyle(0x050710)
       this.healthBackground.fillRect(x + 1, y + 1, this.width - 2, 6)
 
@@ -82,33 +82,32 @@ export default class extends Phaser.GameObjects.Sprite {
         this.healthInner.destroy()
       }
 
-      this.setTexture("explosion")
-      this.play("explosion")
+      // Create an explosion in place
+      this.scene.add.sprite(this.x, this.y, 'explosion')
+          .setScale(this.scale)
+          .play('explosion')
+          .on('animationcomplete', (animation, frame, sprite) => sprite.destroy());
 
+      // Play sound
       this.scene.sfx.explosions[Phaser.Math.Between(0, this.scene.sfx.explosions.length - 1)].play({ volume: window.settings.volumes.sfx });
-      if (this.shootTimer !== undefined) {
-        if (this.shootTimer) {
-          this.shootTimer.remove(false)
-        }
-      }
 
-      this.setAngle(0)
-      this.body.setVelocity(0, 0)
-      this.on('animationcomplete', function() {
-        if (canDestroy) {
-          this.destroy()
-        } else {
-          this.setVisible(false)
-        }
-      }, this)
-      this.isDead = true
+      // if (this.shootTimer !== undefined) {
+      //   if (this.shootTimer) {
+      //     this.shootTimer.remove(false)
+      //   }
+      // }
 
-      if (this.scene.state.combo > 50) {
-        this.scene.cameras.main.shake(200, 0.01)
-        if (window.mobile) navigator.vibrate(100)
-      } else if (this.scene.state.combo > 10) {
-        if (window.mobile) navigator.vibrate(50)
-      }
+      if (canDestroy) this.destroy()
+      else this.setVisible(false)
+
+      this.isDead = true;
+
+      // if (this.scene.state.combo > 50) {
+      //   this.scene.cameras.main.shake(200, 0.01)
+      //   if (window.mobile) navigator.vibrate(100)
+      // } else if (this.scene.state.combo > 10) {
+      //   if (window.mobile) navigator.vibrate(50)
+      // }
 
     }
   }

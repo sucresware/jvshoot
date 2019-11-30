@@ -7,6 +7,9 @@ var unwatch = WatchJS.unwatch;
 export default class extends Phase {
     constructor(params) {
         super(params);
+
+        this.healthMultiplier = params.healthMultiplier || 1;
+        this.velocityMultiplier = params.velocityMultiplier || 1;
     }
 
     mount() {
@@ -24,14 +27,13 @@ export default class extends Phase {
                 delay: 700,
                 callback: () => {
                     this.parent.enemies.add(
-                        new Carrier(
-                            this.parent,
-                            Phaser.Math.Between(
-                                this.parent.cameras.main.worldView.left + 20,
-                                this.parent.cameras.main.worldView.right - 20
-                            ),
-                            this.parent.cameras.main.worldView.top - 30
-                        )
+                        new Carrier({
+                            parent: this.parent,
+                            x: Phaser.Math.Between(this.parent.cameras.main.worldView.left + 20, this.parent.cameras.main.worldView.right - 20),
+                            y: this.parent.cameras.main.worldView.top - 30,
+                            healthMultiplier: this.healthMultiplier,
+                            velocityMultiplier: this.velocityMultiplier,
+                        })
                     );
                 },
                 callbackScope: this,

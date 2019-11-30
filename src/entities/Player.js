@@ -6,6 +6,8 @@ export default class extends Entity {
   constructor (scene, x, y, asset) {
     super(scene, x, y, asset, 'Player')
 
+    this.depth = 95;
+
     this.setData("speed", 400)
     this.setData("isShooting", false)
     this.setData("timerShootDelay", 15)

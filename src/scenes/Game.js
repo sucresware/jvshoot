@@ -12,9 +12,6 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 
-const EXPECTED_INTRO_KILLS = 3;
-const COMBO_MULTIPLIER = 0.1;
-
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -52,7 +49,7 @@ export default class extends Phaser.Scene {
       this.backgrounds.push(new ScrollingBackground(this, "space", i))
     }
 
-    this.state = { kills: 0, damage: 1 }
+    this.state = { kills: 0, damage: 1, time: 0 }
     this.scoreboard = new Scoreboard(this);
 
     // Add groups
@@ -114,6 +111,9 @@ export default class extends Phaser.Scene {
         laser.destroy()
       }
     });
+
+    // Add timer
+    this.time.addEvent({ delay: 1000, callback: () => this.state.time++, callbackScope: this, loop: true });
 
     // Register controls
     this.input.addPointer(2);

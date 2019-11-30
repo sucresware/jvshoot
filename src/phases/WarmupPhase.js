@@ -18,7 +18,9 @@ export default class extends Phase {
         this.parent.cameras.main.setBackgroundColor(0x000000)
         this.parent.cameras.main.setZoom(1.5);
 
-        this.hero = this.parent.add.bitmapText(parent.game.config.width / 2, parent.game.config.height / 2, 'white', this.expectedKills, 32).setOrigin(0.5),
+        this.hero = this.parent.add.bitmapText(parent.game.config.width / 2, parent.game.config.height / 2, 'white', this.expectedKills, 32)
+            .setOrigin(0.5)
+            .setDepth(100);
         this.sprites.push(this.hero);
 
         watch(this.counters, "kills", (attr, action, newValue) => {
