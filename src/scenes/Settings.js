@@ -12,7 +12,13 @@ export default class extends Phaser.Scene {
     super({ key: 'SettingsScene' })
   }
 
+  init (data) {
+    this.loaded = data.loaded || false
+  }
+
   preload () {
+    // Assets loaded by MenuScene
+
     this.bgm = this.sound.add("the_scene_is_dead");
 
     this.bgm.addMarker({

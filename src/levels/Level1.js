@@ -3,7 +3,7 @@ import WarmupPhase from '../phases/WarmupPhase'
 import RandomPhase from '../phases/RandomPhase'
 
 export default class extends Level {
-    static key = 'Level-1';
+    static key = 'Level-1'
 
     constructor(params){
         super({ parent: params.parent })
@@ -24,5 +24,11 @@ export default class extends Level {
         this.parent.bgm.stop();
 
         super.end()
+    }
+
+    assets() {
+        return [
+            { type: 'audio', key: "votedisk", path: "assets/sounds/votedisk.mp3" },
+        ]
     }
 }

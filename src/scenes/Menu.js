@@ -2,14 +2,42 @@ const { version } = require('../../package.json');
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
-
   constructor () {
     super({ key: 'MenuScene' })
 
     this.firstTime = true;
   }
 
+  init (data) {
+    this.loaded = data.loaded || false
+  }
+
+  loadAssets() {
+    /* Load assets for
+      - MenuScene
+      - SettingsScene
+      - ChooseLevelScene
+      - LevelClearScene
+    */
+    this.scene.start('LoadingScene', {
+      nextScene: 'MenuScene',
+      assets: [
+        { type: 'image', key: "space", path: "assets/images/space.png" },
+        { type: 'image', key: 'logo', path: 'assets/images/logo.png' },
+        { type: 'image', key: "arrow", path: "assets/images/arrow.png" },
+        { type: 'image', key: "checkbox", path: "assets/images/checkbox.png" },
+        { type: 'image', key: "checkbox_ok", path: "assets/images/checkbox_ok.png" },
+        { type: 'spritesheet', key: "flare", path: "assets/images/flare.png", options: { frameWidth: 138, frameHeight: 64 } },
+        { type: 'audio', key: "the_courier", path: "assets/sounds/the_courier.mp3" },
+        { type: 'audio', key: "the_scene_is_dead", path: "assets/sounds/the_scene_is_dead.mp3" },
+        { type: 'audio', key: "explode", path: "assets/sounds/explode.wav" },
+      ]
+    })
+  }
+
   preload () {
+    if (!this.loaded) return this.loadAssets()
+
     if (this.firstTime) {
       this.bgm = this.sound.add("the_courier");
       this.bgm.addMarker({ name: 'intro', start: 20.35 });
@@ -20,6 +48,8 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    if (!this.loaded) return
+
     if (window.settings.effects >= 1) this.cameras.main.shake(200, 0.01);
     this.sfx.explode.play({ volume: window.settings.volumes.sfx })
 
@@ -101,7 +131,10 @@ export default class extends Phaser.Scene {
 
     this.input.addPointer(1);
   }
+
   update () {
+    if (!this.loaded) return
+
     if (this.keySpace.isDown || this.input.pointer1.isDown) {
       this.bgm.stop()
       this.scene.start('ChooseLevelScene')

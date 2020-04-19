@@ -7,26 +7,44 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 
-var loaded = false;
-
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'SplashScene' })
   }
 
+  init (data) {
+    this.loaded = data.loaded || false
+  }
+
+  loadAssets() {
+    meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
+    meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
+
+    this.scene.start('LoadingScene', {
+      nextScene: 'SplashScene',
+      assetsFn: function(){
+        // Bitmap Fonts
+        let fonts = ['white', 'indigo', 'orange', 'red', 'green'];
+        fonts.forEach(font => {
+          this.load.bitmapFont(font, './assets/fonts/' + font + '.png', './assets/fonts/' + font + '.xml')
+        })
+      },
+      assets: [
+        { type: 'audio', key: "the_courier", path: "assets/sounds/the_courier.mp3"}
+      ]
+    })
+  }
+
   preload () {
+    if (!this.loaded) return this.loadAssets()
+
     this.cameras.main.setBackgroundColor(0x000000)
-
-    if (!loaded) {
-      meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
-      meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
-      loaded = true;
-    }
-
     this.bgm = this.sound.add("the_courier");
   }
 
   create () {
+    if (!this.loaded) return
+
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
     background.setAlpha(0)
 
@@ -120,6 +138,8 @@ export default class extends Phaser.Scene {
   }
 
   update() {
+    if (!this.loaded) return
+
     if (
       (this.bgm.seek >= 4.8 && this.currentSlide == 0)
       || (this.bgm.seek >= 8.8 && this.currentSlide == 1)
@@ -150,6 +170,6 @@ export default class extends Phaser.Scene {
     unwatch(this.input.pointer1, 'isDown');
     unwatch(this.keySpace, 'isDown');
     this.bgm.stop();
-    this.scene.start('MenuScene');
+    this.scene.start('MenuScene')
   }
 }

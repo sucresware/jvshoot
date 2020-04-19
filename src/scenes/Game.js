@@ -17,7 +17,38 @@ export default class extends Phaser.Scene {
     super({ key: 'GameScene' })
   }
 
+  init (data) {
+    this.level = new ChooseLevelScene.levels[window.selectedLevel]({ parent: this })
+    this.loaded = data.loaded || false
+  }
+
+  loadAssets() {
+    var levelAssets = this.level.assets() || []
+
+    this.scene.start('LoadingScene', {
+      nextScene: 'GameScene',
+      assets: [
+        { type: 'image', key: "space", path: "assets/images/space.png" },
+        { type: 'image', key: 'logo', path: 'assets/images/logo.png' },
+        { type: 'image', key: 'hap', path: 'assets/images/hap.png' },
+        { type: 'image', key: 'noel', path: 'assets/images/noel.png' },
+        { type: 'image', key: 'coin', path: 'assets/images/coin.png' },
+        { type: 'image', key: "laser", path: "assets/images/laser.png" },
+        { type: 'image', key: "computer", path: "assets/images/computer.png" },
+        { type: 'image', key: "background", path: "assets/images/background.png" },
+        { type: 'spritesheet', key: "explosion", path: "assets/images/boom.png", options: { frameWidth: 64, frameHeight: 64 } },
+        { type: 'spritesheet', key: "ship", path: "assets/images/ship.png", options: { frameWidth: 32, frameHeight: 48 } },
+        { type: 'audio', key: "explode_alt", path: "assets/sounds/explode_alt.wav"},
+        { type: 'audio', key: "laser", path: "assets/sounds/laser.wav"},
+        { type: 'audio', key: "coin", path: "assets/sounds/coin.mp3"},
+        ...levelAssets,
+      ]
+    })
+  }
+
   preload () {
+    if (!this.loaded) return this.loadAssets()
+
     this.anims.create({
       key: "explosion",
       frames: this.anims.generateFrameNumbers("explosion"),
@@ -34,6 +65,8 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    if (!this.loaded) return
+
     // Add elements
     this.background = this.add
       .sprite(0, 0, 'background')
@@ -59,7 +92,6 @@ export default class extends Phaser.Scene {
     this.playerLasers = this.add.group()
 
     // Add logic
-    this.level = new ChooseLevelScene.levels[window.selectedLevel]({ parent: this })
     this.level.start()
 
     // Register sounds
@@ -126,6 +158,8 @@ export default class extends Phaser.Scene {
   }
 
   update() {
+    if (!this.loaded) return
+
     if (!this.player.getData("isDead")) {
       // Controls
       if (window.mobile) {

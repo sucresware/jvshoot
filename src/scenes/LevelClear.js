@@ -10,7 +10,13 @@ export default class extends Phaser.Scene {
     super({ key: 'LevelClearScene' })
   }
 
-  preload () {}
+  init (data) {
+    this.loaded = data.loaded || false
+  }
+
+  preload () {
+    // Assets loaded by MenuScene
+  }
 
   create () {
     /**
@@ -45,7 +51,7 @@ export default class extends Phaser.Scene {
        return this.scene.start('MenuScene')
     }
 
-    this.scene.start('GameScene')
+    this.scene.start('GameScene', { loaded : false }) // Force assets reload
   }
 
   goToMenu () {

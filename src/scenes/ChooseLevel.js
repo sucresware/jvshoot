@@ -18,7 +18,13 @@ export default class ChooseLevelScene extends Phaser.Scene {
     super({ key: 'ChooseLevelScene' })
   }
 
-  preload () {}
+  init (data) {
+    this.loaded = data.loaded || false
+  }
+
+  preload () {
+    // Assets loaded by MenuScene
+  }
 
   create () {
     /**
@@ -29,7 +35,7 @@ export default class ChooseLevelScene extends Phaser.Scene {
     this.cameras.main.zoomTo(1, 50);
 
     /**
-      Draw Gui
+      Draw GUI
     */
     let top = 40;
     let wCenter = this.game.config.width / 2;
@@ -83,7 +89,7 @@ export default class ChooseLevelScene extends Phaser.Scene {
   start() {
     this.removeWatchers();
     window.selectedLevel = this.levelValue;
-    this.scene.start('GameScene')
+    this.scene.start('GameScene', { loaded : false }) // Force assets reload
   }
 
   select (key) {

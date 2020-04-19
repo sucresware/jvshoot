@@ -35,4 +35,16 @@ export default class extends Level {
 
         super.end();
     }
+
+    assets() {
+        return [
+            { type: 'image', key: 'olinux', path: 'assets/images/olinux.png' },
+            { type: 'image', key: 'olinux_ah', path: 'assets/images/olinux_ah.png' },
+            { type: 'image', key: "galerie_marchande", path: "assets/images/galerie_marchande.jpg" },
+            { type: 'audio', key: "t_ki_toi", path: "assets/sounds/t_ki_toi.mp3" },
+            { type: 'audio', key: "tu_tcroi_malin", path: "assets/sounds/tu_tcroi_malin.mp3" },
+            { type: 'audio', key: "quoi", path: "assets/sounds/quoi.mp3" },
+            { type: 'audio', key: "la_galerie_marchande", path: "assets/sounds/la_galerie_marchande.mp3" },
+        ]
+    }
 }

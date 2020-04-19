@@ -45,9 +45,9 @@ export default class {
       ...bottom,
     }
 
-    Phaser.Actions.Call(Object.values(this.ui), (entity) => { entity.setDepth(90); console.log(entity); });
-    Phaser.Actions.Call(this.scoreboard.list, (entity) => { entity.setDepth(90); console.log(entity); });
-    Phaser.Actions.Call(this.comboZone.list, (entity) => { entity.setDepth(90); console.log(entity); });
+    Phaser.Actions.Call(Object.values(this.ui), (entity) => { entity.setDepth(90); }); // console.log(entity); });
+    Phaser.Actions.Call(this.scoreboard.list, (entity) => { entity.setDepth(90); }); // console.log(entity); });
+    Phaser.Actions.Call(this.comboZone.list, (entity) => { entity.setDepth(90); }); // console.log(entity); });
     this.scoreboard.setDepth(90);
     this.comboZone.setDepth(90);
 

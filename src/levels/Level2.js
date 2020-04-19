@@ -23,4 +23,10 @@ export default class extends Level {
         this.parent.bgm.stop();
         super.end()
     }
+
+    assets() {
+        return [
+            { type: 'audio', key: "the_scene_is_dead", path: "assets/sounds/the_scene_is_dead.mp3" },
+        ]
+    }
 }
