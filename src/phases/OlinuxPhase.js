@@ -11,12 +11,6 @@ export default class extends Phase {
     }
 
     mount() {
-        // watch(this.counters, "kills", (attr, action, newValue) => {
-        //     if (newValue == 100) {
-        //         this.unmount();
-        //     }
-        // });
-
         this.events.push(
             this.parent.time.addEvent({
                 delay: 500,
@@ -37,26 +31,27 @@ export default class extends Phase {
             })
         );
 
-        setTimeout(() => {
-            let olinux_boss = new OlinuxBoss(
-                this.parent,
-                this.parent.game.config.width + 150,
-                150,
-            )
+        this.olinux_boss = new OlinuxBoss(
+            this.parent,
+            this.parent.game.config.width + 150,
+            150,
+        )
 
-            this.parent.enemies.add(olinux_boss);
+        this.parent.enemies.add(this.olinux_boss);
 
-            watch(olinux_boss, 'isDead', (attr, action, newValue) => {
-                // Stop spawn
+        watch(this.olinux_boss, 'isDead', (attr, action, newValue) => {
+            if (!this.parent.player.isDead && newValue == true) {
+                // Player is god
+                this.parent.player.setData('isGod', true)
+
+                // Stop spawning
                 for (let index = 0; index < this.events.length; index++) {
                     this.events[index].destroy();
                 }
 
-                if (newValue == true) {
-                    this.unmount();
-                }
-            });
-        }, 10000);
+                this.unmount();
+            }
+        });
 
         super.mount();
     }
@@ -67,7 +62,7 @@ export default class extends Phase {
 
     unmount() {
         // Remove watchers
-        unwatch(this.counters, "kills");
+        unwatch(this.olinux_boss, "isDead");
 
         super.unmount();
     }

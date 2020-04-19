@@ -1,6 +1,6 @@
 {
   "name": "jvshoot",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Simple space-shooter in the JVlike universe",
   "author": "MGK <sr@mgk.dev>",
   "main": "index.js",

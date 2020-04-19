@@ -128,6 +128,8 @@ export default class extends Phaser.Scene {
     })
 
     this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
+      if (player.getData('isGod')) return
+
       if (!player.getData("isDead") && !enemy.getData("isDead")) {
         player.explode(false)
         player.onDestroy();
@@ -136,6 +138,8 @@ export default class extends Phaser.Scene {
     })
 
     this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
+      if (player.getData('isGod')) return
+
       if (!player.getData("isDead") &&
           !laser.getData("isDead")) {
         player.explode(false)

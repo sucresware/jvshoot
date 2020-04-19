@@ -64,7 +64,8 @@ export default class extends Phaser.Scene {
     window.selectedLevel++;
 
     if (window.selectedLevel == ChooseLevelScene.levels.length) {
-       return this.scene.start('MenuScene')
+      window.selectedLevel--;
+      return this.scene.start('MenuScene')
     }
 
     this.scene.start('GameScene', { loaded : false }) // Force assets reload

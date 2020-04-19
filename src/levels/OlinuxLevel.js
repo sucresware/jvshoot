@@ -12,7 +12,7 @@ export default class extends Level {
         this.phases = [
             new OlinuxIntroPhase({ parent: params.parent, level: this }),
             new OlinuxPhase({ parent: params.parent, level: this }),
-            new DummyPhase({ parent: params.parent, level: this, sleep: 7000 }),
+            new DummyPhase({ parent: params.parent, level: this, sleep: 5000 }),
         ];
     }
 

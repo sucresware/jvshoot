@@ -10,6 +10,7 @@ export default class {
     }
 
     start() {
+        console.log('start', this.currentPhase)
         this.phases[this.currentPhase].mount();
     }
 
@@ -20,6 +21,7 @@ export default class {
     }
 
     nextPhase() {
+        console.log('nextPhase', this.currentPhase + 1)
         // this.phases[this.currentPhase].unmount();
 
         if (this.currentPhase + 1 >= this.phases.length) {

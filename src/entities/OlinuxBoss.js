@@ -3,7 +3,7 @@ import Entity from './Entity'
 
 export default class extends Entity {
   constructor(scene, x, y) {
-    super(scene, x, y, 'olinux_ah', 'olinux_ah', 150);
+    super(scene, x, y, 'olinux_ah', 'olinux_ah', 90);
     this.scale = 1.5;
     this.depth = 50;
     this.healthBorder.setDepth(50);
@@ -41,8 +41,8 @@ export default class extends Entity {
   }
 
   damage(canDestroy) {
-    this.scene.cameras.main.shake(100, 0.01);
-    if (window.mobile) navigator.vibrate(100)
+    this.scene.cameras.main.shake(50, 0.01);
+    if (window.mobile) navigator.vibrate(50)
     super.damage(canDestroy);
   }
 
@@ -63,6 +63,8 @@ export default class extends Entity {
       let that = this;
 
       this.interval = setInterval(() => {
+        if (!that.scene) return clearInterval(this.interval);
+
         that.scene.sfx.explosions[Phaser.Math.Between(0, that.scene.sfx.explosions.length - 1)].play({ volume: window.settings.volumes.sfx });
         that.scene.cameras.main.shake(50, 0.02)
         if (window.mobile) navigator.vibrate(50)
@@ -84,9 +86,9 @@ export default class extends Entity {
       }, 100);
 
       setTimeout(() => {
-        that.destroy();
         clearInterval(that.interval);
-      }, 7000);
+        that.destroy();
+      }, 5000);
 
       this.isDead = true;
     }

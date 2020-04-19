@@ -21,6 +21,7 @@ export default class extends Level {
 
     end() {
         this.parent.bgm.stop();
+
         super.end()
     }
 

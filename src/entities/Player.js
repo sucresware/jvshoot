@@ -8,6 +8,7 @@ export default class extends Entity {
 
     this.depth = 95;
 
+    this.setData("isGod", false)
     this.setData("speed", 400)
     this.setData("isShooting", false)
     this.setData("timerShootDelay", 15)
