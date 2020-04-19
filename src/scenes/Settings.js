@@ -41,7 +41,7 @@ export default class extends Phaser.Scene {
     let top = 40;
     let left = 20;
 
-    let title = this.add.bitmapText(this.game.config.width / 2, top, 'white', 'SETTINGS', 16).setOrigin(0.5)
+    let title = this.add.bitmapText(this.game.config.width / 2, top, 'white', 'GAME SETTINGS', 16).setOrigin(0.5)
     this.tweens.add({targets: title, y: top - 10, duration: 2000, ease: 'Sine.easeInOut', repeat: -1, yoyo: true});
 
     top += 40;
@@ -81,7 +81,7 @@ export default class extends Phaser.Scene {
 
     top += 20;
 
-    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 10, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
 
     this.keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
     this.keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)

@@ -71,12 +71,12 @@ export default class extends Phaser.Scene {
 
     this.add.bitmapText(this.game.config.width - 10, 10, 'orange', window.state.coins + ' COINS', 12).setOrigin(1, 0)
 
-    let top = 170;
+    let top = 260;
 
     let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(2)
     let flare = this.add.sprite(this.game.config.width / 2, top, 'flare').setScale(2)
 
-    tween = this.tweens.add({
+    this.tweens.add({
         targets: [ logo, flare ],
         y: top - 5,
         duration: 2000,
@@ -86,8 +86,6 @@ export default class extends Phaser.Scene {
         hold: 500,
         yoyo: true,
     });
-
-    top += 100;
 
     this.anims.create({
       key: "flare",
@@ -105,42 +103,57 @@ export default class extends Phaser.Scene {
       loop: true
     });
 
-    let label = window.mobile ? 'TOUCH TO START' : 'PRESS SPACE TO START'
-    let start = this.add.bitmapText(this.game.config.width / 2, top, 'white', label, 16).setOrigin(0.5)
+    if (!window.mobile) {
+      let start = this.add.bitmapText(this.game.config.width / 2, top += 200, 'white', 'PRESS SPACE TO START', 16).setOrigin(0.5)
 
-    var tween = this.tweens.add({
-        targets: [ start ],
-        alpha: 0,
-        duration: 0,
-        ease: 'Sine.easeInOut',
-        repeat: -1,
-        repeatDelay: 1000,
-        hold: 1000,
-        yoyo: true,
-    });
+      this.tweens.add({
+          targets: [ start ],
+          alpha: 0,
+          duration: 0,
+          ease: 'Sine.easeInOut',
+          repeat: -1,
+          repeatDelay: 1000,
+          hold: 1000,
+          yoyo: true,
+      });
 
-    top += 30;
-    this.add.bitmapText(this.game.config.width / 2, top, 'white', '© 2019 SUCRESWARE', 8).setOrigin(0.5)
-    top += 30;
-    this.add.bitmapText(this.game.config.width / 2, top, 'white', 'V' + version, 8).setOrigin(0.5)
+      this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+      this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 
-    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
+      this.add.bitmapText(this.game.config.width / 2, top += 30, 'white', 'PRESS S TO ENTER SETTINGS', 8).setOrigin(0.5)
+    } else {
+      let start = this.add.bitmapText(this.game.config.width / 2, top += 200, 'white', 'PLAY', 16).setOrigin(0.5)
+      // let settings = this.add.bitmapText(this.game.config.width / 2, top += 50, 'white', 'SETTINGS', 16).setOrigin(0.5)
 
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-    this.keySettings = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+      start.setInteractive()
+      start.on('pointerdown', () => this.chooseLevel());
 
-    this.input.addPointer(1);
+      // settings.setInteractive()
+      // settings.on('pointerdown', () => this.settings());
+    }
+
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', '© 2019-2020 SUCRESWARE' + ' - V' + version, 8).setOrigin(0.5)
   }
 
   update () {
     if (!this.loaded) return
 
-    if (this.keySpace.isDown || this.input.pointer1.isDown) {
-      this.bgm.stop()
-      this.scene.start('ChooseLevelScene')
-    } else if (this.keySettings.isDown) {
-      this.bgm.stop()
-      this.scene.start('SettingsScene')
+    if (!window.mobile) {
+      if (this.keySpace.isDown) {
+        this.chooseLevel()
+      } else if (this.keySettings.isDown) {
+        this.settings()
+      }
     }
+  }
+
+  chooseLevel() {
+    this.bgm.stop()
+    this.scene.start('ChooseLevelScene')
+  }
+
+  settings() {
+    this.bgm.stop()
+    this.scene.start('SettingsScene')
   }
 }

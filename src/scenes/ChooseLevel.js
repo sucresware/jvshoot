@@ -24,41 +24,55 @@ export default class ChooseLevelScene extends Phaser.Scene {
 
   preload () {
     // Assets loaded by MenuScene
+
+    this.bgm = this.sound.add("the_scene_is_dead");
+
+    this.bgm.addMarker({
+      name: 'intro',
+      start: 4.3,
+      duration: 46.5
+    });
   }
 
   create () {
-    /**
-      Transition
-    */
+    this.bgm.play('intro', { volume: window.settings.volumes.music })
+    this.sound.add("explode").play({ volume: window.settings.volumes.sfx })
+
     this.cameras.main.shake(200, 0.01)
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
-    /**
-      Draw GUI
-    */
-    let top = 40;
+    let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
+
+    let top = 90;
     let wCenter = this.game.config.width / 2;
 
     let title = this.add.bitmapText(wCenter, top, 'white', 'CHOOSE A LEVEL', 16).setOrigin(0.5)
+    this.tweens.add({targets: title, y: top - 10, duration: 2000, ease: 'Sine.easeInOut', repeat: -1, yoyo: true});
 
-    this.levelValueText = this.add.bitmapText(wCenter, top += 40, 'white', '', 8).setOrigin(0.5);
+    this.levelValueText = this.add.bitmapText(wCenter, top += 60, 'white', '', 8).setOrigin(0.5);
 		this.levelSelectL = this.add.sprite(wCenter - 100, top, 'arrow').setScale(-1);
 		this.levelSelectR = this.add.sprite(wCenter + 100, top, 'arrow');
 
     this.levelValue = window.selectedLevel || 0;
 
-    this.add.bitmapText(wCenter, this.game.config.height - 10, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
+    if (!window.mobile) {
+      this.add.bitmapText(wCenter, this.game.config.height - 40, 'white', 'PRESS SPACE TO START', 8).setOrigin(0.5)
+      this.add.bitmapText(wCenter, this.game.config.height - 20, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
+    } else {
+      let start = this.add.bitmapText(wCenter, this.game.config.height - 60, 'white', 'START', 16).setOrigin(0.5)
+      let back = this.add.bitmapText(10, 10, 'white', 'BACK TO MENU', 8)
 
-    /**
-      Effects
-     */
-    this.tweens.add({targets: title, y: top - 10, duration: 2000, ease: 'Sine.easeInOut', repeat: -1, yoyo: true});
+      start.setInteractive()
+      start.on('pointerdown', () => this.start());
+
+      back.setInteractive()
+      back.on('pointerdown', () => this.goToMenu());
+    }
 
     /**
       Events
     */
-
     this.keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
     this.keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -68,6 +82,12 @@ export default class ChooseLevelScene extends Phaser.Scene {
     watch(this.keyLeft, "isDown", (key, action, value) => value ? this.change('left') : '') // Watch if Q key is pressed
     watch(this.keySpace, "isDown", (key, action, value) => value ? this.start() : '') // Watch if SPACE is pressed
     watch(this.keyMenu, "isDown", (key, action, value) => value ? this.goToMenu() : '') // Watch if A key is pressed
+
+    this.levelSelectL.setInteractive()
+    this.levelSelectL.on('pointerdown', () => this.change('left'));
+
+    this.levelSelectR.setInteractive()
+    this.levelSelectR.on('pointerdown', () => this.change('right'));
 
     this.selectedText = [this.levelTextValue];
     this.refreshGui()
@@ -87,8 +107,9 @@ export default class ChooseLevelScene extends Phaser.Scene {
   }
 
   start() {
-    this.removeWatchers();
-    window.selectedLevel = this.levelValue;
+    this.removeWatchers()
+    this.bgm.stop()
+    window.selectedLevel = this.levelValue
     this.scene.start('GameScene', { loaded : false }) // Force assets reload
   }
 
@@ -144,7 +165,8 @@ export default class ChooseLevelScene extends Phaser.Scene {
   }
 
   goToMenu () {
-    this.removeWatchers();
+    this.removeWatchers()
+    this.bgm.stop()
     this.scene.start('MenuScene')
   }
 
