@@ -33,7 +33,7 @@ export default class {
     }
 
     end() {
-        console.log('This is the end.');
+        // this.parent.scene.start('LevelClearScene', { continue: true })
         this.parent.scene.start('LevelClearScene')
     }
 }

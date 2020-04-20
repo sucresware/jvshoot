@@ -12,6 +12,7 @@ export default class extends Phaser.Scene {
 
   init (data) {
     this.loaded = data.loaded || false
+    this.continue = data.continue || false
   }
 
   preload () {
@@ -56,6 +57,8 @@ export default class extends Phaser.Scene {
       back.setInteractive()
       back.on('pointerdown', () => this.goToMenu());
     }
+
+    if (this.continue) this.nextLevel()
   }
 
   nextLevel() {

@@ -51,6 +51,8 @@ export default class extends Entity {
         }
 
         this.scene.sfx.laser.play({ volume: window.settings.volumes.sfx })
+        this.scene.state.shots++;
+
         this.setData("timerShootTick", 0);
       }
     }

@@ -82,7 +82,7 @@ export default class extends Phaser.Scene {
       this.backgrounds.push(new ScrollingBackground(this, "space", i))
     }
 
-    this.state = { kills: 0, damage: 1, time: 0 }
+    this.state = { kills: 0, damage: 1, time: 0, shots: 0 }
     this.scoreboard = new Scoreboard(this);
 
     // Add groups
