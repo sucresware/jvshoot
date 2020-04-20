@@ -18,6 +18,7 @@ export default class extends Phaser.Scene {
       - SettingsScene
       - ChooseLevelScene
       - LevelClearScene
+      - GameOverScene
     */
     this.scene.start('LoadingScene', {
       nextScene: 'MenuScene',

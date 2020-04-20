@@ -84,7 +84,7 @@ export default class extends Entity {
 
     this.scene.time.addEvent({
       delay: 800,
-      callback: () => this.scene.scene.start("MenuScene"),
+      callback: () => this.scene.scene.start("GameOverScene"),
       callbackScope: this,
     });
   }
