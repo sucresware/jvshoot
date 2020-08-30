@@ -10,3 +10,6 @@ plugins/*
 platforms/*
 deploy.config.php
 TODO
+.gradle
+*.keystore
+build.json
