@@ -5,6 +5,7 @@ import TutorialLevel from '../levels/TutorialLevel';
 import Level1 from '../levels/Level1';
 import Level2 from '../levels/Level2';
 import OlinuxLevel from '../levels/OlinuxLevel';
+import ArcadeLevel from '../levels/ArcadeLevel';
 
 var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
@@ -13,7 +14,7 @@ var callWatchers = WatchJS.callWatchers;
 var selected = 0; // Selected setting (0: volumes.sfx, 1: volumes.music, 2: particlesCB)
 
 export default class ChooseLevelScene extends Phaser.Scene {
-  static levels = [TutorialLevel, Level1, Level2, OlinuxLevel];
+  static levels = [TutorialLevel, Level1, Level2, OlinuxLevel, ArcadeLevel];
 
   constructor () {
     super({ key: 'ChooseLevelScene' })

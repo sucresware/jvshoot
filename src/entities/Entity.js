@@ -102,12 +102,12 @@ export default class extends Phaser.GameObjects.Sprite {
 
       this.isDead = true;
 
-      // if (this.scene.state.combo > 50) {
-      //   this.scene.cameras.main.shake(200, 0.01)
-      //   if (window.mobile) navigator.vibrate(100)
-      // } else if (this.scene.state.combo > 10) {
-      //   if (window.mobile) navigator.vibrate(50)
-      // }
+      if (this.scene.state.combo > 50) {
+        this.scene.cameras.main.shake(200, 0.01)
+        if (window.mobile) navigator.vibrate(100)
+      } else if (this.scene.state.combo > 10) {
+        if (window.mobile) navigator.vibrate(50)
+      }
 
     }
   }

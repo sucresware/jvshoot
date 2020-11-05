@@ -82,7 +82,7 @@ export default class extends Phaser.Scene {
       this.backgrounds.push(new ScrollingBackground(this, "space", i))
     }
 
-    this.state = { kills: 0, damage: 1, time: 0, shots: 0 }
+    this.state = { kills: 0, damage: 1, time: 0, shots: 0, combo: 0, multiplier: 0 }
     this.scoreboard = new Scoreboard(this);
 
     // Add groups
@@ -115,7 +115,10 @@ export default class extends Phaser.Scene {
         if (isDead) {
           scene.level.phases[scene.level.currentPhase].counters.kills++;
           scene.state.kills++;
+          scene.state.combo++;
         }
+
+        scene.state.multiplier = 100; // Refill the multiplier
       }
     })
 
@@ -148,8 +151,9 @@ export default class extends Phaser.Scene {
       }
     });
 
-    // Add timer
+    // Add timers
     this.time.addEvent({ delay: 1000, callback: () => this.state.time++, callbackScope: this, loop: true });
+    this.time.addEvent({ delay: 20, callback: () => this.state.multiplier -= 1, callbackScope: this, loop: true });
 
     // Register controls
     this.input.addPointer(2);
@@ -207,6 +211,11 @@ export default class extends Phaser.Scene {
     // Update background layers (reset position if needed)
     for (let i = 0; i < this.backgrounds.length; i++) {
       this.backgrounds[i].update()
+    }
+
+    // Clear combo
+    if (this.state.multiplier <= 0) {
+      this.state.combo = 0;
     }
   }
 }
