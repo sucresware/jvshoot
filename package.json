@@ -1,11 +1,12 @@
 {
   "name": "jvshoot",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "Simple space-shooter in the JVlike universe",
   "author": "MGK <sr@mgk.dev>",
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch",
+    "serve": "http-server www -o /facebook.html --ssl -c-1 -p 8080 -a 127.0.0.1",
     "build": "webpack"
   },
   "devDependencies": {
@@ -13,7 +14,6 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "babel-eslint": "^9.0.0",
-    "babel-loader": "^8.0.2",
     "browser-sync": "^2.26.13",
     "browser-sync-webpack-plugin": "^2.2.2",
     "browsersync": "0.0.1-security",
@@ -33,7 +33,16 @@
     "phaser": "^3.0.0",
     "phaser3-rex-plugins": "^1.1.31",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.1.0"
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "raw-loader": "^3.1.0",
+    "terser-webpack-plugin": "^2.2.1",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2",
+    "http-server": "^0.11.1"
   },
   "cordova": {
     "plugins": {

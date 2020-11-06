@@ -58,7 +58,7 @@ export default class ChooseLevelScene extends Phaser.Scene {
 
     this.levelValue = window.selectedLevel || 0;
 
-    if (!window.mobile) {
+    if (window.platform == 'desktop') {
       this.add.bitmapText(wCenter, this.game.config.height - 40, 'white', 'PRESS SPACE TO START', 8).setOrigin(0.5)
       this.add.bitmapText(wCenter, this.game.config.height - 20, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
     } else {

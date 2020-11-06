@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     main: [path.resolve(__dirname, 'src/main.js')],
     cordova: [path.resolve(__dirname, 'src/cordova.js')],
+    facebook: [path.resolve(__dirname, 'src/facebook.js')],
     vendor: ['phaser']
   },
   mode: 'development',
@@ -18,7 +19,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),
-      WEBGL_RENDERER: JSON.stringify(true)
+      WEBGL_RENDERER: JSON.stringify(true),
+      PLUGIN_FBINSTANT: JSON.stringify(true)
     }),
     new BrowserSyncPlugin({
       host: process.env.IP || 'localhost',

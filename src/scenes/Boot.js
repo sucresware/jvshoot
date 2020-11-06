@@ -9,7 +9,7 @@ export default class extends Phaser.Scene {
     // Scaling
     this.scale.setGameSize(this.game.config.width, this.game.config.height)
 
-    if (window.mobile || window.settings.zoom == -0.5) {
+    if (window.platform == 'mobile' || window.settings.zoom == -0.5) {
       let scaleFactor = window.innerHeight / this.game.config.height;
       let width = window.innerWidth / scaleFactor;
       this.game.config.width = width;

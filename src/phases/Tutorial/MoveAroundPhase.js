@@ -11,7 +11,7 @@ export default class extends Phase {
     }
 
     mount() {
-        let label = !window.mobile ? 'USE ZQSD\nTO MOVE AROUND' : 'USE YOUR FINGER\nTO MOVE AROUND'
+        let label = (window.platform == 'desktop') ? 'USE ZQSD\nTO MOVE AROUND' : 'USE YOUR FINGER\nTO MOVE AROUND'
 
         this.hero = this.parent.add.text(parent.game.config.width / 2, parent.game.config.height / 2,  label, {
             fontFamily: 'PressStart2P',

@@ -37,7 +37,7 @@ export default class extends Phaser.Scene {
     let title = this.add.bitmapText(wCenter, top, 'white', 'GAME OVER!', 16).setOrigin(0.5)
     this.tweens.add({targets: title, y: top - 10, duration: 2000, ease: 'Sine.easeInOut', repeat: -1, yoyo: true});
 
-    if (!window.mobile) {
+    if (window.platform == 'desktop') {
       this.add.bitmapText(wCenter, this.game.config.height - 40, 'white', 'PRESS ENTER TO RETRY', 8).setOrigin(0.5)
       this.add.bitmapText(wCenter, this.game.config.height - 20, 'white', 'PRESS A FOR MENU', 8).setOrigin(0.5)
 
@@ -70,7 +70,7 @@ export default class extends Phaser.Scene {
   }
 
   removeWatchers() {
-    if (!window.mobile) {
+    if (window.platform == 'desktop') {
       unwatch(this.keyEnter, "isDown");
       unwatch(this.keyMenu, "isDown");
     }

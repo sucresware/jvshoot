@@ -12,7 +12,7 @@ export default class extends Phase {
     }
 
     mount() {
-        let label = !window.mobile ? 'TAP OR HOLD\nSPACEBAR TO SHOOT' : 'TAP WITH YOUR\nSECOND FINGER TO SHOOT'
+        let label = (window.platform == 'desktop') ? 'TAP OR HOLD\nSPACEBAR TO SHOOT' : 'TAP WITH YOUR\nSECOND FINGER TO SHOOT'
 
         this.hero = this.parent.add.text(parent.game.config.width / 2, parent.game.config.height / 2,  label, {
             fontFamily: 'PressStart2P',

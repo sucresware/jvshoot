@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
   constructor () {
-    super({ key: 'MenuScene' })
+    super({ key: 'FacebookMenuScene' })
 
     this.firstTime = true;
   }
@@ -12,36 +12,9 @@ export default class extends Phaser.Scene {
     this.loaded = data.loaded || false
   }
 
-  loadAssets() {
-    /* Load assets for
-      - MenuScene
-      - SettingsScene
-      - ChooseLevelScene
-      - LevelClearScene
-      - GameOverScene
-    */
-    this.scene.start('LoadingScene', {
-      nextScene: 'MenuScene',
-      assets: [
-        { type: 'image', key: "space", path: "assets/images/space.png" },
-        { type: 'image', key: 'logo', path: 'assets/images/logo.png' },
-        { type: 'image', key: "arrow", path: "assets/images/arrow.png" },
-        { type: 'image', key: "checkbox", path: "assets/images/checkbox.png" },
-        { type: 'image', key: "checkbox_ok", path: "assets/images/checkbox_ok.png" },
-        { type: 'spritesheet', key: "flare", path: "assets/images/flare.png", options: { frameWidth: 138, frameHeight: 64 } },
-        { type: 'audio', key: "the_courier", path: "assets/sounds/the_courier.mp3" },
-        { type: 'audio', key: "the_scene_is_dead", path: "assets/sounds/the_scene_is_dead.mp3" },
-        { type: 'audio', key: "explode", path: "assets/sounds/explode.wav" },
-      ]
-    })
-  }
-
   preload () {
-    if (!this.loaded) return this.loadAssets()
-
-    if (this.firstTime) {
-      this.bgm = this.sound.add("the_courier");
-      this.bgm.addMarker({ name: 'intro', start: 20.35 });
+   if (this.firstTime) {
+      this.bgm = this.sound.add("exciter");
       this.sfx = { explode: this.sound.add("explode") }
 
       this.firstTime = false;
@@ -49,29 +22,17 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    if (!this.loaded) return
-
     if (window.settings.effects >= 1) this.cameras.main.shake(200, 0.01);
     this.sfx.explode.play({ volume: window.settings.volumes.sfx })
 
-    this.time.addEvent({
-      delay: 70 * 1000,
-      callback: function() {
-        this.bgm.stop()
-        this.scene.start("SplashScene");
-      },
-      callbackScope: this,
-      loop: false
-    });
+    this.bgm.play({
+      volume: window.settings.volumes.music,
+    })
 
-    this.bgm.play('intro', { volume: window.settings.volumes.music })
     this.cameras.main.setZoom(2);
     this.cameras.main.zoomTo(1, 50);
 
     let background = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'space')
-
-    this.add.bitmapText(this.game.config.width - 10, 10, 'orange', window.state.coins + ' COINS', 12).setOrigin(1, 0)
-
     let top = 260;
 
     let logo = this.add.sprite(this.game.config.width / 2, top, 'logo').setScale(2)
@@ -127,34 +88,29 @@ export default class extends Phaser.Scene {
       // let settings = this.add.bitmapText(this.game.config.width / 2, top += 50, 'white', 'SETTINGS', 16).setOrigin(0.5)
 
       start.setInteractive()
-      start.on('pointerdown', () => this.chooseLevel());
+      start.on('pointerdown', () => this.play());
 
       // settings.setInteractive()
       // settings.on('pointerdown', () => this.settings());
     }
 
-    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', '© SUCRESWARE' + ' - V' + version + ' - ' + window.platform.toUpperCase(), 8).setOrigin(0.5)
+    this.add.bitmapText(this.game.config.width / 2, this.game.config.height - 20, 'white', '© SUCRESWARE' + ' - V' + version + ' - P.' + window.platform.toUpperCase(), 8).setOrigin(0.5)
   }
 
   update () {
-    if (!this.loaded) return
-
     if (window.platform == 'desktop') {
       if (this.keySpace.isDown) {
-        this.chooseLevel()
+        this.play()
       } else if (this.keySettings.isDown) {
         this.settings()
       }
     }
   }
 
-  chooseLevel() {
+  play() {
     this.bgm.stop()
-    this.scene.start('ChooseLevelScene')
-  }
 
-  settings() {
-    this.bgm.stop()
-    this.scene.start('SettingsScene')
+    window.selectedLevel = 4 // ArcadeLevel
+    this.scene.start('GameScene', { loaded : true }) // Assets loaded
   }
 }

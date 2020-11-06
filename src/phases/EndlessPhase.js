@@ -14,8 +14,7 @@ export default class extends Phase {
     }
 
     mount() {
-        // TBD
-        this.parent.bgm.play({ volume: window.settings.volumes.music, seek: 38.3 });
+        this.parent.bgm.play({ volume: window.settings.volumes.music });
 
         this.events.push(
             this.parent.time.addEvent({

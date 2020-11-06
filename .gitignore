@@ -13,3 +13,4 @@ TODO
 .gradle
 *.keystore
 build.json
+*.sfk

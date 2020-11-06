@@ -170,11 +170,9 @@ export default class extends Phaser.Scene {
 
     if (!this.player.getData("isDead")) {
       // Controls
-      if (window.mobile) {
-        if (this.input.pointer1.isDown) {
-          this.player.x = this.input.pointer1.x
-          this.player.y = this.input.pointer1.y - 25
-        }
+      if (this.input.pointer1.isDown) {
+        this.player.x = this.input.pointer1.x
+        this.player.y = this.input.pointer1.y - 25
       }
 
       this.player.update()
@@ -185,7 +183,7 @@ export default class extends Phaser.Scene {
       else if (this.keyD.isDown) this.player.moveRight()
 
       // Keepshooting on hold
-      if ((this.keySpace.isDown || (this.input.pointer1.isDown && this.input.pointer2.isDown))) {
+      if ((this.keySpace.isDown || (this.input.pointer1.isDown))) {
         this.player.setData("isShooting", true)
       } else {
         this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1)
@@ -194,7 +192,6 @@ export default class extends Phaser.Scene {
 
       // Pickup use
       if (this.keyEnter.isDown) {
-        console.log(this.items.getChildren())
         // Loop on the array, search for the current pickup, use it
       }
     }

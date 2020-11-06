@@ -42,7 +42,7 @@ export default class extends Entity {
 
   damage(canDestroy) {
     this.scene.cameras.main.shake(50, 0.01);
-    if (window.mobile) navigator.vibrate(50)
+    if (window.platform == 'mobile') navigator.vibrate(50)
     super.damage(canDestroy);
   }
 
@@ -67,7 +67,7 @@ export default class extends Entity {
 
         that.scene.sfx.explosions[Phaser.Math.Between(0, that.scene.sfx.explosions.length - 1)].play({ volume: window.settings.volumes.sfx });
         that.scene.cameras.main.shake(50, 0.02)
-        if (window.mobile) navigator.vibrate(50)
+        if (window.platform == 'mobile') navigator.vibrate(50)
 
         for (let index = 0; index < that.tweens.length; index++) {
             that.tweens[index].stop();

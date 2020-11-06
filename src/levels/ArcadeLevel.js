@@ -9,13 +9,12 @@ export default class extends Level {
         super({ parent: params.parent })
 
         this.phases = [
-            new WarmupPhase({ parent: params.parent, level: this, expectedKills: 3 }),
             new EndlessPhase({ parent: params.parent, level: this })
         ];
     }
 
     start() {
-        this.parent.bgm = this.parent.sound.add("votedisk")
+        this.parent.bgm = this.parent.sound.add("exciter")
 
         super.start()
     }
@@ -28,7 +27,7 @@ export default class extends Level {
 
     assets() {
         return [
-            { type: 'audio', key: "votedisk", path: "assets/sounds/votedisk.mp3" },
+            { type: 'audio', key: "exciter", path: "assets/sounds/exciter.mp3" },
         ]
     }
 }
